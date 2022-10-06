@@ -1,4 +1,4 @@
-ESCRIBIR ACA LOS SCRIPS PARA CREAR LA BASE DE DATOS:::
+#ESCRIBIR ACA LOS SCRIPS PARA CREAR LA BASE DE DATOS:::
 
 #Crear Database:
 
@@ -111,7 +111,7 @@ insert into formato values (null,'Compact Disc'),(null,'Cassette'),(null,'Long P
 
 
 insert into album values (null,1234567,'Lêttre à ma Mère'   ,3,30,10,5,3,'1979',1000,2,'https://i.discogs.com/ysGLv4Vy4NY1RNgJDNdcwh76guKX1DOW1XFxKeKA0bo/rs:fit/g:sm/q:90/h:600/w:594/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0OTk5/NjM3LTE1ODk2NjM2/NzgtMTgxMy5qcGVn.jpeg');
-insert into album values (null,1234568,'Las Cosas Que Vives',1,52,12,3,1,'1996',1000,1,'https://i.discogs.com/jZHMPfsMSihrVJOcWG0uVXbxnIv1gDb_akXX87puUbM/rs:fit/g:sm/q:90/h:598/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1OTky/ODgtMTIzMTI3OTM4/Ni5qcGVn.jpeg');
+insert into album values (null,1234568,'Las Cosas Que Vives',1,51,12,3,1,'1996',1000,1,'https://i.discogs.com/jZHMPfsMSihrVJOcWG0uVXbxnIv1gDb_akXX87puUbM/rs:fit/g:sm/q:90/h:598/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1OTky/ODgtMTIzMTI3OTM4/Ni5qcGVn.jpeg');
 insert into album values (null,1234569,'En Tiempo de Amor'  ,2,30,10,1,1,'1993',1000,1,'https://i.discogs.com/hBQ5Rv1hfBuekUxclsrpeGcwqTijuOp9uT8xpdTNh7Q/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU4MDA3/MzYtMTQwMzAyNjE5/Ny0zNDE0LmpwZWc.jpeg');
 insert into album values (null,1234570,'El Piano de América',2,30,10,1,1,'1994',1000,1,'https://i.discogs.com/AsKNRgEy2Sufm2KtIPDMhcS8tVj8cYi2Wv4gmrDpu7U/rs:fit/g:sm/q:90/h:596/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg3ODE1/OTktMTQ2ODY1NjU4/OS03NDE0LmpwZWc.jpeg');
 
