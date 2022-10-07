@@ -11,17 +11,17 @@ use disqueria;
 
 create table genero (
     id_genero int not null auto_increment primary key,
-    nombre varchar(50)
+    nombre varchar(50) unique
 );
 
 create table discografica(
     id_discografica int not null auto_increment primary key,
-    nombre varchar(50)
+    nombre varchar(50) unique
 );
 
 create table formato(
     id_formato int not null auto_increment primary key,
-    tipo varchar(50)
+    tipo varchar(50) unique
 );
 
 create table interprete(
@@ -29,12 +29,13 @@ create table interprete(
     nombre varchar(50),
     apellido varchar(50),
     nacionalidad varchar(50),
-    foto varchar(200)
+    foto varchar(200),
+    CONSTRAINT interprete_unico UNIQUE (nombre,apellido)
 );
 
 create table album(
     id_album int auto_increment primary key,
-    cod_album VARCHAR(45) not null,
+    cod_album VARCHAR(45) unique not null,
     nombre varchar(100) not null,
     id_interprete int not null,
     id_genero int not null,
@@ -57,15 +58,12 @@ create table tema(
         duracion time not null,
         autor varchar(100) not null,
         compositor varchar(100) not null,
-        id_album int,
-        id_interprete int,
+        id_album int not null,
+        id_interprete int not null,
         foreign key(id_album) references album(id_album),
         foreign key(id_interprete) references interprete(id_interprete)
     );
 
-
-use disqueria;
-    
 #--------------------------
 # Carga de datos de Prueba:
 #--------------------------
@@ -92,9 +90,6 @@ insert into interprete values (null,'Julio','Iglesias','España','https://i.disc
 insert into interprete values (null,'Rosana','Arbelo Gopar','España','https://i.discogs.com/gsXBxD3Y7_jHAaBvqAuqyH3brakTLY5OpY0dzxu4nM8/rs:fit/g:sm/q:90/h:346/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTkzMjc5/NS0xNTEzMzYzODkw/LTkzNzguanBlZw.jpeg');
 
 
-use disqueria;
-
-
 # Carga de Discográficas:
 # Discográfica:                 id_album, nombre
 
@@ -110,18 +105,16 @@ insert into genero values (null, 'Flamenco'), (null, 'Folclore'), (null, 'Folk')
 insert into genero values (null, 'Gótico'), (null, 'Hard rock'), (null, 'Hardcore'), (null, 'Heavy Metal'), (null, 'Hip hop/Rap');
 insert into genero values (null, 'Indie'), (null, 'Industrial'), (null, 'Instrumental'), (null, 'J-Pop'), (null, 'J-Rock'), (null, 'Jazz');
 insert into genero values (null, 'K-Pop'), (null, 'MPB'), (null, 'Mambo'), (null, 'Marchas/Himnos'), (null, 'Mariachi'), (null, 'Merengue');
-insert into genero values (null, 'Metal'), (null, 'Música Clásica'), (null, 'Música Infantulil'), (null, 'Música Instrumental');
-insert into genero values (null, 'Música Psicodélica'), (null, 'Música Religiosa'), (null, 'Música Romántica'), (null, 'Música clásica');
-insert into genero values (null, 'Música melódica'), (null, 'New Age'), (null, 'New Wave'), (null, 'Pop'), (null, 'Pop Rock'), (null, 'Post-Rock');
+insert into genero values (null, 'Metal'), (null, 'Música Clásica'), (null, 'Música Infantil'), (null, 'Música Instrumental');
+insert into genero values (null, 'Música Psicodélica'), (null, 'Música Religiosa'), (null, 'Música Romántica'), (null, 'Música Relajante');
+insert into genero values (null, 'Música Melódica'), (null, 'New Age'), (null, 'New Wave'), (null, 'Pop'), (null, 'Pop Rock'), (null, 'Post-Rock');
 insert into genero values (null, 'Power-Pop'), (null, 'Punk Rock'), (null, 'R&B'), (null, 'Ranchera'), (null, 'Reggae'), (null, 'Reggaeton');
 insert into genero values (null, 'Regional'), (null, 'Rock'), (null, 'Rock Progresivo'), (null, 'Rock and Roll'), (null, 'Rockabilly');
 insert into genero values (null, 'Salsa'), (null, 'Samba'), (null, 'Score'), (null, 'Sertanejo'), (null, 'Ska'), (null, 'Soft Rock');
 insert into genero values (null, 'Soul'), (null, 'Soundtrack'), (null, 'Tango'), (null, 'Techno'), (null, 'Tecnopop'), (null, 'World Music'), (null,'Zamba');
 
-
 #Formatos de Musica:
 insert into formato values (null,'Compact Disc'),(null,'Cassette'),(null,'Long Play'),(null,'Digital');
-
 
 
 # Album:                  id_album, cod_album,   nombre,   id_interprete, id_genero, cant_temas, id_discografica,  id_formato,  fec_lanzamiento,  precio,cantidad,  caratula
