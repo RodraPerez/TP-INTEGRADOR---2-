@@ -1,36 +1,27 @@
-import mysql.connector                                                                  #Se importa el driver MySQL para Python.
+import mysql.connector                                          #Se importa el driver MySQL para Python.
 
-class Conectar():                                                                       # Se crea la clase de conecxion.
-    def __init__(self) -> None:
+class BaseDatos():                                              #Se crea la clase de conecxion.
+    def __init__(self):
+        print("Instanciada Clase Base de Datos..")              #Print Debug..
+
+    def Conectar(self):                                         #Metodo para conectarse a la Base de Datos
         try:
-            self.conexion = mysql.connector.connect(                                    # Se configuran los parámetros del conector. PONER PASS DE SU MYSQL.
-                host = "localhost",
-                port = "3306",
-                user = "root",
-                password = "",
-                db = "disqueria"
+            self.conexion = mysql.connector.connect(
+            host = 'localhost', #si no conecta con esto probamos con 127.0.0.1
+            port = 3306,
+            user = 'root',
+            password = '',   #NO OLVIDAR Configurar con su pass, y antes de hacer commit borrarlo.
+            db = 'disqueria' #nombre de la base de datos
             )
+            if self.conexion.is_connected():
+                print("La conexion es exitosa.")
 
-        except mysql.connector.Error as conexionError:                                  # En caso de error almacenamos el texto descriptivo del error del metodo en una 
-            print("No se pudo conectar al servidor de Base de Datos",conexionError)     # variable. y la pasamos al print con una descripcion personalizada pero detallada.
+        except mysql.connector.Error as error:
+            print("¡No se conectó!")
+            print(error)
 
+    def Desconectar(self):                                      #Metodo para Desconectarse de la Base de Datos
 
-
-
-    def ListarAlbums(self):                                                              #Método para consultar Base de Datos
         if self.conexion.is_connected():
-            try:
-                cursor = self.conexion.cursor()
-                cursor.execute("SELECT cod_album, nombre, fec_lanzamiento FROM album")    #Sentencia SQL
-                resultados = cursor.fetchall()
-                self.conexion.close()
-                return resultados
-            
-            except mysql.connector.Error as conexionError:
-                print("No se pudo conectar para hacer la consulta.",conexionError)
-
-
-con = Conectar()                                                                         #Se crea la instancia de la Clase Conectar() se almacena en la variable "con"
-
-for album in con.ListarAlbums():                                  # bucle for que recorre el return "resultados" de ListarAlbums() y va imprimiendo cada item de la lista.
-    print(album)
+            self.conexion.close()
+            print("La conexión se cerró")
