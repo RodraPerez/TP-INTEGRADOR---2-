@@ -49,8 +49,7 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
                             FROM album a 
                             JOIN interprete i ON a.id_interprete = i.id_interprete
                             JOIN genero g ON g.id_genero = a.id_genero
-                            WHERE g.nombre = 'NombreGenero'
-                            ORDER BY G.NOMBRE ASC;"""
+                            WHERE g.nombre = """ + "'" + self.NombreGenero + "'" + " ORDER BY G.NOMBRE ASC;"""
             #Conexion a Base de Datos:
             self.Conectar()
 
