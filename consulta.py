@@ -39,14 +39,38 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
         for tupla in self.listado:
             print (tupla)
         
+    
 
 
+    def PorGenero(self, NombreGenero):
+            self.NombreGenero = NombreGenero
+            
+            self.query = """SELECT g.Nombre, a.Nombre, i.nombre, i.apellido
+                            FROM album a 
+                            JOIN interprete i ON a.id_interprete = i.id_interprete
+                            JOIN genero g ON g.id_genero = a.id_genero
+                            WHERE g.nombre = 'NombreGenero'
+                            ORDER BY G.NOMBRE ASC;"""
+            #Conexion a Base de Datos:
+            self.Conectar()
 
-    #def OtraConsulta(self):
-        #codigo
+            #Cursor y consulta:
+            self.cursor = self.conexion.cursor()
+            self.cursor.execute(self.query)
 
+            #Almacenamos bajada de datos en una Variable Buffer.
+            self.listado = self.cursor.fetchall()
+            
+            #Desconectamos
+            self.Desconectar()
+
+            for tupla in self.listado:
+                print (tupla)
+    
     #def OtraMas(self):
         #codigo
     
     #def MasConsultas(self):
         #codigo
+        
+

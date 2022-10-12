@@ -5,8 +5,8 @@ def main():
     
     #Primera Lista
     busqueda = consulta.ListarAlbums()
-    busqueda.PorArtista("Michael","Jackson")
-    
+    busqueda.PorGenero("Instrumental")
+
 
 
 
