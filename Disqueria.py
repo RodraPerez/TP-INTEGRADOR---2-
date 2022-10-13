@@ -1,4 +1,5 @@
 import consulta
+import cargadatos
 
 
 def main():
@@ -10,7 +11,8 @@ def main():
     busqueda2 = consulta.ListarAlbums()
     busqueda2.PorArtista("Michael","Jackson")
 
-
+    carga = cargadatos.Cargar()
+    carga.CargarArtista("Phil","Collins","UK","https://www.discos.com/lafotodelartista.jpg")
 
 
 
