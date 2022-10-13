@@ -93,8 +93,7 @@ insert into interprete values (null,'Rosana','Arbelo Gopar','España','https://i
 # Carga de Discográficas:
 # Discográfica:                 id_album, nombre
 
-insert into discografica values (null,'BMG'),(null,'Sony Music'),(null,'WEA'),(null,'Universal'),(null,'Independiente'),(null,'Epic');
-
+insert into discografica values (null,'BMG'),(null,'Sony Music'),(null,'WEA'),(null,'Universal'),(null,'Independiente'),(null,'Epic'),(null,'Polydor');
 
 #Carga de Géneros Musicales:
 #Genero:				   id_genero, nombre
@@ -127,6 +126,9 @@ insert into album values (null,'QE 38112','Thriller'        ,14,52,9,6,3,'1982',
 insert into album values (null,'88843053662','Xscape'       ,14,52,8,6,1,'2014',1800,5 ,'https://i.discogs.com/phUe7igCIqLRwXmTrSBuMXRhzfzG3sFofPQT3B6NIeI/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU2ODMz/MDUtMTM5OTgyMzYy/Ny04ODg1LmpwZWc.jpeg');
 insert into album values (null,'EK 40600','Bad'             ,14,52,11,6,1,'1987',1600,5 ,'https://i.discogs.com/W4bMsFIhfx4xQgX4L1lD7PwtYyaqMgaC30DmSSVu9E4/rs:fit/g:sm/q:90/h:600/w:598/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ1OTYw/Ni0xNDUwMzg5NDI1/LTg4NTIuanBlZw.jpeg');
 insert into album values (null,'EPC 465802 4','Dangerous'   ,14,52,14,6,2,'1991',1100,3 ,'https://i.discogs.com/dZoDC4ArXV01irStGKnhbwOIahZsVGfgcfx-bytrhX4/rs:fit/g:sm/q:90/h:432/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM5NTEy/NC0xNDgxNjI5NTIz/LTg2OTkuanBlZw.jpeg');
+insert into album values (null,'PD-1-6112','Oxygène',6,12,6,7,3,'1976',880,3 ,'https://i.discogs.com/lnhlvNyI4e6sPZz4-s1ChPgXZIiNEJRGGRhbQpyB448/rs:fit/g:sm/q:90/h:596/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzMzQw/NTctMTU0MDYxOTAw/NC0zMDk0LmpwZWc.jpeg');
+insert into album values (null,'POLD 5007','Equinoxe',6,12,8,7,3,'1978',890,3 ,'https://i.discogs.com/G-HE45v7f7OkFA2DOE-nBIxhya5b5WHTtYHhll70cdo/rs:fit/g:sm/q:90/h:590/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU3NTI4/LTEyODgwODY0ODQu/anBlZw.jpeg');
+insert into album values (null,'19075833892','Geometry Of Love',6,12,6,2,1,'1976',880,3 ,'https://i.discogs.com/lnhlvNyI4e6sPZz4-s1ChPgXZIiNEJRGGRhbQpyB448/rs:fit/g:sm/q:90/h:596/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzMzQw/NTctMTU0MDYxOTAw/NC0zMDk0LmpwZWc.jpeg');
 
 # Temas del Disco:     id_tema, track_num,titulo,duracion,autor,compositor,id_album,id_interprete
 insert into tema values (null,1,'Lêttre à ma Mère','00:40:00','Paul De Senneville','Paul De Senneville',1,3);
@@ -169,6 +171,7 @@ insert into tema values (null,9,'Dirty Diana','00:04:52','Michael Jackson','Mich
 insert into tema values (null,10,'Smooth Criminal','00:04:16','Michael Jackson','Michael Jackson',7,14);
 insert into tema values (null,11,'Leave Me Alone','00:04:37','Michael Jackson','Michael Jackson',7,14);
 
+# Temas del Disco:     id_tema, track_num,titulo,duracion,autor,compositor,id_album,id_interprete
 insert into tema values (null,1,'Jam','00:05:38','Michael Jackson','Michael Jackson',8,14);
 insert into tema values (null,2,'Why You Wanna Trip On Me','00:05:24','Michael Jackson','Michael Jackson',8,14);
 insert into tema values (null,3,'In The Closet','00:06:31','Michael Jackson','Michael Jackson',8,14);
@@ -183,3 +186,31 @@ insert into tema values (null,11,'Will You Be There','00:07:39','Michael Jackson
 insert into tema values (null,12,'Keep The Faith','00:05:56','Michael Jackson','Michael Jackson',8,14);
 insert into tema values (null,13,'Gone Too Soon','00:03:22','Michael Jackson','Michael Jackson',8,14);
 insert into tema values (null,14,'Dangerous','00:07:00','Michael Jackson','Michael Jackson',8,14);
+
+# Temas del Disco:     id_tema, track_num,titulo,duracion,autor,compositor,id_album,id_interprete
+insert into tema values (null,1,'Oxygene (Part I)','00:07:40','Jean Michel Jarre','Jean Michel Jarre',9,6);
+insert into tema values (null,2,'Oxygene (Part II)','00:08:10','Jean Michel Jarre','Jean Michel Jarre',9,6);
+insert into tema values (null,3,'Oxygene (Part III)','00:02:50','Jean Michel Jarre','Jean Michel Jarre',9,6);
+insert into tema values (null,4,'Oxygene (Part IV)','00:04:08','Jean Michel Jarre','Jean Michel Jarre',9,6);
+insert into tema values (null,5,'Oxygene (Part V)','00:10:31','Jean Michel Jarre','Jean Michel Jarre',9,6);
+insert into tema values (null,6,'Oxygene (Part VI)','00:06:16','Jean Michel Jarre','Jean Michel Jarre',9,6);
+
+# Temas del Disco:     id_tema, track_num,titulo,duracion,autor,compositor,id_album,id_interprete
+insert into tema values (null,1,'Equinoxe Part 1','00:02:23','Jean Michel Jarre','Jean Michel Jarre',10,6);
+insert into tema values (null,2,'Equinoxe Part 2','00:05:13','Jean Michel Jarre','Jean Michel Jarre',10,6);
+insert into tema values (null,3,'Equinoxe Part 3','00:05:04','Jean Michel Jarre','Jean Michel Jarre',10,6);
+insert into tema values (null,4,'Equinoxe Part 4','00:06:45','Jean Michel Jarre','Jean Michel Jarre',10,6);
+insert into tema values (null,5,'Equinoxe Part 5','00:03:59','Jean Michel Jarre','Jean Michel Jarre',10,6);
+insert into tema values (null,6,'Equinoxe Part 6','00:03:09','Jean Michel Jarre','Jean Michel Jarre',10,6);
+insert into tema values (null,7,'Equinoxe Part 7','00:07:18','Jean Michel Jarre','Jean Michel Jarre',10,6);
+insert into tema values (null,8,'Equinoxe Part 8','00:05:06','Jean Michel Jarre','Jean Michel Jarre',10,6);
+
+# Temas del Disco:     id_tema, track_num,titulo,duracion,autor,compositor,id_album,id_interprete
+insert into tema values (null,1,'Pleasure Principle','00:06:15','Jean Michel Jarre','Jean Michel Jarre',11,6);
+insert into tema values (null,2,'Geometry Of Love Part 1','00:03:51','Jean Michel Jarre','Jean Michel Jarre',11,6);
+insert into tema values (null,3,'Soul Intrusion','00:04:45','Jean Michel Jarre','Jean Michel Jarre',11,6);
+insert into tema values (null,4,'Electric Flesh','00:06:01','Jean Michel Jarre','Jean Michel Jarre',11,6);
+insert into tema values (null,5,'Skin Paradox','00:06:17','Jean Michel Jarre','Jean Michel Jarre',11,6);
+insert into tema values (null,6,'Velvet Road','00:05:55','Jean Michel Jarre','Jean Michel Jarre',11,6);
+insert into tema values (null,7,'Near Djaina','00:05:02','Jean Michel Jarre','Jean Michel Jarre',11,6);
+insert into tema values (null,8,'Geometry Of Love Part 2','00:04:06','Jean Michel Jarre','Jean Michel Jarre',11,6);
