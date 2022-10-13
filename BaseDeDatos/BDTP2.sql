@@ -124,7 +124,9 @@ insert into album values (null,1234568,'Las Cosas Que Vives',1,52,12,3,1,'1996',
 insert into album values (null,1234569,'En Tiempo de Amor'  ,2,31,10,1,1,'1993',1000,1,'https://i.discogs.com/hBQ5Rv1hfBuekUxclsrpeGcwqTijuOp9uT8xpdTNh7Q/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU4MDA3/MzYtMTQwMzAyNjE5/Ny0zNDE0LmpwZWc.jpeg');
 insert into album values (null,1234570,'El Piano de América',2,31,10,1,1,'1994',1000,1,'https://i.discogs.com/AsKNRgEy2Sufm2KtIPDMhcS8tVj8cYi2Wv4gmrDpu7U/rs:fit/g:sm/q:90/h:596/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg3ODE1/OTktMTQ2ODY1NjU4/OS03NDE0LmpwZWc.jpeg');
 insert into album values (null,'QE 38112','Thriller'        ,14,52,9,6,3,'1982',1200,5 ,'https://i.discogs.com/t3Gzrzp1_DT27bSfVynl5bCmqWqddfUT5ohPHuUDtyE/rs:fit/g:sm/q:90/h:600/w:597/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2NTk1/MjctMTY2NDIwNDcy/Mi05NDU4LmpwZWc.jpeg');
-
+insert into album values (null,'88843053662','Xscape'       ,14,52,8,6,1,'2014',1800,5 ,'https://i.discogs.com/phUe7igCIqLRwXmTrSBuMXRhzfzG3sFofPQT3B6NIeI/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU2ODMz/MDUtMTM5OTgyMzYy/Ny04ODg1LmpwZWc.jpeg');
+insert into album values (null,'EK 40600','Bad'             ,14,52,11,6,1,'1987',1600,5 ,'https://i.discogs.com/W4bMsFIhfx4xQgX4L1lD7PwtYyaqMgaC30DmSSVu9E4/rs:fit/g:sm/q:90/h:600/w:598/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ1OTYw/Ni0xNDUwMzg5NDI1/LTg4NTIuanBlZw.jpeg');
+insert into album values (null,'EPC 465802 4','Dangerous'   ,14,52,14,6,2,'1991',1100,3 ,'https://i.discogs.com/dZoDC4ArXV01irStGKnhbwOIahZsVGfgcfx-bytrhX4/rs:fit/g:sm/q:90/h:432/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM5NTEy/NC0xNDgxNjI5NTIz/LTg2OTkuanBlZw.jpeg');
 
 # Temas del Disco:     id_tema, track_num,titulo,duracion,autor,compositor,id_album,id_interprete
 insert into tema values (null,1,'Lêttre à ma Mère','00:40:00','Paul De Senneville','Paul De Senneville',1,3);
@@ -142,3 +144,42 @@ insert into tema values (null,6,'Billie Jean','00:04:57','Michael Jackson','Mich
 insert into tema values (null,7,'Human Nature','00:04:05','Michael Jackson','John Bettis, Steve Porcaro',5,14);
 insert into tema values (null,8,'P.Y.T. (Pretty Young Thing)','00:03:58','Michael Jackson','James Ingram, Quincy Jones',5,14);
 insert into tema values (null,9,'The Lady In My Life','00:04:57','Michael Jackson','Rod Temperton',5,14);
+
+# Temas del Disco:     id_tema, track_num,titulo,duracion,autor,compositor,id_album,id_interprete
+insert into tema values (null,1,'WLove Never Felt So Good','00:03:54','Michael Jackson','Michael Jackson',6,14);
+insert into tema values (null,2,'Chicago','00:04:05','Michael Jackson','Michael Jackson',6,14);
+insert into tema values (null,3,'Loving You','00:03:15','Michael Jackson','Michael Jackson',6,14);
+insert into tema values (null,4,'A Place With No Name','00:05:35','Michael Jackson','Michael Jackson',6,14);
+insert into tema values (null,5,'Slave To The Rhythm','00:04:15','Michael Jackson','Michael Jackson',6,14);
+insert into tema values (null,6,'Do You Know Where Your Children Are','00:04:36','Michael Jackson','Michael Jackson',6,14);
+insert into tema values (null,7,'Blue Gangsta','00:04:14','Michael Jackson','Michael Jackson',6,14);
+insert into tema values (null,8,'Xscape','00:04:04','Michael Jackson','Michael Jackson',6,14);
+
+
+# Temas del Disco:     id_tema, track_num,titulo,duracion,autor,compositor,id_album,id_interprete
+insert into tema values (null,1,'Bad','00:04:06','Michael Jackson','Michael Jackson',7,14);
+insert into tema values (null,2,'The Way You Make Me Feel','00:04:59','Michael Jackson','Michael Jackson',7,14);
+insert into tema values (null,3,'Speed Demon','00:04:01','Michael Jackson','Michael Jackson',7,14);
+insert into tema values (null,4,'Liberian Girl','00:03:53','Michael Jackson','Michael Jackson',7,14);
+insert into tema values (null,5,'Just Good Friends','00:04:05','Michael Jackson','Michael Jackson',7,14);
+insert into tema values (null,6,'Another Part Of Me','00:03:53','Michael Jackson','Michael Jackson',7,14);
+insert into tema values (null,7,'Man In The Mirror','00:05:18','Michael Jackson','Michael Jackson',7,14);
+insert into tema values (null,8,'I Just Cant Stop Loving You','00:04:24','Michael Jackson','Michael Jackson',7,14);
+insert into tema values (null,9,'Dirty Diana','00:04:52','Michael Jackson','Michael Jackson',7,14);
+insert into tema values (null,10,'Smooth Criminal','00:04:16','Michael Jackson','Michael Jackson',7,14);
+insert into tema values (null,11,'Leave Me Alone','00:04:37','Michael Jackson','Michael Jackson',7,14);
+
+insert into tema values (null,1,'Jam','00:05:38','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,2,'Why You Wanna Trip On Me','00:05:24','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,3,'In The Closet','00:06:31','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,4,'She Drives Me Wild','00:03:41','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,5,'Remember The Time','00:04:00','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,6,'Cant Let Her Get Away','00:05:01','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,7,'Heal The World','00:06:23','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,8,'Black Or White','00:04:15','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,9,'Who Is It','00:06:35','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,10,'Give In To Me','00:05:28','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,11,'Will You Be There','00:07:39','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,12,'Keep The Faith','00:05:56','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,13,'Gone Too Soon','00:03:22','Michael Jackson','Michael Jackson',8,14);
+insert into tema values (null,14,'Dangerous','00:07:00','Michael Jackson','Michael Jackson',8,14);
