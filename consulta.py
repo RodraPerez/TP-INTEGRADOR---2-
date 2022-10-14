@@ -34,12 +34,14 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
 
                 #Almacenamos bajada de datos en una Variable Buffer.
                 self.listado = self.cursor.fetchall()
+                print("Solicitada consulta por Artista..") #print debug
 
                 #Desconectamos
                 self.Desconectar()
 
+                #return self.listado
                 for tupla in self.listado:
-                    print (tupla)
+                     print (tupla)
 
             except self.mysql.connector.Error as Error:
                 print("No hay conexion con la base de datos.",Error)
@@ -72,8 +74,9 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
                     #Desconectamos
                     self.Desconectar()
 
+                    #return self.listado
                     for tupla in self.listado:
-                        print (tupla)
+                         print (tupla)
 
                 except self.mysql.connector.Error as Error:
                     print("No hay conexion con la base de datos.",Error)
