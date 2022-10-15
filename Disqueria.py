@@ -12,7 +12,7 @@ def main():
     busqueda2.PorArtista("Michael","Jackson")
 
     carga = cargadatos.Cargar()
-    carga.CargarArtista("Phil","Collins","UK","https://www.discos.com/lafotodelartista.jpg")
+    carga.CargarInterprete("Phil","Collins","UK","https://www.discos.com/lafotodelartista.jpg")
     
 
 
