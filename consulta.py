@@ -50,15 +50,16 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
     
     def PorGenero(self, NombreGenero):
         self.NombreGenero = NombreGenero
-        self.query = """SELECT album.nombre, interprete.nombre, genero.nombre, album.id_album, formato.tipo, album.fec_lanzamiento
-                        FROM album 
-                        JOIN interprete
-                        ON album.id_interprete = interprete.id_interprete
-                        JOIN genero
-                        ON genero.id_genero = album.id_genero
-                        JOIN formato
-                        ON formato.id_formato = album.id_formato
-                        WHERE genero.nombre = """ + "'" + self.NombreGenero + "'" + " ORDER BY G.NOMBRE ASC;"""
+        self.query = """SELECT album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.id_album, formato.tipo, album.fec_lanzamiento
+                    FROM album 
+                    JOIN interprete
+                    ON album.id_interprete = interprete.id_interprete
+                    JOIN genero
+                    ON genero.id_genero = album.id_genero
+                    JOIN formato
+                    ON formato.id_formato = album.id_formato
+                    WHERE genero.nombre = """ + "'" + self.NombreGenero + "'" + " ORDER BY genero.nombre ASC;"
+                    
         #Conexion a Base de Datos:
         self.Conectar()
 
