@@ -48,38 +48,42 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
         
         
     
-
-
     def PorGenero(self, NombreGenero):
-            self.NombreGenero = NombreGenero
-            
-            self.query = """SELECT g.Nombre, a.Nombre, i.nombre, i.apellido
-                            FROM album a 
-                            JOIN interprete i ON a.id_interprete = i.id_interprete
-                            JOIN genero g ON g.id_genero = a.id_genero
-                            WHERE g.nombre = """ + "'" + self.NombreGenero + "'" + " ORDER BY G.NOMBRE ASC;"""
+        self.NombreGenero = NombreGenero
+        self.query = """SELECT album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.id_album, formato.tipo, album.fec_lanzamiento
+                    FROM album 
+                    JOIN interprete
+                    ON album.id_interprete = interprete.id_interprete
+                    JOIN genero
+                    ON genero.id_genero = album.id_genero
+                    JOIN formato
+                    ON formato.id_formato = album.id_formato
+                    WHERE genero.nombre = """ + "'" + self.NombreGenero + "'" + " ORDER BY genero.nombre ASC;"
+                    
+        #Conexion a Base de Datos:
+        self.Conectar()
 
-            #Conexion a Base de Datos:
-            self.Conectar()
+        if self.conexion.is_connected():
+            try:
+                #Cursor y consulta:
+                self.cursor = self.conexion.cursor()
+                self.cursor.execute(self.query)
 
-            if self.conexion.is_connected():
-                try:
-                    #Cursor y consulta:
-                    self.cursor = self.conexion.cursor()
-                    self.cursor.execute(self.query)
+                #Almacenamos bajada de datos en una Variable Buffer.
+                self.listado = self.cursor.fetchall()
+                print("Solicitada consulta por Artista..") #print debug
 
-                    #Almacenamos bajada de datos en una Variable Buffer.
-                    self.listado = self.cursor.fetchall()
+                #Desconectamos
+                self.Desconectar()
 
-                    #Desconectamos
-                    self.Desconectar()
+                #return self.listado
+                for tupla in self.listado:
+                     print (tupla)
 
-                    #return self.listado
-                    for tupla in self.listado:
-                         print (tupla)
-
-                except self.mysql.connector.Error as Error:
-                    print("No hay conexion con la base de datos.",Error)
+            except self.mysql.connector.Error as Error:
+                print("No hay conexion con la base de datos.",Error)
+        
+         
 
      
                 
