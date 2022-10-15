@@ -60,7 +60,7 @@ create table tema(
         compositor varchar(100) not null,
         id_album int not null,
         id_interprete int not null,
-        foreign key(id_album) references album(id_album),
+        foreign key(id_album) references album(id_album) ON DELETE CASCADE,
         foreign key(id_interprete) references interprete(id_interprete)
     );
 

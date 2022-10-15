@@ -7,7 +7,7 @@ class Cargar(conexion.BaseDatos):
         print("Instanciada Clase de Carga de datos..")  # Print Debug
         conexion.BaseDatos.__init__(self)
     
-    def CargarArtista(self,nombre,apellido,nacionalidad,foto): #Edgar G - Cargar un Interprete.    
+    def CargarInterprete(self,nombre,apellido,nacionalidad,foto): #Edgar G - Cargar un Interprete.    
         # Tabla Interprete:  id_interprete(autoincremental),nombre,apellido,nacionalidad,foto
         self.Conectar()
 
@@ -20,7 +20,7 @@ class Cargar(conexion.BaseDatos):
                 self.cursor.execute(self.query,self.datos_envio)
 
                 self.conexion.commit()
-                print("Artista Cargado en Base de Datos.") #Si ya esta cargado, o si se cargó el registro.
+                print("\033[1mEjecutada carga de un Interprete. \033[0m") #Si ya esta cargado, o si se cargó el registro.
 
             except self.mysql.connector.Error as Error:
                 print("No hay conexion con la base de datos.",Error)
