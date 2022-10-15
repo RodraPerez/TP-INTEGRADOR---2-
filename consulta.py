@@ -1,11 +1,11 @@
-#Modulo con Clase Para consulta Base de Datos, Usamos modulo de conexion que tiene los parametros del connector de MySQL.
+#Modulo con Clases Para consultar la Base de Datos, Usamos modulo de conexion que tiene los parametros del connector de MySQL.
 
 import conexion
 
 
 class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacenada en modulos para acceder a sus metodos y propiedades.
     def __init__(self):
-        print("Instanciada Clase ListarAlbums..")  # Print Debug
+        print("Instanciada Clase ListarAlbums...")  # Print Debug
         conexion.BaseDatos.__init__(self)
 
 
@@ -13,7 +13,7 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
         self.nombre = nombre
         self.apellido = apellido
 
-        self.query = """ SELECT album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.cod_album, formato.tipo, album.fec_lanzamiento
+        self.query =""" SELECT album.nombre, interprete.nombre, interprete.apellido,album.cant_temas, genero.nombre, album.cod_album, formato.tipo, album.fec_lanzamiento,album.precio,album.cantidad,discografica.nombre,album.caratula,album.id_album,album.id_interprete,album.id_genero,album.id_discografica,album.id_formato
                     FROM album
                     INNER JOIN interprete
                     ON album.id_interprete = interprete.id_interprete
@@ -21,7 +21,9 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
                     ON album.id_genero = genero.id_genero
                     INNER JOIN formato
                     ON album.id_formato = formato.id_formato
-                    WHERE interprete.nombre = """ + "'" + self.nombre + "'" + " AND interprete.apellido = " + "'" + self.apellido  + "'" + " ORDER BY album.nombre ASC;"
+                    INNER JOIN discografica
+                    ON album.id_discografica = discografica.id_discografica
+                    WHERE interprete.nombre = """  + "'" + self.nombre + "'" + " AND interprete.apellido = " + "'" + self.apellido  + "'" + " ORDER BY album.nombre ASC;"
         
         #Conexion a Base de Datos:
         self.Conectar()
@@ -34,13 +36,13 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
 
                 #Almacenamos bajada de datos en una Variable Buffer.
                 self.listado = self.cursor.fetchall()
-                print("Solicitada consulta por Artista..") #print debug
+                print("\033[1mEjecutada consulta Albums por Interprete.\033[0m") #print debug
 
                 #Desconectamos
                 self.Desconectar()
 
                 #return self.listado
-                for tupla in self.listado:
+                for tupla in self.listado:  #Habilitamos el ciclo solamente para test consola, enviamos listado de tuplas por return a la interfaz.
                      print (tupla)
 
             except self.mysql.connector.Error as Error:
@@ -50,7 +52,7 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
     
     def PorGenero(self, NombreGenero):
         self.NombreGenero = NombreGenero
-        self.query = """SELECT album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.id_album, formato.tipo, album.fec_lanzamiento
+        self.query = """SELECT album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.cod_album, formato.tipo, album.fec_lanzamiento,album.id_album
                     FROM album 
                     JOIN interprete
                     ON album.id_interprete = interprete.id_interprete
@@ -71,26 +73,91 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
 
                 #Almacenamos bajada de datos en una Variable Buffer.
                 self.listado = self.cursor.fetchall()
-                print("Solicitada consulta por Artista..") #print debug
+                print("\033[1mEjecutada consulta Albums por Género.\033[0m") #print debug
 
                 #Desconectamos
                 self.Desconectar()
 
                 #return self.listado
                 for tupla in self.listado:
-                     print (tupla)
+                        print (tupla)
 
             except self.mysql.connector.Error as Error:
                 print("No hay conexion con la base de datos.",Error)
-        
-         
 
-     
-                
-    #def OtraMas(self):
-        #codigo
+
+#-----------------------------------------------------------------------------------------------------------------------
+# consultas de una sola tabla sin parametros:
+#-----------------------------------------------------------------------------------------------------------------------
     
-    #def MasConsultas(self):
-        #codigo
-        
+class ListarGeneros():
+    def __init__(self):
+        print("Instanciada Clase ListarGeneros..")  # Print Debug
+        conexion.BaseDatos.__init__(self)
 
+         
+    def ListaCompleta(self):
+
+        self.query =" "  # <------------------------- PONER SENTENCIA SQL
+
+        #Conexion a Base de Datos:
+        self.Conectar()
+
+        if self.conexion.is_connected():
+            try:
+                self.cursor = self.conexion.cursor()
+                self.cursor.execute(self.query)
+                self.listado = self.cursor.fetchall()
+                print("\033[1mEjecutada consulta Lista de Generos Musicales..\033[0m") #print debug
+
+                self.Desconectar()
+
+                #return self.listado        #no borrar
+                for tupla in self.listado:  #Habilitamos el ciclo solamente para test consola, enviamos listado de tuplas por return a la interfaz.
+                        print (tupla)
+            except self.mysql.connector.Error as Error:
+                print("No hay conexion con la base de datos.",Error)
+
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+# PENDIENTES:
+#-----------------------------------------------------------------------------------------------------------------------    
+# class ListarDiscograficas():
+#     def __init__(self):
+#         print("Instanciada Clase ListarDiscograficas..")  # Print Debug
+#         conexion.BaseDatos.__init__(self)        
+
+#     def ListaCompleta(self):
+#         pass
+
+#-----------------------------------------------------------------------------------------------------------------------
+    
+# class ListarFormatos():
+#     def __init__(self):
+#         print("Instanciada Clase ListarFormatos..")  # Print Debug
+#         conexion.BaseDatos.__init__(self)        
+
+#     def ListaCompleta(self):
+#         pass
+
+#-----------------------------------------------------------------------------------------------------------------------
+    
+# class ListarInterpretes():
+#     def __init__(self):
+#         print("Instanciada Clase ListarInterpretes..")  # Print Debug
+#         conexion.BaseDatos.__init__(self)        
+
+#     def ListaCompleta(self):
+#         pass
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+    
+# class ListarCanciones():
+#     def __init__(self):
+#         print("Instanciada Clase ListarCanciones..")  # Print Debug
+#         conexion.BaseDatos.__init__(self)        
+
+#     def ListaCompleta(self):
+#         pass
