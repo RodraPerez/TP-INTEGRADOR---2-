@@ -13,6 +13,9 @@ def main():
 
     carga = cargadatos.Cargar()
     carga.CargarArtista("Phil","Collins","UK","https://www.discos.com/lafotodelartista.jpg")
+    
+
+
 
 
 
