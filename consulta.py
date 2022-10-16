@@ -143,13 +143,34 @@ class ListarGeneros():
 
 #-----------------------------------------------------------------------------------------------------------------------
     
-# class ListarInterpretes():
-#     def __init__(self):
-#         print("Instanciada Clase ListarInterpretes..")  # Print Debug
-#         conexion.BaseDatos.__init__(self)        
+class ListarInterpretes(): #Nico
+    def __init__(self):
+        print("Instanciada Clase ListarInterpretes..")  # Print Debug
+        conexion.BaseDatos.__init__(self)        
 
-#     def ListaCompleta(self):
-#         pass
+    def ListaCompleta(self):
+        self.query ="""SELECT i.id_interprete, i.nombre, i.apellido, i.nacionalidad, i.foto
+                    FROM interprete 
+                    AS i
+                    ORDER BY i.nombre ASC;"""
+
+        #Conexion a Base de Datos:
+        self.Conectar()
+
+        if self.conexion.is_connected():
+            try:
+                self.cursor = self.conexion.cursor()
+                self.cursor.execute(self.query)
+                self.listado = self.cursor.fetchall()
+                print("\033[1mEjecutada consulta Lista de Generos Musicales..\033[0m") #print debug
+
+                self.Desconectar()
+
+                #return self.listado        #no borrar
+                for tupla in self.listado:  #Habilitamos el ciclo solamente para test consola, enviamos listado de tuplas por return a la interfaz.
+                    print (tupla)
+            except self.mysql.connector.Error as Error:
+                print("No hay conexion con la base de datos.",Error)
 
 
 #-----------------------------------------------------------------------------------------------------------------------
