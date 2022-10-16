@@ -90,7 +90,7 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
 # consultas de una sola tabla sin parametros:
 #-----------------------------------------------------------------------------------------------------------------------
     
-class ListarGeneros():
+class ListarGeneros(conexion.BaseDatos):
     def __init__(self):
         print("Instanciada Clase ListarGeneros..")  # Print Debug
         conexion.BaseDatos.__init__(self)
@@ -108,7 +108,7 @@ class ListarGeneros():
                 self.cursor = self.conexion.cursor()
                 self.cursor.execute(self.query)
                 self.listado = self.cursor.fetchall()
-                print("\033[1mEjecutada consulta Lista de Generos Musicales..\033[0m") #print debug
+                print("\033[0;34m\033[1mEEjecutada consulta Lista de Generos Musicales..\033[0m") #print debug
 
                 self.Desconectar()
 
@@ -123,7 +123,7 @@ class ListarGeneros():
 #-----------------------------------------------------------------------------------------------------------------------
 # PENDIENTES:
 #-----------------------------------------------------------------------------------------------------------------------    
-# class ListarDiscograficas():
+# class ListarDiscograficas(conexion.BaseDatos):
 #     def __init__(self):
 #         print("Instanciada Clase ListarDiscograficas..")  # Print Debug
 #         conexion.BaseDatos.__init__(self)        
@@ -133,7 +133,7 @@ class ListarGeneros():
 
 #-----------------------------------------------------------------------------------------------------------------------
     
-# class ListarFormatos():
+# class ListarFormatos(conexion.BaseDatos):
 #     def __init__(self):
 #         print("Instanciada Clase ListarFormatos..")  # Print Debug
 #         conexion.BaseDatos.__init__(self)        
@@ -143,7 +143,7 @@ class ListarGeneros():
 
 #-----------------------------------------------------------------------------------------------------------------------
     
-class ListarInterpretes(): #Nico
+class ListarInterpretes(conexion.BaseDatos): #Nico
     def __init__(self):
         print("Instanciada Clase ListarInterpretes..")  # Print Debug
         conexion.BaseDatos.__init__(self)        
@@ -162,7 +162,7 @@ class ListarInterpretes(): #Nico
                 self.cursor = self.conexion.cursor()
                 self.cursor.execute(self.query)
                 self.listado = self.cursor.fetchall()
-                print("\033[1mEjecutada consulta Lista de Generos Musicales..\033[0m") #print debug
+                print("\033[0;34m\033[1mEjecutada consulta Lista de Interpretes..\033[0m") #print debug
 
                 self.Desconectar()
 
@@ -175,7 +175,7 @@ class ListarInterpretes(): #Nico
 
 #-----------------------------------------------------------------------------------------------------------------------
     
-# class ListarCanciones():
+# class ListarCanciones(conexion.BaseDatos):
 #     def __init__(self):
 #         print("Instanciada Clase ListarCanciones..")  # Print Debug
 #         conexion.BaseDatos.__init__(self)        
