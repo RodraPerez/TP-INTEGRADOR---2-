@@ -10,8 +10,8 @@ def main():
 
     busqueda.PorArtista("Michael","Jackson")
 
-
-    busqueda.ListarInterpretes() 
+    Listar1 = consulta.ListarInterpretes()
+    Listar1.ListaCompleta
 
     carga = cargadatos.Cargar()
     carga.CargarInterprete("Phil","Collins","UK","https://www.discos.com/lafotodelartista.jpg")
