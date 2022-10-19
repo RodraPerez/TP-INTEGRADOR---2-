@@ -11,11 +11,12 @@ def Menu():
     busqueda.PorGenero("Instrumental")
 
     #Segunda Lista
-    # busqueda.PorArtista("Michael","Jackson")
+    busqueda = consulta.ListarAlbums()
+    busqueda.PorArtista("Michael","Jackson")
 
     #Consulta todos los Interpretes
-    # Listar1 = consulta.ListarInterpretes()
-    # Listar1.ListaCompleta()
+    Listar1 = consulta.ListarInterpretes()
+    Listar1.ListaCompleta()
 
     # #Consulta todos los Generos
     # Listar2 = consulta.ListarGeneros()
