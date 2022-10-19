@@ -46,9 +46,7 @@ class BaseDatos():                                              #Se crea la clas
                 #Desconectamos por defecto en cualquier operacion, podemos llamar al metodo si deseamos conexión fija (no se recomienda)
                 self.Desconectar()  #   <-----------------
 
-                #return self.listado
-                for tupla in self.listado:  #Habilitamos el ciclo solamente para test consola, enviamos listado de tuplas por return a la interfaz.
-                     print (tupla)
+                return self.listado
 
             except self.mysql.connector.Error as Error:
                 print("No hay conexion con la base de datos.",Error)
