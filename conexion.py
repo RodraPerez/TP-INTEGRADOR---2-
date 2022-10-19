@@ -1,3 +1,5 @@
+#Modulo de conexion, con desconexion automatica por defecto luego de operar, el llamado a metodo de desconexión está en el metodo QuerySQL().
+
 import mysql.connector                                          #Se importa el driver MySQL para Python.
 
 class BaseDatos():                                              #Se crea la clase de conecxion.
@@ -25,3 +27,28 @@ class BaseDatos():                                              #Se crea la clas
         if self.conexion.is_connected():
             self.conexion.close()
             print("La conexión se cerró")
+
+
+    def QuerySQL(self,query):  #Recibimos la query SQL desde cualquier llamando al metodo del objeto con un solo parametro
+        self.query = query
+
+        if self.conexion.is_connected():
+            try:
+                #Cursor y query recibida::
+                self.cursor = self.conexion.cursor()
+                self.cursor.execute(self.query)
+                print("\033[1mEjecutada QUERY SQL..\033[0m") #print debug
+
+                #Almacenamos bajada de datos en una Variable Buffer.
+                self.listado = self.cursor.fetchall()
+                print("\033[1mDatos en cache [OK]..\033[0m") #print debug
+
+                #Desconectamos por defecto en cualquier operacion, podemos llamar al metodo si deseamos conexión fija (no se recomienda)
+                self.Desconectar()  #   <-----------------
+
+                #return self.listado
+                for tupla in self.listado:  #Habilitamos el ciclo solamente para test consola, enviamos listado de tuplas por return a la interfaz.
+                     print (tupla)
+
+            except self.mysql.connector.Error as Error:
+                print("No hay conexion con la base de datos.",Error)
