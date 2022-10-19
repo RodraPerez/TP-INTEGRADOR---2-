@@ -27,28 +27,10 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
         
         #Conexion a Base de Datos:
         self.Conectar()
+        print("\033[1mEjecutada consulta Albums por Interprete.\033[0m") #print debug
+        self.QuerySQL(self.query)
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
 
-        if self.conexion.is_connected():
-            try:
-                #Cursor y consulta:
-                self.cursor = self.conexion.cursor()
-                self.cursor.execute(self.query)
-
-                #Almacenamos bajada de datos en una Variable Buffer.
-                self.listado = self.cursor.fetchall()
-                print("\033[1mEjecutada consulta Albums por Interprete.\033[0m") #print debug
-
-                #Desconectamos
-                self.Desconectar()
-
-                #return self.listado
-                for tupla in self.listado:  #Habilitamos el ciclo solamente para test consola, enviamos listado de tuplas por return a la interfaz.
-                     print (tupla)
-
-            except self.mysql.connector.Error as Error:
-                print("No hay conexion con la base de datos.",Error)
-        
-        
     
     def PorGenero(self, NombreGenero):
         self.NombreGenero = NombreGenero
@@ -64,26 +46,9 @@ class ListarAlbums(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos al
                     
         #Conexion a Base de Datos:
         self.Conectar()
-
-        if self.conexion.is_connected():
-            try:
-                #Cursor y consulta:
-                self.cursor = self.conexion.cursor()
-                self.cursor.execute(self.query)
-
-                #Almacenamos bajada de datos en una Variable Buffer.
-                self.listado = self.cursor.fetchall()
-                print("\033[1mEjecutada consulta Albums por Género.\033[0m") #print debug
-
-                #Desconectamos
-                self.Desconectar()
-
-                #return self.listado
-                for tupla in self.listado:
-                        print (tupla)
-
-            except self.mysql.connector.Error as Error:
-                print("No hay conexion con la base de datos.",Error)
+        print("\033[1mEjecutada consulta Albums por Género.\033[0m") #print debug
+        self.QuerySQL(self.query)
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
 
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -102,21 +67,9 @@ class ListarGeneros(conexion.BaseDatos):
 
         #Conexion a Base de Datos:
         self.Conectar()
-
-        if self.conexion.is_connected():
-            try:
-                self.cursor = self.conexion.cursor()
-                self.cursor.execute(self.query)
-                self.listado = self.cursor.fetchall()
-                print("\033[0;34m\033[1mEEjecutada consulta Lista de Generos Musicales..\033[0m") #print debug
-
-                self.Desconectar()
-
-                #return self.listado        #no borrar
-                for tupla in self.listado:  #Habilitamos el ciclo solamente para test consola, enviamos listado de tuplas por return a la interfaz.
-                        print (tupla)
-            except self.mysql.connector.Error as Error:
-                print("No hay conexion con la base de datos.",Error)
+        print("\033[1mEjecutada consulta Lista de géneros.\033[0m") #print debug
+        self.QuerySQL(self.query)
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
 
 
 
@@ -156,21 +109,9 @@ class ListarInterpretes(conexion.BaseDatos): #Nico
 
         #Conexion a Base de Datos:
         self.Conectar()
-
-        if self.conexion.is_connected():
-            try:
-                self.cursor = self.conexion.cursor()
-                self.cursor.execute(self.query)
-                self.listado = self.cursor.fetchall()
-                print("\033[0;34m\033[1mEjecutada consulta Lista de Interpretes..\033[0m") #print debug
-
-                self.Desconectar()
-
-                #return self.listado        #no borrar
-                for tupla in self.listado:  #Habilitamos el ciclo solamente para test consola, enviamos listado de tuplas por return a la interfaz.
-                    print (tupla)
-            except self.mysql.connector.Error as Error:
-                print("No hay conexion con la base de datos.",Error)
+        print("\033[1mEjecutada consulta Lista de Intérpretes..\033[0m") #print debug
+        self.QuerySQL(self.query)
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
 
 
 #-----------------------------------------------------------------------------------------------------------------------
