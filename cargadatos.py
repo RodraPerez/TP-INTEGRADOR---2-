@@ -50,3 +50,25 @@ class Cargar(conexion.BaseDatos):
         self.Desconectar()
 
 #----------------------------------------------------------------------------------
+
+    def CargarGenero(self,nombre): #Cargar un Género musical.    
+        # Tabla Interprete:  id_interprete(autoincremental),nombre,apellido,nacionalidad,foto
+        self.Conectar()
+
+        if self.conexion.is_connected():
+            try:
+                self.cursor = self.conexion.cursor()
+                self.query = "INSERT IGNORE INTO genero VALUES(null,%s)"  #Evitamos cargar duplicado.
+
+                self.datos_envio = (nombre,) #Creamos la tupla, si la tupla tiene un solo item dejar coma al final.
+                self.cursor.execute(self.query,self.datos_envio)
+
+                self.conexion.commit()
+                print("\033[1mEjecutada carga de un Género Musical. \033[0m") #Si ya esta cargado, o si se cargó el registro.
+
+            except self.mysql.connector.Error as Error:
+                print("No hay conexion con la base de datos.",Error)
+        
+        self.Desconectar()
+
+#----------------------------------------------------------------------------------

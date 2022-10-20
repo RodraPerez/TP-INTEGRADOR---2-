@@ -11,22 +11,22 @@ use disqueria;
 
 create table genero (
     id_genero int not null auto_increment primary key,
-    nombre varchar(50) unique
+    nombre varchar(50) unique not null
 );
 
 create table discografica(
     id_discografica int not null auto_increment primary key,
-    nombre varchar(50) unique
+    nombre varchar(50)  unique not null
 );
 
 create table formato(
     id_formato int not null auto_increment primary key,
-    tipo varchar(50) unique
+    tipo varchar(50)  unique not null
 );
 
 create table interprete(
     id_interprete int not null auto_increment primary key,
-    nombre varchar(50),
+    nombre varchar(50) not null,
     apellido varchar(50),
     nacionalidad varchar(50),
     foto varchar(200),
