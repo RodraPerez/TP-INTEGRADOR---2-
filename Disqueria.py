@@ -11,13 +11,19 @@ def main():
 
     opcion1 = "--ModoConsola"
     opcion2 = "--ModoVentana"
+    opcion3 = "--AcercaDe"
 
-    ayuda =     """\n Para iniciar el programa Seleccione un modo de interfaz: \n
-                Disqueria.py --ModoConsola  (Inicia en modo consola de texto)
-                Disqueria.py --ModoVentana  (Inicia en modo Ventana)"""
+    info = """\n Soft de gestión de albumes de Disquería, realizado en Python 3 por Alumnos ISPC TSIT 4.0 - 2022 (TP2) \n"""
+
+    ayuda =     """\n Bienvenido, para iniciar el programa seleccione un modo de interfaz: \n
+                Escriba el comando de la manera indicada más abajo.
+
+                Disqueria.py --ModoConsola  (Inicia gestión en modo Consola de texto)
+                Disqueria.py --ModoVentana  (Inicia gestión en modo Ventana)
+                Disqueria.py --AcercaDe     (Muestra información del programa)"""
 
     #Evitamos cero argumentos o cualquier otro ingreso distinto de las opciones.
-    if (len(seleccion_modo) == 0 or ((seleccion_modo[0] != opcion1) and (seleccion_modo[0] != opcion2))): 
+    if (len(seleccion_modo) == 0 or ((seleccion_modo[0] != opcion1) and (seleccion_modo[0] != opcion2) and (seleccion_modo[0] != opcion3))): 
         print (ayuda)
 
     elif seleccion_modo[0] == opcion1:
@@ -27,7 +33,10 @@ def main():
     elif seleccion_modo[0] == opcion2:
         print("[MAIN] Entrando al modo ventana..")
         interfaz.IniciarInterfazVentana()   # llamamos al modulo con la interfaz Ventana
-    
+
+    elif seleccion_modo[0] == opcion3:
+        print(info)
+        # Acerca De..
 
 
 if __name__ == '__main__':
