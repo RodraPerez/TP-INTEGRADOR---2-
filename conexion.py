@@ -26,7 +26,7 @@ class BaseDatos():                                              #Se crea la clas
 
         if self.conexion.is_connected():
             self.conexion.close()
-            print("La conexión se cerró")
+            print("La conexión se cerró\n")
 
 
     def QuerySQL(self,query):  #Recibimos la query SQL desde cualquier llamando al metodo del objeto con un solo parametro
