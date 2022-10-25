@@ -1,4 +1,4 @@
-#Funciones de formato y salida de texto para estética del CLI consola y algunas filtros para la interfaz. Sin librerias de terceros. El propósito es poner en práctica los contenidos del curso.
+#Funciones de formato y salida de texto para estética del CLI consola y algunas filtros para la interfaz.
 
 import consulta
 import cargadatos
@@ -56,9 +56,8 @@ def MostrarAlbumsPorInterpreteCLI(): # captura de lista de tuplas del cursor se 
 
 
 
-
-
-def MostrarAlbumPorNombreCLI():
+   
+def MostrarAlbumPorNombreCLI(): #Edgar G.
     nombre = str(input("Ingrese nombre del Album: "))
     nombre = nombre.strip('\n')  #String, limpieza de espacios ant post.
     nombre = nombre.strip()
@@ -73,58 +72,55 @@ def MostrarAlbumPorNombreCLI():
     if registros == []:
         print("\n \033[1m No hay registros que coincidan con su búsqueda..\033[0m")
         return                          
-    
     else:
-        # Antes de mostrar los registros recorro cada indice de la lista de tuplas y se analiza la longitud de cada indice de la tupla como string, para ajustar el texto.
-            for album in registros:
-                if len(str(album[0])) > pistaChrLen:
-                    pistaChrLen = len(str(album[0]))
-
-                if len(str(album[1])) > tituloChrLen:
-                    tituloChrLen = len(str(album[1]))
-
-                if len(str(album[2])) > duracionChrLen:
-                    duracionChrLen = len(str(album[2]))
-            
+        for album in registros:
             espaciado = 5
 
             print("\n")
 
-            print("Album: ", "\033[92m\033[1m",str(album[3]),"\033[0m")
-            print("Cod:    ",  str(album[7]))
-            print("Artista:", str(album[4]),str(album[5]))
-            print("Año:    ", str(album[9]))
-            print("Tipo:   ", str(album[8]))
-            print("Genero: ", str(album[6]))
-            print("Precio:  $", str(album[12]), sep='')
-            if album[13] > 0:
-                print("En Stock, disponibles:", str(album[13]), "unidades.")
+            print("Album: ", "\033[92m\033[1m",str(album[2]),"\033[0m")
+            print("Cod:    ",  str(album[1]))
+            print("Artista:", str(album[9]),str(album[10]))
+            print("Año:    ", str(album[4]))
+            print("Tipo:   ", str(album[12]))
+            print("Genero: ", str(album[11]))
+            print("Precio:  $", str(album[5]), sep='')
+            if album[6] > 0:
+                print("En Stock, disponibles:", str(album[6]), "unidades.")
             else:
                 print("En Stock?: ", "NO")             
-            print("Canciones del Album: ", str(album[14]))
-              
-            print("\n")
-
-            #tema.track_num, tema.titulo, tema.duracion, album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.cod_album, formato.tipo, album.fec_lanzamiento, album.caratula, interprete.foto, album.precio, album.cantidad, album.cant_temas
-
-            #Apariencia de Tabla, calibrada desde los multiplicadores de caracteres. Se ajusta automático al resultado del album y sus cadenas.                 
+            print("Canciones del Album: ", str(album[3]))
             
-            print(" " * espaciado, str("Pista").ljust(pistaChrLen, ' ')," " * 1,str("Nombre").ljust(tituloChrLen, ' '), " " * espaciado, str("Duracion").ljust(duracionChrLen, ' '))
+            print("\n")
+
+            #Se puede dar que existan albumes sin canciones cargadas. 
+            if ((album[13] == None) and (album[14] == None) and (album[15] == None)):
+                print("Album sin canciones cargadas.")
+            else:
+                for album in registros:
+                    if len(str(album[13])) > pistaChrLen:
+                        pistaChrLen = len(str(album[13]))
+
+                    if len(str(album[14])) > tituloChrLen:
+                        tituloChrLen = len(str(album[14]))
+
+                    if len(str(album[15])) > duracionChrLen:
+                        duracionChrLen = len(str(album[15]))
+
+
+                print(" " * espaciado, str("Pista").ljust(pistaChrLen, ' ')," " * 1,str("Nombre").ljust(tituloChrLen, ' '), " " * espaciado, str("Duracion").ljust(duracionChrLen, ' '))
+
+                print("\n")
+                
+                for album in registros:               
+                    print(" " * espaciado, album[13]," " * espaciado, str(album[14]).ljust(tituloChrLen, ' '), " " * espaciado  ,album[15])
+
 
             print("\n")
-            
-            #Imprimo resultados se calibran automáticamente de acuerdo al nombre del tema ya que es variable en su longitud.
-
-            for album in registros:
-                print(" " * espaciado, album[0]," " * espaciado, str(album[1]).ljust(tituloChrLen, ' '), " " * espaciado  ,album[2])
-
-            # Muestra liks Web de catalogos populares con detalles del album. Se pasan Parametros de búsqueda a los links mediante variables de los resultados de la consulta.
-
-            print("\n")
-            print("\nTapa del Disco: ",album[10])
-            print("Foto Interprete:",album[11])
-            print("Spotify Artista:","\033[94m https://open.spotify.com/search/" + str(album[4]) + "%20" + str(album[5]) + "\033[0m")
-            print("Spotify Album:  ","\033[94m https://open.spotify.com/search/album" + "%3A" + str(album[3]) + "\033[0m")
+            print("\nTapa del Disco: ",album[7])
+            print("Foto Interprete:",album[8])
+            print("Spotify Artista:","\033[94m https://open.spotify.com/search/" + str(album[9]) + "%20" + str(album[10]) + "\033[0m")
+            print("Spotify Album:  ","\033[94m https://open.spotify.com/search/album" + "%3A" + str(album[2]) + "\033[0m")
         
     return
 
