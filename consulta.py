@@ -57,17 +57,17 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
     def NombreAlbumEspecifico(self, nombre):
         self.nombre = nombre
-        self.query = """SELECT tema.track_num, tema.titulo, tema.duracion, album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.cod_album, formato.tipo, album.fec_lanzamiento, album.caratula, interprete.foto, album.precio, album.cantidad, album.cant_temas
+        self.query = """SELECT album.id_album, album.cod_album, album.nombre, album.cant_temas, album.fec_lanzamiento, album.precio, album.cantidad, album.caratula, interprete.foto, interprete.nombre, interprete.apellido,genero.nombre,formato.tipo,tema.track_num, tema.titulo, tema.duracion
         FROM album
-        INNER JOIN tema
-        ON album.id_album = tema.id_album
         INNER JOIN interprete
         ON album.id_interprete = interprete.id_interprete
         INNER JOIN genero
         ON album.id_genero = genero.id_genero
         INNER JOIN formato
         ON album.id_formato = formato.id_formato
-        WHERE album.nombre =""" + "'" + self.nombre + "'"
+		LEFT JOIN tema
+        ON album.id_album = tema.id_album
+        WHERE album.nombre = """ + "'" + self.nombre + "'"
 
         #Conexion a Base de Datos:
         self.Conectar()
