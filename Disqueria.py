@@ -28,7 +28,8 @@ def main():
 
     elif seleccion_modo[0] == opcion1:
         print("[MAIN] Entrando al modo consola..")
-        cli.IniciarInterfazConsola()  #llamamos al modulo con la interfaz consola
+        consola = cli.cli()
+        consola.Iniciar()
 
     elif seleccion_modo[0] == opcion2:
         print("[MAIN] Entrando al modo ventana..")

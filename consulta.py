@@ -57,7 +57,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
     def NombreAlbumEspecifico(self, nombre):
         self.nombre = nombre
-        self.query = """SELECT tema.track_num, tema.titulo, tema.duracion, album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.cod_album, formato.tipo, album.fec_lanzamiento, album.caratula, interprete.foto
+        self.query = """SELECT tema.track_num, tema.titulo, tema.duracion, album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.cod_album, formato.tipo, album.fec_lanzamiento, album.caratula, interprete.foto, album.precio, album.cantidad, album.cant_temas
         FROM album
         INNER JOIN tema
         ON album.id_album = tema.id_album
@@ -71,7 +71,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
         #Conexion a Base de Datos:
         self.Conectar()
-        print("\033[1mEjecutada consulta Albums por Género.\033[0m") #print debug
+        print("\033[1mEjecutada consulta Albums por Nombre del Album.\033[0m") #print debug
         self.datos = self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         return self.datos
@@ -138,30 +138,28 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 #-----------------------------------------------------------------------------------------------------------------------
 # PENDIENTES:
 #-----------------------------------------------------------------------------------------------------------------------    
-# class ListarDiscograficas(conexion.BaseDatos):
-#     def __init__(self):
-#         print("Instanciada Clase ListarDiscograficas..")  # Print Debug
-#         conexion.BaseDatos.__init__(self)        
+    # def ListaDiscograficasCompleta(self):
 
-#     def ListaCompleta(self):
-#         pass
+    #     self.query =""  <-------------------------------
+
+    #     #Conexion a Base de Datos:
+    #     self.Conectar()
+    #     print("\033[1mEjecutada consulta Lista de Discograficas.\033[0m") #print debug
+    #     self.datos = self.QuerySQL(self.query)
+    #     #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
+    #     return self.datos
 
 #-----------------------------------------------------------------------------------------------------------------------
     
-# class ListarFormatos(conexion.BaseDatos):
-#     def __init__(self):
-#         print("Instanciada Clase ListarFormatos..")  # Print Debug
-#         conexion.BaseDatos.__init__(self)        
+    # def ListaFormatosCompleta(self):
 
-#     def ListaCompleta(self):
-#         pass
+    #     self.query =""  <-------------------------------
+
+    #     #Conexion a Base de Datos:
+    #     self.Conectar()
+    #     print("\033[1mEjecutada consulta Lista de Formatos.\033[0m") #print debug
+    #     self.datos = self.QuerySQL(self.query)
+    #     #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
+    #     return self.datos
 
 #-----------------------------------------------------------------------------------------------------------------------
-
-# class ListarCanciones(conexion.BaseDatos):
-#     def __init__(self):
-#         print("Instanciada Clase ListarCanciones..")  # Print Debug
-#         conexion.BaseDatos.__init__(self)        
-
-#     def ListaCompleta(self):
-#         pass

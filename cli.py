@@ -92,14 +92,12 @@ class cli(colores.ColoresCLI):
             print(self.END)
 
             print(self.VERDE_CLARO)
-            print("GESTION DE CONSULTAS")
-            print("1 > BÚSQUEDA POR NOMBRE DE ÁLBUM (FULL INFO)          7 > LISTA DE INTERPRETES")           
-            print("2 > LISTA DE ALBUMES POR ARTISTA (NOMBRE ASC)         8 > LISTADO DE GENEROS MUSICALES")
-            print("3 > LISTA DE ALBUMES DE UN GENERO MUSICAL ESPECIFICO  9 > LISTADO DE FORMATOS")
-            print("4 > LISTA DE ALBUMES POR TIPO DE FORMATO             10 > LISTAR TODAS LAS CANCIONES")
-            print("5 > LISTA DE ALBUMES EN STOCK                        11 > BUSCAR CANCION POR NOMBRE")
-            print("6 > LISTA DE ALBUMES SIN STOCK                       12 > BUSCAR INTERPRETE POR NOMBRE")               
-            print("S > Salir                                            13 > LISTADO DE DISCOGRAFICAS")       
+            print("GESTION DE CONSULTAS\n")
+            print("1 > INFORMACION DETALLE DE UN ÁLBUM                      4 > LISTADO DE INTERPRETES")           
+            print("2 > LISTA DE ALBUMES POR ARTISTA (NOMBRE ASC)            5 > LISTADO DE GENEROS MUSICALES")
+            print("3 > LISTA DE ALBUMES DE UN GENERO MUSICAL ESPECIFICO     6 > LISTADO DE FORMATOS")
+            print("S > Salir                                                7 > LISTADO DE DISCOGRAFICAS")              
+
             print(self.END)            
             print("\n")
 
@@ -115,34 +113,16 @@ class cli(colores.ColoresCLI):
                 formatodatos.MostrarAlbumsPorGeneroCLI()
                 continue                
             elif self.opcion == "4":
-                print("falta este listado")
-                continue
-            elif self.opcion == "5":
-                print("falta este listado")
-                continue
-            elif self.opcion == "6":
-                print("falta este listado")
-                continue
-            elif self.opcion == "7":
                 formatodatos.MostrarInterpreteCLI()
                 continue  
-            elif self.opcion == "8":
+            elif self.opcion == "5":
                 formatodatos.MostrarGenerosCLI()   
                 continue 
-            elif self.opcion == "9":
-                print("falta este listado")
+            elif self.opcion == "6":
+                #formatodatos.MostrarDiscograficasCLI()
                 continue
-            elif self.opcion == "10":
-                print("falta este listado")
-                continue
-            elif self.opcion == "11":
-                print("falta este listado")
-                continue
-            elif self.opcion == "12":
-                print("falta este listado")
-                continue
-            elif self.opcion == "13":
-                print("falta este listado")
+            elif self.opcion == "7":
+                #formatodatos.MostrarFormatosCLI()
                 continue
             elif self.opcion == "S" or self.opcion == "s":
                 break            
@@ -178,10 +158,10 @@ class cli(colores.ColoresCLI):
                 formatodatos.insertarGeneroCLI()
                 continue
             elif self.opcion == "3":
-                print("falta este insert")
+                formatodatos.insertarFormatoCLI()
                 continue
             elif self.opcion == "4":
-                print("falta este insert")
+                formatodatos.InsertarDiscograficaCLI()
                 continue
             elif self.opcion == "S" or self.opcion == "s":
                 break
