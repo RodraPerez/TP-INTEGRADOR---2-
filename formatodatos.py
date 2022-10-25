@@ -1,9 +1,10 @@
-#Funciones de formato y salida de texto para estética del CLI consola y algunas filtros para la interfaz ventana, tambien funciones de control.
+#Funciones de formato y salida de texto para estética del CLI consola y algunas filtros para la interfaz. Sin librerias de terceros. El propósito es poner en práctica los contenidos del curso.
 
 import consulta
 import cargadatos
 
-def AlbumsVistaCLI(): # captura de lista de tuplas del cursor se procesa todo en este modulo.
+
+def MostrarAlbumsPorInterpreteCLI(): # captura de lista de tuplas del cursor se procesa todo en este modulo.
   
     Listar = consulta.Listar()
     registros = Listar.ListaAlbumesCompleta()
@@ -95,10 +96,17 @@ def MostrarAlbumPorNombreCLI():
             print("Año:    ", str(album[9]))
             print("Tipo:   ", str(album[8]))
             print("Genero: ", str(album[6]))
-            print("\nCanciones del Album:")
+            print("Precio:  $", str(album[12]), sep='')
+            if album[13] > 0:
+                print("En Stock, disponibles:", str(album[13]), "unidades.")
+            else:
+                print("En Stock?: ", "NO")             
+            print("Canciones del Album: ", str(album[14]))
+              
             print("\n")
 
-            
+            #tema.track_num, tema.titulo, tema.duracion, album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.cod_album, formato.tipo, album.fec_lanzamiento, album.caratula, interprete.foto, album.precio, album.cantidad, album.cant_temas
+
             #Apariencia de Tabla, calibrada desde los multiplicadores de caracteres. Se ajusta automático al resultado del album y sus cadenas.                 
             
             print(" " * espaciado, str("Pista").ljust(pistaChrLen, ' ')," " * 1,str("Nombre").ljust(tituloChrLen, ' '), " " * espaciado, str("Duracion").ljust(duracionChrLen, ' '))
@@ -274,6 +282,69 @@ def MostrarGenerosCLI():
 
 
 
+#--------------------------------------------------------------------------------------------------------------------
+
+def MostrarFormatosCLI():
+
+    Listar = consulta.Listar()
+    registros = Listar.ListaFormatosCompleta()
+
+    if registros == []:
+        print("\n \033[1m No hay registros que coincidan con su búsqueda..\033[0m")
+        return
+
+    espaciado = 1
+    longidformato = 0
+    longnombre = 0
+
+    for formato in registros:
+        if len(str(formato[0])) > longidformato:
+            longidformato = len(str(formato[0]))
+
+        if len(str(formato[1])) > longnombre:
+            longnombre = len(str(formato[1]))
+
+
+    print("\n\033[1m")
+    print("Usted solicitó listar los formatos de música cargados en la Base de Datos:\n" )
+    print(" " * espaciado, str("Id").ljust(longidformato, ' ')," " * espaciado, str("Nombre\033[0m").ljust(longnombre, ' '))
+
+    for formato in registros:
+        print(" " * espaciado, str(formato[0]).ljust(longidformato, ' ')," " * espaciado, str(formato[1]).ljust(longnombre, ' '))
+
+
+
+def MostrarDiscograficasCLI():
+
+    Listar = consulta.Listar()
+    registros = Listar.ListaDiscograficasCompleta()
+
+    if registros == []:
+        print("\n \033[1m No hay registros que coincidan con su búsqueda..\033[0m")
+        return
+
+    espaciado = 1
+    longidnombre = 0
+    longnombre = 0
+
+    for discografica in registros:
+        if len(str(discografica[0])) > longidnombre:
+            longidnombre = len(str(discografica[0]))
+
+        if len(str(discografica[1])) > longnombre:
+            longnombre = len(str(discografica[1]))
+
+
+    print("\n\033[1m")
+    print("Usted solicitó listar Discograficas cargadas en la Base de Datos:\n" )
+    print(" " * espaciado, str("Id").ljust(longidnombre, ' ')," " * espaciado, str("Nombre\033[0m").ljust(longnombre, ' '))
+
+    for discografica in registros:
+        print(" " * espaciado, str(discografica[0]).ljust(longidnombre, ' ')," " * espaciado, str(discografica[1]).ljust(longnombre, ' '))
+
+#--------------------------------------------------------------------------------------------------------------------
+
+
 def insertarGeneroCLI():
     while True:
         print("\n")
@@ -282,7 +353,7 @@ def insertarGeneroCLI():
         nombre =        str(input("Escriba nombre del Género:  "))
         opcion = input("\n Que desea hacer? | 1 (Cargar) | 2 (Reingresar los Datos) | 3 (Cancelar)\nIngrese un número de opción: ")
         
-        nombre = nombre.strip('\n')  #String, limpieza de espacios ant post, y Capitalizacion.
+        nombre = nombre.strip('\n')  #String, limpieza de espacios anteriores y posteriores y Capitalizacion.
         nombre = nombre.strip()
         nombre = nombre.capitalize()
 
@@ -290,6 +361,59 @@ def insertarGeneroCLI():
             print("Intentando carga de los datos..")
             carga = cargadatos.Cargar()
             carga.CargarGenero(nombre)
+            break
+
+        elif opcion == "2":
+            print("REINTENTANDO..")
+            nombre = ""
+        elif opcion == "3":
+            print("CANCELADO volviendo al menú principal.")
+            break  
+        else:
+            print("¡Opción incorrecta!")
+
+def insertarFormatoCLI():
+    while True:
+        print("\n")
+        print("Usted está por cargar nuevo Formato de audio, si ya existe en la Base de Datos se omitirá la carga: \n")
+
+        tipo =        str(input("Escriba el tipo de formato:  "))
+        opcion = input("\n Que desea hacer? | 1 (Cargar) | 2 (Reingresar los Datos) | 3 (Cancelar)\nIngrese un número de opción: ")
+        
+        tipo = tipo.strip('\n')  #String, limpieza de espacios anteriores y posteriores.
+        tipo = tipo.strip()
+
+        if opcion == "1":
+            print("Intentando carga de los datos..")
+            carga = cargadatos.Cargar()
+            carga.CargarFormato(tipo)
+            break
+
+        elif opcion == "2":
+            print("REINTENTANDO..")
+            tipo = ""
+        elif opcion == "3":
+            print("CANCELADO volviendo al menú principal.")
+            break  
+        else:
+            print("¡Opción incorrecta!")
+
+
+def InsertarDiscograficaCLI():
+    while True:
+        print("\n")
+        print("Usted está por cargar una Discográfica, si ya existe en la Base de Datos se omitirá la carga: \n")
+
+        nombre =        str(input("Escriba el nombre de la Discográfica:  "))
+        opcion = input("\n Que desea hacer? | 1 (Cargar) | 2 (Reingresar los Datos) | 3 (Cancelar)\nIngrese un número de opción: ")
+        
+        nombre = nombre.strip('\n')  #String, limpieza de espacios anteriores y posteriores.
+        nombre = nombre.strip()
+
+        if opcion == "1":
+            print("Intentando carga de los datos..")
+            carga = cargadatos.Cargar()
+            carga.CargarDiscografica(nombre)
             break
 
         elif opcion == "2":

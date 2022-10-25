@@ -7,8 +7,7 @@ class Cargar(conexion.BaseDatos):
         print("Instanciada Clase de Carga de datos..")  # Print Debug
         conexion.BaseDatos.__init__(self)
     
-    def CargarInterprete(self,nombre,apellido,nacionalidad,foto): #Edgar G - Cargar un Interprete.    
-        # Tabla Interprete:  id_interprete(autoincremental),nombre,apellido,nacionalidad,foto
+    def CargarInterprete(self,nombre,apellido,nacionalidad,foto):
         self.Conectar()
 
         if self.conexion.is_connected():
@@ -20,7 +19,7 @@ class Cargar(conexion.BaseDatos):
                 self.cursor.execute(self.query,self.datos_envio)
 
                 self.conexion.commit()
-                print("\033[1mEjecutada carga de un Interprete. \033[0m") #Si ya esta cargado, o si se cargó el registro.
+                print("Ejecutada carga de un Interprete.") #Si ya esta cargado, o si se cargó el registro.
 
             except self.mysql.connector.Error as Error:
                 print("No hay conexion con la base de datos.",Error)
@@ -42,7 +41,7 @@ class Cargar(conexion.BaseDatos):
                 self.cursor.execute(self.query,self.datos_envio)
 
                 self.conexion.commit()
-                print("\033[1mEjecutada carga de un Album. \033[0m") #Si ya esta cargado, o si se cargó el registro.
+                print("Ejecutada carga de un Album.") #Si ya esta cargado, o si se cargó el registro.
 
             except self.mysql.connector.Error as Error:
                 print("No hay conexion con la base de datos.",Error)
@@ -64,7 +63,7 @@ class Cargar(conexion.BaseDatos):
                 self.cursor.execute(self.query,self.datos_envio)
 
                 self.conexion.commit()
-                print("\033[1mEjecutada carga de un Género Musical. \033[0m") #Si ya esta cargado, o si se cargó el registro.
+                print("Ejecutada carga de un Género Musical.") #Si ya esta cargado, o si se cargó el registro.
 
             except self.mysql.connector.Error as Error:
                 print("No hay conexion con la base de datos.",Error)
@@ -72,3 +71,45 @@ class Cargar(conexion.BaseDatos):
         self.Desconectar()
 
 #----------------------------------------------------------------------------------
+
+
+    def CargarFormato(self,tipo): #Cargar un Formato musical.    
+        self.Conectar()
+
+        if self.conexion.is_connected():
+            try:
+                self.cursor = self.conexion.cursor()
+                self.query = "INSERT IGNORE INTO formato VALUES(null,%s)"  #Evitamos cargar duplicado.
+
+                self.datos_envio = (tipo,) #Creamos la tupla, si la tupla tiene un solo item dejar coma al final.
+                self.cursor.execute(self.query,self.datos_envio)
+
+                self.conexion.commit()
+                print("Ejecutada carga de un formato fisico Musical.") #Si ya esta cargado, o si se cargó el registro.
+
+            except self.mysql.connector.Error as Error:
+                print("No hay conexion con la base de datos.",Error)
+        
+        self.Desconectar()
+
+#----------------------------------------------------------------------------------
+
+
+    def CargarDiscografica(self,nombre): #Cargar un Formato musical.    
+        self.Conectar()
+
+        if self.conexion.is_connected():
+            try:
+                self.cursor = self.conexion.cursor()
+                self.query = "INSERT IGNORE INTO discografica VALUES(null,%s)"  #Evitamos cargar duplicado.
+
+                self.datos_envio = (nombre,) #Creamos la tupla, si la tupla tiene un solo item dejar coma al final.
+                self.cursor.execute(self.query,self.datos_envio)
+
+                self.conexion.commit()
+                print("Ejecutada carga de una Discográfica.") #Si ya esta cargado, o si se cargó el registro.
+
+            except self.mysql.connector.Error as Error:
+                print("No hay conexion con la base de datos.",Error)
+        
+        self.Desconectar()

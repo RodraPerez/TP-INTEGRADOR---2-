@@ -1,60 +1,170 @@
 #Interfaz de modo consola. En desarrollo.
-
-import cargadatos
 import formatodatos
+import colores
+
+# Atencion con el tema de menus anidados en bucles https://peps.python.org/pep-3136/ ya que si no hacemos la modificacion quedamos atrapados en el primer bucle.
 
 
-def Menu():
-    while True:
-        print("\n+-------------------------------------------+")
-        print("|         DISQUERÍA FORMOSA MUSICAL         |")
-        print("+-------------------------------------------+\n")
-        print("")
-        print("MENÚ PRINCIPAL\n")
-        print("1 - ALTA / BAJA / MODIFICACION DE UN ÁLBUM " + "4 - BÚSQUEDA POR NOMBRE DE ÁLBUM")
-        print("2 - LISTADO DE ÁLBUMES POR ARTISTAS        " + "5 - INSERTAR INTERPRETE")
-        print("3 - LISTADO DE ÁLBUMES POR GÉNERO MUSICAL  " + "6 - LISTADO DE INTERPRETES")
-        print("7 - INSERTAR GENERO MUSICAL                " + "8 - LISTADO DE GENEROS MUSICALES")
-        print("S - Salir")       
-        print("\n")
-        opcion = input("Ingrese su opción: ")
-
-        if opcion == "1":
-            print("\033[0;31mFunción no disponible todavía.. \033[0m")
-        elif opcion == "2":
-            formatodatos.AlbumsVistaCLI()
-        elif opcion == "3":
-            formatodatos.MostrarAlbumsPorGeneroCLI()
-        elif opcion == "4":
-            formatodatos.MostrarAlbumPorNombreCLI()
-        elif opcion == "5":
-            formatodatos.InsertarInterpreteCLI()
-        elif opcion == "6":
-            formatodatos.MostrarInterpreteCLI()
-        elif opcion == "7":
-            formatodatos.insertarGeneroCLI()
-        elif opcion == "8":
-            formatodatos.MostrarGenerosCLI()
-        elif (opcion == "s") or (opcion == "S"):
-            break
-        else:
-            print("¡Opción incorrecta!")
+class cli(colores.ColoresCLI):
+    def __init__(self):
+        self.Iniciar()
 
 
+    def Iniciar(self):
+        print(self.VERDE_CLARO)
+        print("[MODULO cli] Interfaz de Consola Iniciada..")
+        print(self.END)
+        self.GUIMenuPrincipal()
 
+    def ErrorDeOpcion(self):
+        print(self.ROJO_CLARO + self.BOLD)
+        print("¡Opción incorrecta!, reintente nuevamente..")
+        print(self.END)
 
+    def GUIMenuPrincipal(self):
+        while True:
+            print(self.AZUL_CLARO)
+            print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
+            print(  "      DISQUERÍA FORMOSA MUSICAL      ")
+            print(  "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
+            print(self.END)
 
+            print(self.BOLD + "MENÚ PRINCIPAL" + self.END + "\n")
+            print("1 - ALTA / BAJA / MODIFICACION DE UN ÁLBUM ")
+            print("2 - LISTADOS Y BUSQUEDAS                   ")
+            print("3 - OTRAS OPCIONES                         ")
+            print("S - Salir")       
+            print("\n")
 
+            self.opcion = input("Ingrese su opción: ")
 
+            if self.opcion == "1":
+                self.GUIMenuABMAlbum()
+            elif self.opcion == "2":
+                self.GUIMenuListados()
+            elif self.opcion == "3":
+                self.GUIMenuOtros()
+            elif self.opcion == "S" or self.opcion == "s":
+                break
+            else:
+                self.ErrorDeOpcion()
+                continue
+            break #[!]
 
+    def GUIMenuABMAlbum(self):
+        while True:
+            print(self.AZUL_CLARO)
+            print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
+            print(  "      DISQUERÍA FORMOSA MUSICAL      ")
+            print(  "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
+            print(self.END)
 
-    #Test de carga Interprete
-    # carga = cargadatos.Cargar()
-    # carga.CargarInterprete("Phil","Collins","UK","https://www.discos.com/lafotodelartista.jpg")
+            print(self.CYAN_CLARO)
+            print("GESTION DE ALBUMES\n")
+            print("1 - ALTA DE UN ÁLBUM")
+            print("2 - BAJA DE UN ÁLBUM")
+            print("3 - MODIFICACION DE ALBUM")
+            print("S - Salir")
+            print(self.END)       
+            print("\n")
 
+            self.opcion = input("Ingrese su opción: ")
 
-def IniciarInterfazConsola():
-    print("\033[0;32m\033[1m[MODULO cli] Interfaz de Consola Iniciada..\033[0m")
-    Menu()
+            if self.opcion == "1":
+                print("\033[0;31mFunción ALTA ALBUM no disponible todavía.. \033[0m")
+            elif self.opcion == "2":
+                print("\033[0;31mFunción BAJA ALBUM no disponible todavía.. \033[0m")
+            elif self.opcion == "3":
+                print("\033[0;31mFunción MODIFICACION ALBUM no disponible todavía.. \033[0m")
+            elif self.opcion == "S" or self.opcion == "s":
+                self.opcion == ""
+                break            
+            else:
+                self.ErrorDeOpcion()
+                continue
 
+    def GUIMenuListados(self):
+        while True:
+            print(self.AZUL_CLARO)
+            print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
+            print(  "      DISQUERÍA FORMOSA MUSICAL      ")
+            print(  "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
+            print(self.END)
 
+            print(self.VERDE_CLARO)
+            print("GESTION DE CONSULTAS\n")
+            print("1 > INFORMACION DETALLE DE UN ÁLBUM                      4 > LISTADO DE INTERPRETES")           
+            print("2 > LISTA DE ALBUMES POR ARTISTA (NOMBRE ASC)            5 > LISTADO DE GENEROS MUSICALES")
+            print("3 > LISTA DE ALBUMES DE UN GENERO MUSICAL ESPECIFICO     6 > LISTADO DE FORMATOS")
+            print("S > Salir                                                7 > LISTADO DE DISCOGRAFICAS")              
+
+            print(self.END)            
+            print("\n")
+
+            self.opcion = input("Ingrese su opción: ")
+
+            if self.opcion ==   "1":
+                formatodatos.MostrarAlbumPorNombreCLI()
+                continue
+            elif self.opcion == "2":
+                formatodatos.MostrarAlbumsPorInterpreteCLI()
+                continue
+            elif self.opcion == "3":
+                formatodatos.MostrarAlbumsPorGeneroCLI()
+                continue                
+            elif self.opcion == "4":
+                formatodatos.MostrarInterpreteCLI()
+                continue  
+            elif self.opcion == "5":
+                formatodatos.MostrarGenerosCLI()   
+                continue 
+            elif self.opcion == "6":
+                #formatodatos.MostrarDiscograficasCLI()
+                continue
+            elif self.opcion == "7":
+                #formatodatos.MostrarFormatosCLI()
+                continue
+            elif self.opcion == "S" or self.opcion == "s":
+                break            
+            else:
+                self.ErrorDeOpcion()
+                continue
+
+    def GUIMenuOtros(self):
+        while True:
+            print(self.AZUL_CLARO)
+            print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
+            print(  "      DISQUERÍA FORMOSA MUSICAL      ")
+            print(  "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
+            print(self.END)
+
+            print(self.MORADO)
+            print("OTRAS GESTIONES\n")
+            print("1 - INSERTAR INTERPRETE")
+            print("2 - INSERTAR GENERO MUSICAL")
+            print("3 - INSERTAR FORMATO")
+            print("4 - INSERTAR DISCOGRAFICA")            
+            print("S - Salir")
+            print(self.END)       
+            print("\n")
+
+            self.opcion = ""
+            self.opcion = input("Ingrese su opción: ")
+
+            if  self.opcion == "1":
+                formatodatos.InsertarInterpreteCLI()
+                continue
+            elif self.opcion == "2":
+                formatodatos.insertarGeneroCLI()
+                continue
+            elif self.opcion == "3":
+                formatodatos.insertarFormatoCLI()
+                continue
+            elif self.opcion == "4":
+                formatodatos.InsertarDiscograficaCLI()
+                continue
+            elif self.opcion == "S" or self.opcion == "s":
+                break
+            else:
+                self.ErrorDeOpcion()
+                continue
