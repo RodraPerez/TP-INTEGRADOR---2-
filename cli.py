@@ -1,35 +1,33 @@
-#Interfaz de modo consola. En desarrollo.
-import formatodatos
-import colores
+#Interfaz de modo consola.
 
-# Atencion con el tema de menus anidados en bucles https://peps.python.org/pep-3136/ ya que si no hacemos la modificacion quedamos atrapados en el primer bucle.
+import cli_formato
+from cli_colores import ColoresCLI as color
 
-
-class cli(colores.ColoresCLI):
+class cli():
     def __init__(self):
         self.Iniciar()
 
 
     def Iniciar(self):
-        print(self.VERDE_CLARO)
+        print(color.VERDE_CLARO)
         print("[MODULO cli] Interfaz de Consola Iniciada..")
-        print(self.END)
+        print(color.END)
         self.GUIMenuPrincipal()
 
     def ErrorDeOpcion(self):
-        print(self.ROJO_CLARO + self.BOLD)
+        print(color.ROJO_CLARO + color.BOLD)
         print("¡Opción incorrecta!, reintente nuevamente..")
-        print(self.END)
+        print(color.END)
 
     def GUIMenuPrincipal(self):
         while True:
-            print(self.AZUL_CLARO)
+            print(color.AZUL_CLARO)
             print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
             print(  "      DISQUERÍA FORMOSA MUSICAL      ")
             print(  "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
-            print(self.END)
+            print(color.END)
 
-            print(self.BOLD + "MENÚ PRINCIPAL" + self.END + "\n")
+            print(color.BOLD + "MENÚ PRINCIPAL" + color.END + "\n")
             print("1 - ALTA / BAJA / MODIFICACION DE UN ÁLBUM ")
             print("2 - LISTADOS Y BUSQUEDAS                   ")
             print("3 - OTRAS OPCIONES                         ")
@@ -53,29 +51,29 @@ class cli(colores.ColoresCLI):
 
     def GUIMenuABMAlbum(self):
         while True:
-            print(self.AZUL_CLARO)
+            print(color.AZUL_CLARO)
             print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
             print(  "      DISQUERÍA FORMOSA MUSICAL      ")
             print(  "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
-            print(self.END)
+            print(color.END)
 
-            print(self.CYAN_CLARO)
+            print(color.CYAN_CLARO)
             print("GESTION DE ALBUMES\n")
             print("1 - ALTA DE UN ÁLBUM")
             print("2 - BAJA DE UN ÁLBUM")
             print("3 - MODIFICACION DE ALBUM")
             print("S - Salir")
-            print(self.END)       
+            print(color.END)       
             print("\n")
 
             self.opcion = input("Ingrese su opción: ")
 
             if self.opcion == "1":
-                print("\033[0;31mFunción ALTA ALBUM no disponible todavía.. \033[0m")
+                cli_formato.InsertarAlbumCLI()
             elif self.opcion == "2":
-                print("\033[0;31mFunción BAJA ALBUM no disponible todavía.. \033[0m")
+                print("Función BAJA ALBUM no disponible todavía..")
             elif self.opcion == "3":
-                print("\033[0;31mFunción MODIFICACION ALBUM no disponible todavía.. \033[0m")
+                print("Función MODIFICACION ALBUM no disponible todavía..")
             elif self.opcion == "S" or self.opcion == "s":
                 self.opcion == ""
                 break            
@@ -85,44 +83,44 @@ class cli(colores.ColoresCLI):
 
     def GUIMenuListados(self):
         while True:
-            print(self.AZUL_CLARO)
+            print(color.AZUL_CLARO)
             print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
             print(  "      DISQUERÍA FORMOSA MUSICAL      ")
             print(  "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
-            print(self.END)
+            print(color.END)
 
-            print(self.VERDE_CLARO)
+            print(color.VERDE_CLARO)
             print("GESTION DE CONSULTAS\n")
             print("1 > INFORMACION DETALLE DE UN ÁLBUM                      4 > LISTADO DE INTERPRETES")           
             print("2 > LISTA DE ALBUMES POR ARTISTA (NOMBRE ASC)            5 > LISTADO DE GENEROS MUSICALES")
             print("3 > LISTA DE ALBUMES DE UN GENERO MUSICAL ESPECIFICO     6 > LISTADO DE FORMATOS")
             print("S > Salir                                                7 > LISTADO DE DISCOGRAFICAS")              
 
-            print(self.END)            
+            print(color.END)            
             print("\n")
 
             self.opcion = input("Ingrese su opción: ")
 
             if self.opcion ==   "1":
-                formatodatos.MostrarAlbumPorNombreCLI()
+                cli_formato.MostrarAlbumPorNombreCLI()
                 continue
             elif self.opcion == "2":
-                formatodatos.MostrarAlbumsPorInterpreteCLI()
+                cli_formato.MostrarAlbumsPorInterpreteCLI()
                 continue
             elif self.opcion == "3":
-                formatodatos.MostrarAlbumsPorGeneroCLI()
+                cli_formato.MostrarAlbumsPorGeneroCLI()
                 continue                
             elif self.opcion == "4":
-                formatodatos.MostrarInterpreteCLI()
+                cli_formato.MostrarInterpreteCLI()
                 continue  
             elif self.opcion == "5":
-                formatodatos.MostrarGenerosCLI()   
+                cli_formato.MostrarGenerosCLI()   
                 continue 
             elif self.opcion == "6":
-                #formatodatos.MostrarDiscograficasCLI()
+                cli_formato.MostrarFormatosCLI()
                 continue
             elif self.opcion == "7":
-                #formatodatos.MostrarFormatosCLI()
+                cli_formato.MostrarDiscograficasCLI()
                 continue
             elif self.opcion == "S" or self.opcion == "s":
                 break            
@@ -132,36 +130,36 @@ class cli(colores.ColoresCLI):
 
     def GUIMenuOtros(self):
         while True:
-            print(self.AZUL_CLARO)
+            print(color.AZUL_CLARO)
             print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
             print(  "      DISQUERÍA FORMOSA MUSICAL      ")
             print(  "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
-            print(self.END)
+            print(color.END)
 
-            print(self.MORADO)
+            print(color.MORADO)
             print("OTRAS GESTIONES\n")
             print("1 - INSERTAR INTERPRETE")
             print("2 - INSERTAR GENERO MUSICAL")
             print("3 - INSERTAR FORMATO")
             print("4 - INSERTAR DISCOGRAFICA")            
             print("S - Salir")
-            print(self.END)       
+            print(color.END)       
             print("\n")
 
             self.opcion = ""
             self.opcion = input("Ingrese su opción: ")
 
             if  self.opcion == "1":
-                formatodatos.InsertarInterpreteCLI()
+                cli_formato.InsertarInterpreteCLI()
                 continue
             elif self.opcion == "2":
-                formatodatos.insertarGeneroCLI()
+                cli_formato.insertarGeneroCLI()
                 continue
             elif self.opcion == "3":
-                formatodatos.insertarFormatoCLI()
+                cli_formato.insertarFormatoCLI()
                 continue
             elif self.opcion == "4":
-                formatodatos.InsertarDiscograficaCLI()
+                cli_formato.InsertarDiscograficaCLI()
                 continue
             elif self.opcion == "S" or self.opcion == "s":
                 break

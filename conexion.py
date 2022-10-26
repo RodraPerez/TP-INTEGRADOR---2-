@@ -1,4 +1,4 @@
-#Modulo de conexion, con desconexion automatica por defecto luego de operar, el llamado a metodo de desconexión está en el metodo QuerySQL().
+#Modulo de conexion, con desconexion automatica por defecto luego de operar.
 
 import mysql.connector                                          #Se importa el driver MySQL para Python.
 
@@ -12,7 +12,7 @@ class BaseDatos():                                              #Se crea la clas
             host = 'localhost', #si no conecta con esto probamos con 127.0.0.1
             port = 3306,
             user = 'root',
-            password = '',   #NO OLVIDAR Configurar con su pass, y antes de hacer commit borrarlo.
+            password = '2022#ISPC#Tp2',   #NO OLVIDAR Configurar con su pass, y antes de hacer commit borrarlo.
             db = 'disqueria' #nombre de la base de datos
             )
             if self.conexion.is_connected():
@@ -37,11 +37,11 @@ class BaseDatos():                                              #Se crea la clas
                 #Cursor y query recibida::
                 self.cursor = self.conexion.cursor()
                 self.cursor.execute(self.query)
-                print("\033[1mEjecutada QUERY SQL..\033[0m") #print debug
+                print("Ejecutada selnencia SQL..") #print debug
 
                 #Almacenamos bajada de datos en una Variable Buffer.
                 self.listado = self.cursor.fetchall()
-                print("\033[1mDatos en cache [OK]..\033[0m") #print debug
+                print("Datos en cache [OK]..") #print debug
 
                 #Desconectamos por defecto en cualquier operacion, podemos llamar al metodo si deseamos conexión fija (no se recomienda)
                 self.Desconectar()  #   <-----------------
@@ -50,3 +50,8 @@ class BaseDatos():                                              #Se crea la clas
 
             except self.mysql.connector.Error as Error:
                 print("No hay conexion con la base de datos.",Error)
+
+    
+    def abmSQL(self,sentenciaSQL,data):  #Recibimos la query SQL desde cualquier llamando al metodo del objeto con un solo parametro
+        self.Conectar()
+        pass
