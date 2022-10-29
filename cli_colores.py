@@ -17,6 +17,7 @@ class ColoresCLI:
     AZUL_CLARO = "\033[1;34m"
     PURPURA_CLARO = "\033[1;35m"
     CYAN_CLARO = "\033[1;36m"
+    NARANJA ="\033[38;2;255;165;2m"
     BLANCO = "\033[1;37m"
     BOLD = "\033[1m"
     FAINT = "\033[2m"

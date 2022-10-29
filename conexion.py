@@ -12,7 +12,7 @@ class BaseDatos():                                              #Se crea la clas
             host = 'localhost', #si no conecta con esto probamos con 127.0.0.1
             port = 3306,
             user = 'root',
-            password = '2022#ISPC#Tp2',   #NO OLVIDAR Configurar con su pass, y antes de hacer commit borrarlo.
+            password = '',   #NO OLVIDAR Configurar con su pass, y antes de hacer commit borrarlo.
             db = 'disqueria' #nombre de la base de datos
             )
             if self.conexion.is_connected():
@@ -49,9 +49,26 @@ class BaseDatos():                                              #Se crea la clas
                 return self.listado
 
             except self.mysql.connector.Error as Error:
-                print("No hay conexion con la base de datos.",Error)
+                print("[QuerySQL] No hay conexion con la base de datos.",Error)
 
     
-    def abmSQL(self,sentenciaSQL,data):  #Recibimos la query SQL desde cualquier llamando al metodo del objeto con un solo parametro
-        self.Conectar()
-        pass
+    def abmSQL(self,query,data):  # Recibo sentencia SQL y Datos.
+
+        self.query = query
+        self.data = data
+
+        if self.conexion.is_connected():
+            try:
+                self.cursor = self.conexion.cursor()
+
+                self.cursor.execute(self.query,self.data)
+
+                self.conexion.commit() #[!]
+
+                print("Commit [OK].") 
+
+            except self.mysql.connector.Error as Error:
+                print("[abmSQL] No hay conexion con la base de datos.",Error)
+
+        #Desconectamos por defecto en cualquier operacion, podemos llamar al metodo si deseamos conexión fija (no se recomienda)
+        self.Desconectar()
