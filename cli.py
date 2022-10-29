@@ -28,10 +28,10 @@ class cli():
             print(color.END)
 
             print(color.BOLD + "MENÚ PRINCIPAL" + color.END + "\n")
-            print("1 - ALTA / BAJA / MODIFICACION DE UN ÁLBUM ")
-            print("2 - LISTADOS Y BUSQUEDAS                   ")
-            print("3 - OTRAS OPCIONES                         ")
-            print("S - Salir")       
+            print(color.NARANJA + "1" + color.END + "- ALTA / BAJA / MODIFICACION DE UN ÁLBUM ")
+            print(color.NARANJA + "2" + color.END + "- LISTADOS Y BUSQUEDAS                   ")
+            print(color.NARANJA + "3" + color.END + "- OTRAS OPCIONES DE CARGA                ")
+            print(color.NARANJA + "S" + color.END + "- Salir")       
             print("\n")
 
             self.opcion = input("Ingrese su opción: ")
@@ -59,10 +59,10 @@ class cli():
 
             print(color.CYAN_CLARO)
             print("GESTION DE ALBUMES\n")
-            print("1 - ALTA DE UN ÁLBUM")
-            print("2 - BAJA DE UN ÁLBUM")
-            print("3 - MODIFICACION DE ALBUM")
-            print("S - Salir")
+            print(color.NARANJA + "1" + color.END + "- ALTA DE UN ÁLBUM")
+            print(color.NARANJA + "2" + color.END + "- BAJA DE UN ÁLBUM")
+            print(color.NARANJA + "3" + color.END + "- MODIFICACION DE ALBUM")
+            print(color.NARANJA + "S" + color.END + "- Salir")
             print(color.END)       
             print("\n")
 
@@ -71,9 +71,9 @@ class cli():
             if self.opcion == "1":
                 cli_formato.InsertarAlbumCLI()
             elif self.opcion == "2":
-                print("Función BAJA ALBUM no disponible todavía..")
+                cli_formato.EliminarAlbumCLI()
             elif self.opcion == "3":
-                print("Función MODIFICACION ALBUM no disponible todavía..")
+                cli_formato.ModificarAlbumCLI()
             elif self.opcion == "S" or self.opcion == "s":
                 self.opcion == ""
                 break            
@@ -89,14 +89,13 @@ class cli():
             print(  "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
             print(color.END)
 
-            print(color.VERDE_CLARO)
-            print("GESTION DE CONSULTAS\n")
+            print(color.BOLD)
+            print("GESTION DE CONSULTAS\n" + color.END + color.VERDE_CLARO)
             print("1 > INFORMACION DETALLE DE UN ÁLBUM                      4 > LISTADO DE INTERPRETES")           
             print("2 > LISTA DE ALBUMES POR ARTISTA (NOMBRE ASC)            5 > LISTADO DE GENEROS MUSICALES")
             print("3 > LISTA DE ALBUMES DE UN GENERO MUSICAL ESPECIFICO     6 > LISTADO DE FORMATOS")
-            print("S > Salir                                                7 > LISTADO DE DISCOGRAFICAS")              
-
-            print(color.END)            
+            print("S > Salir                                                7 > LISTADO DE DISCOGRAFICAS" + color.END)              
+         
             print("\n")
 
             self.opcion = input("Ingrese su opción: ")
@@ -136,13 +135,13 @@ class cli():
             print(  "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
             print(color.END)
 
-            print(color.MORADO)
-            print("OTRAS GESTIONES\n")
-            print("1 - INSERTAR INTERPRETE")
-            print("2 - INSERTAR GENERO MUSICAL")
-            print("3 - INSERTAR FORMATO")
-            print("4 - INSERTAR DISCOGRAFICA")            
-            print("S - Salir")
+            print(color.BOLD)
+            print("OTRAS GESTIONES\n",color.END)
+            print(color.NARANJA + "1" + color.END + " - INSERTAR INTERPRETE")
+            print(color.NARANJA + "2" + color.END + " - INSERTAR GENERO MUSICAL")
+            print(color.NARANJA + "3" + color.END + " - INSERTAR FORMATO")
+            print(color.NARANJA + "4" + color.END + " - INSERTAR DISCOGRAFICA")            
+            print(color.NARANJA + "S" + color.END + " - Salir")
             print(color.END)       
             print("\n")
 

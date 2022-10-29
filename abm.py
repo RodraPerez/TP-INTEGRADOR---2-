@@ -231,124 +231,152 @@ class Cargar(conexion.BaseDatos):
         print("Instanciada Clase de Carga de datos..")  # Print Debug
         conexion.BaseDatos.__init__(self)
     
-    def CargarInterprete(self,nombre,apellido,nacionalidad,foto):
-        self.Conectar()
 
-        if self.conexion.is_connected():
-            try:
-                self.cursor = self.conexion.cursor()
-                self.query = "INSERT IGNORE INTO interprete VALUES(null,%s,%s,%s,%s)"  #Evitamos cargar duplicado.
-
-                self.datos_envio = (nombre,apellido,nacionalidad,foto) #Creamos la tupla, si la tupla tiene un solo item dejar coma al final.
-                self.cursor.execute(self.query,self.datos_envio)
-
-                self.conexion.commit()
-                print("Ejecutada carga de un Interprete.") #Si ya esta cargado, o si se cargó el registro.
-
-            except self.mysql.connector.Error as Error:
-                print("No hay conexion con la base de datos.",Error)
-        
-        self.Desconectar()
-
-#----------------------------------------------------------------------------------
     #Nico - Cargar un Album.
     def CargarAlbum(self,album):     
         # Album:   id_album, cod_album,   nombre,   id_interprete, id_genero, cant_temas, id_discografica,  id_formato,  fec_lanzamiento,  precio,cantidad,  caratula
-        self.Conectar()       
 
-        if self.conexion.is_connected():
-            try:
-                self.cursor = self.conexion.cursor()
-                self.query = "INSERT IGNORE INTO album VALUES(null,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"  #Evitamos cargar duplicado.
+        self.query = "INSERT IGNORE INTO album VALUES(null,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"  #Evitamos cargar duplicado.
 
-                self.data = (album.getCod_album(),
-                album.getNombre(),
-                album.getId_interprete(),
-                album.getId_genero(),
-                album.getCant_temas(),
-                album.getId_discografica(),
-                album.getId_formato(),
-                album.getFec_lanzamiento(),
-                album.getPrecio(),
-                album.getCantidad(),
-                album.getCaratula())
+        self.data = (album.getCod_album(),
+        album.getNombre(),
+        album.getId_interprete(),
+        album.getId_genero(),
+        album.getCant_temas(),
+        album.getId_discografica(),
+        album.getId_formato(),
+        album.getFec_lanzamiento(),
+        album.getPrecio(),
+        album.getCantidad(),
+        album.getCaratula())
 
 
-                self.cursor.execute(self.query,self.data)
+        self.Conectar()
 
-                self.conexion.commit()
-                print("Ejecutada carga de un Album.") #Si ya esta cargado, o si se cargó el registro.
+        self.datos = self.abmSQL(self.query,self.data)   #Enviamos Query y Tupla, el metodo abm es el que posee el commit. y se desconecta al terminar.
 
-            except self.mysql.connector.Error as Error:
-                print("No hay conexion con la base de datos.",Error)
-        
-        self.Desconectar()
+        print("[ABM] Ejecutada CARGA de un Album.") #Si ya esta cargado, o si se cargó el registro.
 
 #----------------------------------------------------------------------------------
 
-    def CargarGenero(self,nombre): #Cargar un Género musical.    
-        # Tabla Interprete:  id_interprete(autoincremental),nombre,apellido,nacionalidad,foto
+    def ModificarAlbum(self,album,id_albumModificado): #Edgar G.
+
+        self.id_albumModificado = id_albumModificado
+
+        #  id_album,cod_album,nombre,id_interprete,id_genero,cant_temas,id_discografica,id_formato,fec_lanzamiento,precio,cantidad,caratula
+
+        self.query = ("""UPDATE album
+                        SET cod_album=%s, nombre=%s, id_interprete=%s, id_genero=%s, cant_temas=%s,id_discografica=%s,id_formato=%s,fec_lanzamiento=%s,precio=%s,cantidad=%s,caratula=%s
+                        WHERE id_album = """) + "'" + str(self.id_albumModificado) + "'"
+
+
+        self.data = (album.getCod_album(),
+        album.getNombre(),
+        album.getId_interprete(),
+        album.getId_genero(),
+        album.getCant_temas(),
+        album.getId_discografica(),
+        album.getId_formato(),
+        album.getFec_lanzamiento(),
+        album.getPrecio(),
+        album.getCantidad(),
+        album.getCaratula())
+
         self.Conectar()
 
-        if self.conexion.is_connected():
-            try:
-                self.cursor = self.conexion.cursor()
-                self.query = "INSERT IGNORE INTO genero VALUES(null,%s)"  #Evitamos cargar duplicado.
+        self.datos = self.abmSQL(self.query,self.data)   #Enviamos Query y Tupla, el metodo abm es el que posee el commit. y se desconecta al terminar.
 
-                self.datos_envio = (nombre,) #Creamos la tupla, si la tupla tiene un solo item dejar coma al final.
-                self.cursor.execute(self.query,self.datos_envio)
+        print("[ABM] Ejecutada MODIFICACION de un Album.") #Si ya esta cargado, o si se cargó el registro.
 
-                self.conexion.commit()
-                print("Ejecutada carga de un Género Musical.") #Si ya esta cargado, o si se cargó el registro.
 
-            except self.mysql.connector.Error as Error:
-                print("No hay conexion con la base de datos.",Error)
+#----------------------------------------------------------------------------------
+
+
+    def EliminarAlbum(self,id_album): # Recibimos solo la id_album para eliminarlo.
+        #Preparamos la tupla
+        self.id_album = id_album
+        self.query = "DELETE FROM album WHERE id_album = %s"
+        self.data = (id_album,)
+
+        #Conectamos y enviamos:
+        self.Conectar()
+        self.run = self.abmSQL(self.query,self.data)
+        print("[ABM] Solicitando ELIMINACION del Album..")  #print debug
         
-        self.Desconectar()
+        #Se desconecta automaticamente luego de hacer la operacion, ver modulo conexion.py.
+
+
+#----------------------------------------------------------------------------------
+
+    def CargarInterprete(self,nombre,apellido,nacionalidad,foto):
+
+        self.nombre = nombre
+        self.apellido = apellido
+        self.nacionalidad = nacionalidad
+        self.foto = foto
+        
+        self.query = "INSERT IGNORE INTO interprete VALUES(null,%s,%s,%s,%s)"  #Evitamos cargar duplicado.
+        self.data = (self.nombre,self.apellido,self.nacionalidad,self.foto) #Creamos la tupla, si la tupla tiene un solo item dejar coma al final.
+ 
+        self.Conectar()
+        self.run = self.abmSQL(self.query,self.data)
+        print("[ABM] Ejecutada carga de un Interprete..")  #print debug
+
+        #Se desconecta automaticamente luego de hacer la operacion, ver modulo conexion.py.
+
+#----------------------------------------------------------------------------------
+
+
+    def CargarGenero(self,nombre): #Cargar un Género musical.    
+        # Tabla Interprete:  id_interprete(autoincremental),nombre,apellido,nacionalidad,foto
+        self.nombre = nombre
+
+        self.query = "INSERT IGNORE INTO genero VALUES(null,%s)"  #Evitamos cargar duplicado.
+        self.data = (nombre,) #Creamos la tupla, si la tupla tiene un solo item dejar coma al final.
+
+        self.Conectar()
+
+        self.run = self.abmSQL(self.query,self.data)
+        print("[ABM] Ejecutada carga de un Género..")  #print debug
+
+        #Se desconecta automaticamente luego de hacer la operacion, ver modulo conexion.py.
 
 #----------------------------------------------------------------------------------
 
 
     def CargarFormato(self,tipo): #Cargar un Formato musical.    
+        self.tipo = tipo
+
+        self.query = "INSERT IGNORE INTO formato VALUES(null,%s)"  #Evitamos cargar duplicado.
+        self.data = (tipo,) #Creamos la tupla, si la tupla tiene un solo item dejar coma al final.
+
         self.Conectar()
 
-        if self.conexion.is_connected():
-            try:
-                self.cursor = self.conexion.cursor()
-                self.query = "INSERT IGNORE INTO formato VALUES(null,%s)"  #Evitamos cargar duplicado.
+        self.run = self.abmSQL(self.query,self.data)
+        print("[ABM] Ejecutada carga de un Formato..")  #print debug
 
-                self.datos_envio = (tipo,) #Creamos la tupla, si la tupla tiene un solo item dejar coma al final.
-                self.cursor.execute(self.query,self.datos_envio)
-
-                self.conexion.commit()
-                print("Ejecutada carga de un formato fisico Musical.") #Si ya esta cargado, o si se cargó el registro.
-
-            except self.mysql.connector.Error as Error:
-                print("No hay conexion con la base de datos.",Error)
-        
-        self.Desconectar()
+        #Se desconecta automaticamente luego de hacer la operacion, ver modulo conexion.py.
 
 #----------------------------------------------------------------------------------
 
 
     def CargarDiscografica(self,nombre): #Cargar un Formato musical.    
+        self.nombre = nombre
+        
+        self.query = "INSERT IGNORE INTO discografica VALUES(null,%s)"  #Evitamos cargar duplicado.
+
+        self.data = (nombre,) #Creamos la tupla, si la tupla tiene un solo item dejar coma al final.
+
         self.Conectar()
 
-        if self.conexion.is_connected():
-            try:
-                self.cursor = self.conexion.cursor()
-                self.query = "INSERT IGNORE INTO discografica VALUES(null,%s)"  #Evitamos cargar duplicado.
+        self.run = self.abmSQL(self.query,self.data)
+        print("[ABM] Ejecutada carga de una Discografica..")  #print debug
 
-                self.datos_envio = (nombre,) #Creamos la tupla, si la tupla tiene un solo item dejar coma al final.
-                self.cursor.execute(self.query,self.datos_envio)
+        #Se desconecta automaticamente luego de hacer la operacion, ver modulo conexion.py.
 
-                self.conexion.commit()
-                print("Ejecutada carga de una Discográfica.") #Si ya esta cargado, o si se cargó el registro.
 
-            except self.mysql.connector.Error as Error:
-                print("No hay conexion con la base de datos.",Error)
-        
-        self.Desconectar()
+
+
 
 # test = Cargar()
 

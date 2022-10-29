@@ -1,11 +1,20 @@
 #Funciones de formato y salida de texto para estética del CLI consola y algunas filtros para la salida de datos en la interfaz.
 
+from lib2to3.pytree import NegatedPattern
 import consulta
-import cargadatos
+import abm
 from cli_colores import ColoresCLI as color
 
+#Mensaje por defecto para ausencia de registros:
 msg_nohayregistros = color.BOLD + "\nNo hay registros que coincidan con su búsqueda.." + color.END
 
+
+#Tema de Color Custom para las tablas, puede cambiarse para todas desde aqui::
+ColorTemaA = color.NEGRO
+ColorTemaB = color.END
+ColorTemaC = color.CYAN
+ColorTemaD = color.NARANJA
+ColorTemaE = color.GRIS_CLARO
 
 def MostrarAlbumsPorInterpreteCLI():
   
@@ -16,7 +25,7 @@ def MostrarAlbumsPorInterpreteCLI():
         print(msg_nohayregistros)
         return
 
-    espaciado = 1
+    gap = 1
     longalbum = 0
     longnombre = 0
     longapellido = 0
@@ -27,6 +36,7 @@ def MostrarAlbumsPorInterpreteCLI():
     longprecio = 0
     longcant = 0
     longdiscograf = 0
+    longdidalbum = 0
 
     for album in registros:  #Procedimiento para extraer maximos strlen de cada registro
         if len(str(album[0])) > longalbum:
@@ -49,14 +59,49 @@ def MostrarAlbumsPorInterpreteCLI():
             longcant = len(str(album[9]))
         if len(str(album[10])) > longdiscograf:
             longdiscograf = len(str(album[10]))
+        if len(str(album[12])) > longdidalbum:
+            longdidalbum = len(str(album[12]))
 
     print(color.BOLD)
-    print(" " * espaciado, str("Album").ljust(longalbum, ' ')," " * espaciado, str("Nombre").ljust(longnombre, ' ')," " * espaciado, str("Apellido").ljust(longapellido, ' ')," " * espaciado,str("Genero").center(longgenero, ' ')," " * espaciado," " * espaciado,str("Codigo").center(longalbumcod, ' ')," " * espaciado," " * espaciado,str("Formato").ljust(longformato, ' ')," " * espaciado," " * espaciado,str("Año").center(longfecha, ' ')," " * espaciado," " * espaciado,str("Precio").ljust(longprecio, ' ')," " * espaciado," " * espaciado,str("Stock").center(longcant, ' ')," " * espaciado," " * espaciado,str("Sello").ljust(longdiscograf, ' ')," " * espaciado)
+    print(" " * gap, str("Id").ljust(longdidalbum,' '),
+    " " * gap,str("Album").ljust(longalbum, ' '),
+    " " * gap, str("Nombre").ljust(longnombre, ' '),
+    " " * gap, str("Apellido").ljust(longapellido, ' '),
+    " " * gap,str("Genero").center(longgenero, ' '),
+    " " * gap," " * gap,str("Codigo").center(longalbumcod, ' '),
+    " " * gap," " * gap,str("Formato").ljust(longformato, ' '),
+    " " * gap," " * gap,str("Año").center(longfecha, ' '),
+    " " * gap," " * gap,str("Precio").ljust(longprecio, ' '),
+    " " * gap," " * gap,str("Stock").center(longcant, ' '),
+    " " * gap,str("Sello").ljust(longdiscograf, ' '),
+    " " * gap)
     print(color.END)
-    for album in registros:
-        #Imprimo resultados se calibran automáticamente de acuerdo a la cadena de long maxima ya que es variable en su longitud en cada columna.
-        print(" " * espaciado, str(album[0]).ljust(longalbum, ' ')," " * espaciado, str(album[1]).ljust(longnombre, ' ')," " * espaciado, str(album[2]).ljust(longapellido, ' ')," " * espaciado,str(album[4]).center(longgenero, ' ')," " * espaciado," " * espaciado,str(album[5]).center(longalbumcod, ' ')," " * espaciado," " * espaciado,str(album[6]).ljust(longformato, ' ')," " * espaciado," " * espaciado,str(album[7]).ljust(longfecha, ' ')," " * espaciado," " * espaciado,str(album[8]).ljust(longprecio, ' ')," " * espaciado," " * espaciado,str(album[9]).ljust(longcant, ' ')," " * espaciado," " * espaciado,str(album[10]).center(longdiscograf, ' ')," " * espaciado)
+    
+    i = 0
 
+    for album in registros:
+        
+        if i % 2 == 0:
+            print(ColorTemaA, end='')
+        else:
+            print(ColorTemaB, end='')
+              
+        #Imprimo resultados se calibran automáticamente de acuerdo a la cadena de long maxima ya que es variable en su longitud en cada columna.
+
+        print(" " * gap,str(album[12]).ljust(longdidalbum, ' '),
+        " " * gap,str(album[0]).ljust(longalbum, ' '),
+        " " * gap,str(album[1]).ljust(longnombre, ' '),
+        " " * gap, str(album[2]).ljust(longapellido, ' '),
+        " " * gap,str(album[4]).center(longgenero, ' '),
+        " " * gap," " * gap,str(album[5]).center(longalbumcod, ' '),
+        " " * gap," " * gap,str(album[6]).ljust(longformato, ' '),
+        " " * gap," " * gap,str(album[7]).ljust(longfecha, ' '),
+        " " * gap," " * gap,str(album[8]).ljust(longprecio, ' '),
+        " " * gap," " * gap,str(album[9] if album[9] > 0 else color.ROJO + "NO" + color.END).ljust(longcant, ' '),
+        " " * gap," " * gap,str(album[10]).ljust(longdiscograf, ' '),
+        " " * gap)
+        i += 1
+    i = 0
 
 
    
@@ -71,63 +116,66 @@ def MostrarAlbumPorNombreCLI(): #Edgar G.
 
     Listar = consulta.Listar()
     registros = Listar.NombreAlbumEspecifico(nombre)
-            
+
+    
+
     if registros == []:
         print(msg_nohayregistros)
         return                          
     else:
-        espaciado = 5
+        gap = 5
         for album in registros:
-            
-            print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
+            pass
 
-            print("  Album: ", color.VERDE_CLARO,str(album[2]),color.END)
-            print("  Cod:    ",  str(album[1]))
-            print("  Artista:", str(album[9]),str(album[10]))
-            print("  Año:    ", str(album[4]))
-            print("  Tipo:   ", str(album[12]))
-            print("  Genero: ", str(album[11]))
-            print("  Precio:  $", str(album[5]), sep='')
-            print("█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
+    print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
 
-            print("Id en BD:", str(album[0]))
+    print("  Album: ", color.VERDE_CLARO,str(album[2]),color.END)
+    print("  Cod:    ",  str(album[1]))
+    print("  Artista:", str(album[9]),str(album[10]))
+    print("  Año:    ", str(album[4]))
+    print("  Tipo:   ", str(album[12]))
+    print("  Genero: ", str(album[11]))
+    print("  Precio:  $", str(album[5]), sep='')
+    print("█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
 
-            if album[6] > 0:
-                print("En Stock?:",color.VERDE,"SI, hay disponibles", str(album[6]), "unidades.", color.END)
-            else:
-                print("En Stock?:",color.ROJO, "NO quedan unidades.",color.END)             
-            print("Canciones del Album: ", str(album[3]))
-            
-            print("\n")
+    print("Id en BD:", str(album[0]))
 
-        #Se puede dar que existan albumes sin canciones cargadas. 
-        if ((album[13] == None) and (album[14] == None) and (album[15] == None)):
-            print(color.AMARILLO + "Album sin información de canciones cargadas." + color.END)
-        else:
-            for cancion in registros:
-                if len(str(cancion[13])) > pistaChrLen:
-                    pistaChrLen = len(str(cancion[13]))
+    if album[6] > 0:
+        print("En Stock?:",color.VERDE,"SI, hay disponibles", str(album[6]), "unidades.", color.END)
+    else:
+        print("En Stock?:",color.ROJO, "NO quedan unidades.",color.END)             
+    print("Canciones del Album: ", str(album[3]))
 
-                if len(str(cancion[14])) > tituloChrLen:
-                    tituloChrLen = len(str(cancion[14]))
+    print("\n")
 
-                if len(str(cancion[15])) > duracionChrLen:
-                    duracionChrLen = len(str(cancion[15]))
+    #Se puede dar que existan albumes sin canciones cargadas. 
+    if ((album[13] == None) and (album[14] == None) and (album[15] == None)):
+        print(color.AMARILLO + "Album sin información de canciones cargadas." + color.END)
+    else:
+        for cancion in registros:
+            if len(str(cancion[13])) > pistaChrLen:
+                pistaChrLen = len(str(cancion[13]))
+
+            if len(str(cancion[14])) > tituloChrLen:
+                tituloChrLen = len(str(cancion[14]))
+
+            if len(str(cancion[15])) > duracionChrLen:
+                duracionChrLen = len(str(cancion[15]))
+
+        print(color.BOLD,end='')
+        print(" " * gap, str("Pista").ljust(pistaChrLen, ' ')," " * 3,str("Nombre").ljust(tituloChrLen, ' '), " " * 5, str("Duracion").ljust(duracionChrLen, ' '))
+        print(color.END)
+
+        
+        for album in registros:               
+            print(" " * gap, color.CYAN, album[13],color.END," " * gap, str(album[14]).ljust(tituloChrLen, ' '), " " * gap  ,album[15])
 
 
-                print(" " * espaciado, str("Pista").ljust(pistaChrLen, ' ')," " * 1,str("Nombre").ljust(tituloChrLen, ' '), " " * espaciado, str("Duracion").ljust(duracionChrLen, ' '))
-
-                print("\n")
-                
-                for album in registros:               
-                    print(" " * espaciado, album[13]," " * espaciado, str(album[14]).ljust(tituloChrLen, ' '), " " * espaciado  ,album[15])
-
-
-                print("\n")
-                print("\nTapa del Disco: ",album[7])
-                print("Foto Interprete:",album[8])
-                print("Spotify Artista:","\033[94m https://open.spotify.com/search/" + str(album[9]) + "%20" + str(album[10]) + "\033[0m")
-                print("Spotify Album:  ","\033[94m https://open.spotify.com/search/album" + "%3A" + str(album[2]) + "\033[0m")
+        print("\n")
+        print("\nTapa del Disco: ",album[7])
+        print("Foto Interprete:",album[8])
+        print("Spotify Artista:",color.AZUL + "https://open.spotify.com/search/" + str(album[9]) + "%20" + str(album[10]) + color.END)
+        print("Spotify Album:  ",color.AZUL + "https://open.spotify.com/search/album" + "%3A" + str(album[2]) + color.END)
         
     return
 
@@ -137,7 +185,7 @@ def MostrarAlbumsPorGeneroCLI():
     genero = str(input("Ingrese el género que quiere listar: "))
     genero = genero.strip('\n')  #String, limpieza de espacios ant post
     genero = genero.strip()
-
+#album.id_album,album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.cod_album, formato.tipo, album.fec_lanzamiento,album.precio,album.cantidad
 
     Listar = consulta.Listar()
     registros = Listar.GeneroEspecifico(genero)
@@ -146,7 +194,7 @@ def MostrarAlbumsPorGeneroCLI():
         print(msg_nohayregistros)
         return
 
-    espaciado = 1
+    gap = 1
     longalbum = 0
     longnombre = 0
     longapellido = 0
@@ -154,14 +202,20 @@ def MostrarAlbumsPorGeneroCLI():
     longalbumcod = 0
     longformato = 0
     longfecha = 0
+    longprecio = 0
+    longcant = 0
+    longdiscograf = 0
+    longdidalbum = 0
 
     for album in registros:  #Procedimiento para extraer maximos strlen de cada registro
-        if len(str(album[0])) > longalbum:
-            longalbum = len(str(album[0]))
-        if len(str(album[1])) > longnombre:
-            longnombre = len(str(album[1]))
-        if len(str(album[2])) > longapellido:
-            longapellido = len(str(album[2]))
+        if len(str(album[0])) > longdidalbum:
+            longdidalbum = len(str(album[0]))
+        if len(str(album[1])) > longalbum:
+            longalbum = len(str(album[1]))
+        if len(str(album[2])) > longnombre:
+            longnombre = len(str(album[2]))
+        if len(str(album[3])) > longapellido:
+            longapellido = len(str(album[3]))
         if len(str(album[4])) > longgenero:
             longgenero = len(str(album[4]))
         if len(str(album[5])) > longalbumcod:
@@ -170,32 +224,68 @@ def MostrarAlbumsPorGeneroCLI():
             longformato = len(str(album[6]))
         if len(str(album[7])) > longfecha:
             longfecha = len(str(album[7]))
+        if len(str(album[8])) > longprecio:
+            longprecio = len(str(album[8]))
+        if len(str(album[9])) > longcant:
+            longcant = len(str(album[9]))
 
-    print("\n\033[1m")
-    print("Usted solicitó listar Albumes del género musical " + genero + ":\n" )
-    print(" " * espaciado, str("Album").ljust(longalbum, ' ')," " * espaciado, str("Nombre").ljust(longnombre, ' ')," " * espaciado, str("Apellido").ljust(longapellido, ' ')," " * espaciado,str("Código").ljust(longgenero, ' ')," " * espaciado," " * espaciado,str("Sello").center(longalbumcod, ' ')," " * espaciado," " * espaciado,str("Año").center(longformato, ' ')," " * espaciado," " * espaciado,str("Stock\033[0m").ljust(longfecha, ' '))
+
+    print(color.BOLD)
+    print(" " * gap, str("Id").ljust(longdidalbum,' '),
+    " " * gap,str("Album").ljust(longalbum, ' '),
+    " " * gap, str("Nombre").ljust(longnombre, ' '),
+    " " * gap, str("Apellido").ljust(longapellido, ' '),
+    "  " * gap,str("Genero").center(longgenero, ' '),
+    " " * gap,str("Codigo").center(longalbumcod, ' '),
+    " " * gap," " * gap,str("Formato").ljust(longformato, ' '),
+    " " * gap," " * gap,str("Año").center(longfecha, ' '),
+    " " * gap," " * gap,str("Precio").ljust(longprecio, ' '),
+    " " * gap," " * gap,str("Stock").center(longcant, ' '),
+    " " * gap)
+    print(color.END)
+    
+    i = 0
 
     for album in registros:
-        print(" " * espaciado, str(album[0]).ljust(longalbum, ' ')," " * espaciado, str(album[1]).ljust(longnombre, ' ')," " * espaciado, str(album[2]).ljust(longapellido, ' ')," " * espaciado,str(album[4]).center(longgenero, ' ')," " * espaciado," " * espaciado,str(album[5]).ljust(longalbumcod, ' ')," " * espaciado," " * espaciado,str(album[6]).ljust(longformato, ' ')," " * espaciado," " * espaciado,str(album[7]).ljust(longfecha, ' '))
+        
+        if i % 2 == 0:
+            print(ColorTemaA, end='')
+        else:
+            print(ColorTemaB, end='')
+              
+        #Imprimo resultados se calibran automáticamente de acuerdo a la cadena de long maxima ya que es variable en su longitud en cada columna.
 
+        print(" " * gap,str(album[0]).ljust(longdidalbum, ' '),
+        " " * gap,str(album[1]).ljust(longalbum, ' '),
+        " " * gap,str(album[2]).ljust(longnombre, ' '),
+        " " * gap, str(album[3]).ljust(longapellido, ' '),
+        "    " * gap,str(album[4]).center(longgenero, ' '),
+        " " * gap," " * gap,str(album[5]).center(longalbumcod, ' '),
+        " " * gap," " * gap,str(album[6]).ljust(longformato, ' '),
+        " " * gap," " * gap,str(album[7]).ljust(longfecha, ' '),
+        " " * gap," " * gap,str(album[8]).ljust(longprecio, ' '),
+        " " * gap," " * gap,str(album[9] if album[9] > 0 else color.ROJO + "NO" + color.END).ljust(longcant, ' '),
+        " " * gap)
+        i += 1
+    i = 0
 
 def InsertarInterpreteCLI():
 
     while True:
         print("\n")
-        print("Usted está por cargar nuevo Artista o Interprete: \n")
+        print("Usted está por cargar nuevo Artista o Interprete:"+ color.END)
+        nombre =        str(input(color.BOLD +"Escriba Nombre del interprete:                      " + color.END))
+        apellido =      str(input(color.BOLD +"Apellido (si no tiene dejar en blanco ej. ABBA):    " + color.END))
+        nacionalidad =  str(input(color.BOLD +"Nacionalidad del interprete:                        " + color.END))
+        foto =          str(input(color.BOLD +"Foto del interprete (link directo al .jpg .jpeg o .png o puede dejarlo vacio \n Link:  " + color.END))
+        print(color.END)
 
-        nombre =        str(input("Escriba Nombre del interprete:                      "))
-        apellido =      str(input("Apellido (si no tiene dejar en blanco ej. ABBA):    "))
-        nacionalidad =  str(input("Nacionalidad del interprete:                        "))
-        foto =          str(input("Foto del interprete (link directo al .jpg .jpeg o .png o puede dejarlo vacio \n Link:  "))
-        
+        print(color.BOLD + color.CYAN_CLARO)
+        opcion = input("\n█ Que desea hacer? █ 1 (Cargar) █ 2 (Reingresar los Datos) █ 3 (Cancelar) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
 
-        opcion = input("\n Que desea hacer? | 1 (Cargar) | 2 (Reingresar los Datos) | 3 (Cancelar)\nIngrese un número de opción: ")
-        
         if opcion == "1":
             print("Intentando carga de los datos..")
-            carga = cargadatos.Cargar()
+            carga = abm.Cargar()
             carga.CargarInterprete(nombre,apellido,nacionalidad,foto)
             break
 
@@ -226,7 +316,7 @@ def MostrarInterpreteCLI():
 
     #i.id_interprete, i.nombre, i.apellido, i.nacionalidad, i.foto
 
-    espaciado = 1
+    gap = 1
     longidinterprete = 0
     longnombre = 0
     longapellido = 0
@@ -246,13 +336,21 @@ def MostrarInterpreteCLI():
         if len(str(artista[3])) > longnacionalidad:
             longnacionalidad = len(str(artista[3]))
 
-    print("\n\033[1m")
+    print(color.BOLD)
     print("Usted solicitó listar los Artistas disponibles en la base de datos:\n" )
-    print(" " * espaciado, str("Id").ljust(longidinterprete, ' ')," " * espaciado, str("Nombre").ljust(longnombre, ' ')," " * espaciado, str("Apellido").ljust(longapellido, ' ')," " * espaciado,str("Nacionalidad\033[0m").center(longnacionalidad, ' '))
+    print(" " * gap, str("Id").ljust(longidinterprete, ' ')," " * gap, str("Nombre").ljust(longnombre, ' ')," " * gap, str("Apellido").ljust(longapellido, ' ')," " * gap,str("Nacionalidad" + color.END).center(longnacionalidad, ' '))
 
+    i = 0
     for artista in registros:
-        print(" " * espaciado, str(artista[0]).ljust(longidinterprete, ' ')," " * espaciado, str(artista[1]).ljust(longnombre, ' ')," " * espaciado, str(artista[2]).ljust(longapellido, ' ')," " * espaciado,str(artista[3]).center(longnacionalidad, ' '))
+        
+        if i % 2 == 0:
+            print(ColorTemaA, end='')
+        else:
+            print(ColorTemaC, end='')
+        i += 1
 
+        print(" " * gap, str(artista[0]).ljust(longidinterprete, ' ')," " * gap, str(artista[1]).ljust(longnombre, ' ')," " * gap, str(artista[2]).ljust(longapellido, ' ')," " * gap,str(artista[3]).center(longnacionalidad, ' '),(artista[4] if artista[4] != "" else color.ROJO + "No hay imagen de este artista en la Base de Datos." + color.END))
+    i = 0
 
 def MostrarGenerosCLI():
 
@@ -263,7 +361,7 @@ def MostrarGenerosCLI():
         print(msg_nohayregistros)
         return
 
-    espaciado = 1
+    gap = 1
     longidgenero = 0
     longnombre = 0
 
@@ -275,13 +373,20 @@ def MostrarGenerosCLI():
             longnombre = len(str(genero[1]))
 
 
-    print("\n\033[1m")
+    print(color.BOLD)
     print("Usted solicitó listar los Géneros Musicales cargados en la Base de Datos:\n" )
-    print(" " * espaciado, str("Id").ljust(longidgenero, ' ')," " * espaciado, str("Nombre\033[0m").ljust(longnombre, ' '))
+    print(" " * gap, str("Id").ljust(longidgenero, ' ')," " * gap, str("Nombre" + color.END).ljust(longnombre, ' '))
 
+    i = 0
     for genero in registros:
-        print(" " * espaciado, str(genero[0]).ljust(longidgenero, ' ')," " * espaciado, str(genero[1]).ljust(longnombre, ' '))
-
+        
+        if i % 2 == 0:
+            print(ColorTemaE, end='')
+        else:
+            print(ColorTemaD, end='')
+        i += 1
+        print(" " * gap, str(genero[0]).ljust(longidgenero, ' ')," " * gap, str(genero[1]).ljust(longnombre, ' '))
+    i = 0
 
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -295,7 +400,7 @@ def MostrarFormatosCLI():
         print(msg_nohayregistros)
         return
 
-    espaciado = 1
+    gap = 1
     longidformato = 0
     longnombre = 0
 
@@ -307,13 +412,21 @@ def MostrarFormatosCLI():
             longnombre = len(str(formato[1]))
 
 
-    print("\n\033[1m")
+    print(color.BOLD)
     print("Usted solicitó listar los formatos de música cargados en la Base de Datos:\n" )
-    print(" " * espaciado, str("Id").ljust(longidformato, ' ')," " * espaciado, str("Nombre\033[0m").ljust(longnombre, ' '))
+    print(" " * gap, str("Id").ljust(longidformato, ' ')," " * gap, str("Nombre" + color.END).ljust(longnombre, ' '))
 
+    i = 0
     for formato in registros:
-        print(" " * espaciado, str(formato[0]).ljust(longidformato, ' ')," " * espaciado, str(formato[1]).ljust(longnombre, ' '))
+        
+        if i % 2 == 0:
+            print(ColorTemaA, end='')
+        else:
+            print(ColorTemaD, end='')
+        i += 1
 
+        print(" " * gap, str(formato[0]).ljust(longidformato, ' ')," " * gap, str(formato[1]).ljust(longnombre, ' '))
+    i = 0
 
 
 def MostrarDiscograficasCLI():
@@ -325,7 +438,7 @@ def MostrarDiscograficasCLI():
         print(msg_nohayregistros)
         return
 
-    espaciado = 1
+    gap = 1
     longidnombre = 0
     longnombre = 0
 
@@ -337,31 +450,40 @@ def MostrarDiscograficasCLI():
             longnombre = len(str(discografica[1]))
 
 
-    print("\n\033[1m")
+    print(color.BOLD)
     print("Usted solicitó listar Discograficas cargadas en la Base de Datos:\n" )
-    print(" " * espaciado, str("Id").ljust(longidnombre, ' ')," " * espaciado, str("Nombre\033[0m").ljust(longnombre, ' '))
+    print(" " * gap, str("Id").ljust(longidnombre, ' ')," " * gap, str("Nombre" + color.END).ljust(longnombre, ' '))
 
+    i = 0
     for discografica in registros:
-        print(" " * espaciado, str(discografica[0]).ljust(longidnombre, ' ')," " * espaciado, str(discografica[1]).ljust(longnombre, ' '))
-
+        
+        if i % 2 == 0:
+            print(ColorTemaA, end='')
+        else:
+            print(ColorTemaD, end='')
+        i += 1
+        print(" " * gap, str(discografica[0]).ljust(longidnombre, ' ')," " * gap, str(discografica[1]).ljust(longnombre, ' '))
+    i = 0
 #--------------------------------------------------------------------------------------------------------------------
 
 
 def insertarGeneroCLI():
     while True:
-        print("\n")
-        print("Usted está por cargar nuevo Género Musical, si ya existe en la Base de Datos se omitirá la carga: \n")
+        print("\n" + color.UNDERLINE)
+        print("Usted está por cargar nuevo Género Musical, si ya existe en la Base de Datos se omitirá la carga: \n" + color.END)
 
-        nombre =        str(input("Escriba nombre del Género:  "))
-        opcion = input("\n Que desea hacer? | 1 (Cargar) | 2 (Reingresar los Datos) | 3 (Cancelar)\nIngrese un número de opción: ")
-        
+        nombre = str(input(color.BOLD + "Escriba nombre del Género:  " + color.END))
+
+        print(color.BOLD + color.CYAN_CLARO)
+        opcion = input("\n█ Que desea hacer? █ 1 (Cargar) █ 2 (Reingresar los Datos) █ 3 (Cancelar) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
+
         nombre = nombre.strip('\n')  #String, limpieza de espacios anteriores y posteriores y Capitalizacion.
         nombre = nombre.strip()
         nombre = nombre.capitalize()
 
         if opcion == "1":
             print("Intentando carga de los datos..")
-            carga = cargadatos.Cargar()
+            carga = abm.Cargar()
             carga.CargarGenero(nombre)
             break
 
@@ -376,18 +498,20 @@ def insertarGeneroCLI():
 
 def insertarFormatoCLI():
     while True:
-        print("\n")
-        print("Usted está por cargar nuevo Formato de audio, si ya existe en la Base de Datos se omitirá la carga: \n")
+        print("\n" + color.UNDERLINE)
+        print("Usted está por cargar nuevo Tipo de Formato, si ya existe en la Base de Datos se omitirá la carga: \n" + color.END)
 
-        tipo =        str(input("Escriba el tipo de formato:  "))
-        opcion = input("\n Que desea hacer? | 1 (Cargar) | 2 (Reingresar los Datos) | 3 (Cancelar)\nIngrese un número de opción: ")
+        nombre = str(input(color.BOLD + "Escriba el Tipo de Formato:  " + color.END))
+
+        print(color.BOLD + color.CYAN_CLARO)
+        opcion = input("\n█ Que desea hacer? █ 1 (Cargar) █ 2 (Reingresar los Datos) █ 3 (Cancelar) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
         
         tipo = tipo.strip('\n')  #String, limpieza de espacios anteriores y posteriores.
         tipo = tipo.strip()
 
         if opcion == "1":
             print("Intentando carga de los datos..")
-            carga = cargadatos.Cargar()
+            carga = abm.Cargar()
             carga.CargarFormato(tipo)
             break
 
@@ -403,18 +527,20 @@ def insertarFormatoCLI():
 
 def InsertarDiscograficaCLI():
     while True:
-        print("\n")
-        print("Usted está por cargar una Discográfica, si ya existe en la Base de Datos se omitirá la carga: \n")
+        print("\n" + color.UNDERLINE)
+        print("Usted está por cargar una nueva Discografica, si ya existe en la Base de Datos se omitirá la carga: \n" + color.END)
 
-        nombre = str(input("Escriba el nombre de la Discográfica:  "))
-        opcion = input("\n Que desea hacer? | 1 (Cargar) | 2 (Reingresar los Datos) | 3 (Cancelar)\nIngrese un número de opción: ")
-        
+        nombre = str(input(color.BOLD + "Escriba el nombre de la Discográfica:  " + color.END))
+
+        print(color.BOLD + color.CYAN_CLARO)
+        opcion = input("\n█ Que desea hacer? █ 1 (Cargar) █ 2 (Reingresar los Datos) █ 3 (Cancelar) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
+
         nombre = nombre.strip('\n')  #String, limpieza de espacios anteriores y posteriores.
         nombre = nombre.strip()
 
         if opcion == "1":
             print("Intentando carga de los datos..")
-            carga = cargadatos.Cargar()
+            carga = abm.Cargar()
             carga.CargarDiscografica(nombre)
             break
 
@@ -436,50 +562,63 @@ def InsertarAlbumCLI():
         print("Usted está por cargar un álbum: \n")
         
 
-        cod_album = str(input("\nEscriba el código discográfico del álbum:  "))
+        cod_album = str(input("\nEscriba el " + color.BOLD + "código" + color.END + " discográfico del álbum: "))
         cod_album = cod_album.strip('\n')  #String, limpieza de espacios anteriores y posteriores.
         cod_album = cod_album.strip()
 
-        nombre = input("\nIngrese el nombre del álbum: ")
+        nombre = input("\nIngrese el " + color.BOLD + "nombre" + color.END + " del álbum: ")
         nombre = nombre.strip('\n')  #String, limpieza de espacios anteriores y posteriores.
         nombre = nombre.strip()
 
        #-------------------------------------------------------------------------------------------------------   
 
         MostrarInterpreteCLI()
-        id_interprete = int(input("\nIngrese el ID del Intérprete: "))
+
+        id_interprete = int(input("\nIngrese el " + color.BOLD + "Id del Interprete" + color.END + " (si no existe, escriba '0' para agregar uno): "))
+        if id_interprete == 0:
+            InsertarInterpreteCLI()
+            MostrarInterpreteCLI()
+            id_interprete = int(input("\nIngrese el " + color.BOLD + "Id del Interprete" + color.END + ": "))
 
         #------------------------------------------------------------------------------------------------------ 
                  
         MostrarGenerosCLI()
-        id_genero = int(input("\nIngrese el ID del Género: "))
-
+        id_genero = int(input("\nIngrese el " + color.BOLD + "Id del género" + color.END + " (si no existe, escriba '0' para agregar uno): "))
+        if id_genero == 0:
+            insertarGeneroCLI()
+            MostrarGenerosCLI()
+            id_genero = int(input("\nIngrese el " + color.BOLD + "Id del género " + color.END + ": "))
         #------------------------------------------------------------------------------------------------------  
 
-        cant_temas = int(input("\nIngrese la cantidad de temas: "))
+        cant_temas = int(input("\nIngrese la " + color.BOLD + "cantidad de temas: " + color.END))
 
         #------------------------------------------------------------------------------------------------------   
       
         MostrarDiscograficasCLI()
-        id_discografica = int(input("\nIngrese el ID de la discografica: "))
+        id_discografica = int(input("\nIngrese el " + color.BOLD + "id de la discográfica" + color.END  + " (si no existe, escriba '0' para agregar una): "))
+        if id_discografica == 0:
+            InsertarDiscograficaCLI()
+            MostrarDiscograficasCLI()
+            id_discografica = int(input("\nIngrese el " + color.BOLD + "id de la discográfica" + color.END  + ": "))
 
         #------------------------------------------------------------------------------------------------------  
         MostrarFormatosCLI()               
-        id_formato = int(input("\nIngrese el ID del formato: "))
+        id_formato = int(input("\nIngrese el " + color.BOLD + "id del formato" + color.END  + ": "))
         #------------------------------------------------------------------------------------------------------  
 
-        fec_lanzamiento = input("\nIngrese la Fecha de Lanzamiento (ej: 2018): ")
-        precio = float(input("\nIngrese el precio (ej: 1200): "))
-        cantidad = int(input("\nIngrese cantidad disponible de este álbum (ej: 4): "))
-        caratula = input("\nIngrese la dirección web de la Carátula (link directo al .jpg etc): ")
+        fec_lanzamiento = input("\nIngrese el " + color.BOLD + "año de lanzamiento" + color.END  + " (ej: 2018): ")
+        precio = float(input("\nIngrese el " + color.BOLD + "precio" + color.END  + " (ej: 1200): "))
+        cantidad = int(input("\nIngrese " + color.BOLD + "cantidad en stock" + color.END  + " de este álbum (ej: 4): "))
+        caratula = input("\nIngrese la " + color.BOLD + "direccion web de la imagen" + color.END  + " de la Carátula (link directo al .jpg etc): ")
 
-        nuevoAlbum = cargadatos.Album(0,cod_album,nombre,id_interprete,id_genero,cant_temas,id_discografica,id_formato,fec_lanzamiento,precio,cantidad,caratula)
+        nuevoAlbum = abm.Album(0,cod_album,nombre,id_interprete,id_genero,cant_temas,id_discografica,id_formato,fec_lanzamiento,precio,cantidad,caratula)
 
-        opcion = input("\n Que desea hacer? | 1 (Cargar) | 2 (Reingresar los Datos) | 3 (Cancelar)\nIngrese un número de opción: ")
+        print(color.BOLD + color.CYAN_CLARO)
+        opcion = input("\n█ Que desea hacer? █ 1 (Cargar) █ 2 (Reingresar los Datos) █ 3 (Cancelar) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
 
         if opcion == "1":
             print("Intentando carga de los datos..")
-            carga = cargadatos.Cargar()
+            carga = abm.Cargar()
             carga.CargarAlbum(nuevoAlbum)
             break
 
@@ -488,7 +627,8 @@ def InsertarAlbumCLI():
             cod_album = ""
             nombre = ""
             id_interprete = ""
-            id_genero,cant_temas = ""
+            id_genero = ""
+            cant_temas = ""
             id_discografica = ""
             id_formato = ""
             fec_lanzamiento = ""
@@ -502,3 +642,342 @@ def InsertarAlbumCLI():
         else:
             print("¡Opción incorrecta!")
 
+#-------------------------------------------------------------------------------------------------------------------------------------------
+
+# CLI Modificacion Album (descripción):
+# 1 - Pedir id de album. Será el parámetro a pasar junto con la nueva tupla de la clase Album que obtengamos.
+# 2 - Durante el cuestionario usamos variables con nombre de todos los campos a modificar con lo que se mantiene o se va segun respuestas. 
+# 3 - Luego establecemos todas las propiedades de la clase album con los datos de las columnas, por medio de la consulta por ID que tenemos en "consultas.py" 
+# 4 - Usando un filtro con IF's almacenando lo que se modificará. Y manteniendo lo que se queda. Getter y Setters. Se modela la tupla.
+# 5 - Al ultimo enviamos a conexion el objeto modelado en sus propiedades. Tenemos Añadido de decidir reintentar la Modificación en un menú adicional.
+# 6 - Hacemos el UPDATE Se envia el objeto con la info modificada al modulo ABM. Finalmente éste hace la conexión con la query y la tupla objeto.
+# CLI (interfaz) ---> CLI_FORMATO (estetica y formato de los datos) ---> CONSULTA (SOLO CONSULTAS select) ----> ABM(altas bajas modificacion, y clases)-----> conexion.
+
+
+def ModificarAlbumCLI():
+
+    id_album = None
+    cod_album = None
+    nombre = None
+    id_interprete = None
+    id_genero = None
+    cant_temas = None
+    id_discografica = None
+    id_formato = None
+    fec_lanzamiento = None
+    precio = None
+    cantidad = None
+    caratula = None
+
+
+    while True:
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
+        #Se elige el id del album:
+
+        print("\n")
+        print("Usted está por " + color.AMARILLO+ "MODIFICAR" + color.END + " un " + color.BOLD + "álbum." + color.END)
+
+        id_album = int(input("\nEscriba el " + color.BOLD + "id" + color.END + " del album a modificar (ingrese 0 para ver la lista antes, si no lo sabe.):  "))
+
+        if (id_album == 0) or (id_album == None):
+            MostrarAlbumsPorInterpreteCLI()
+            id_album = int(input("\n Escriba el " + color.BOLD + "id" + color.END + " del album a modificar: "))
+              
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+        print(color.BOLD + "\nPerfecto, ahora siga las instrucciones: \n" + color.END)
+
+        #Cuestionario donde cambiaremos los datos en las propiedades de la clase Album luego por medio de los setters y los getters las propiedades de el objeto:
+
+        pregunta1 = str(input(color.VERDE_CLARO + "Desea modificar el codigo discográfico del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta1.lower()
+        if pregunta1 == "s":
+            cod_album = str(input("\nEscriba el " + color.BOLD + "nuevo código" + color.END + " discográfico del álbum: "))
+            cod_album = cod_album.strip()
+
+        pregunta2 = str(input(color.VERDE_CLARO + "Desea modificar el nombre del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta2.lower()       
+        if pregunta2 == "s":
+            nombre = str(input("\nEscriba el " + color.BOLD + "nuevo nombre" + color.END + " del álbum: "))
+            nombre = nombre.strip()
+            
+
+        pregunta3 = str(input(color.VERDE_CLARO + "Desea modificar el interprete del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta3.lower()       
+        if pregunta3 == "s":
+            MostrarInterpreteCLI()
+            id_interprete = int(input("\nEscriba el " + color.BOLD + "id del nuevo interprete" + color.END + " del álbum: "))
+            
+
+        pregunta4 = str(input(color.VERDE_CLARO + "Desea modificar el género del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta4.lower()       
+        if pregunta4 == "s":
+            MostrarGenerosCLI()
+            id_genero = int(input("\nEscriba el " + color.BOLD + "id del nuevo género" + color.END + " del álbum: "))
+
+
+        pregunta5 = str(input(color.VERDE_CLARO + "Desea modificar cantidad de temas del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta5.lower()       
+        if pregunta5 == "s":
+            cant_temas = input("\nEscriba la " + color.BOLD + "nueva cantidad de temas" + color.END + " del álbum: ")
+            
+
+        pregunta6 = str(input(color.VERDE_CLARO + "Desea modificar el sello discográfico del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta6.lower()       
+        if pregunta6 == "s":
+            MostrarDiscograficasCLI()
+            id_discografica = int(input("\nEscriba la " + color.BOLD + "nueva id discográfica" + color.END + " del álbum: "))
+            
+
+        pregunta7 = str(input(color.VERDE_CLARO + "Desea modificar el formato del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta7.lower()       
+        if pregunta7 == "s":
+            MostrarFormatosCLI()
+            id_formato = int(input("\nEscriba el " + color.BOLD + "nuevo formato" + color.END + " del álbum: "))
+            
+
+        pregunta8 = str(input(color.VERDE_CLARO + "Desea modificar año de lanzamiento del album?" + color.BOLD + "s/n: " + color.END))
+        pregunta8.lower()       
+        if pregunta8 == "s":
+            fec_lanzamiento = input("\nEscriba el " + color.BOLD + "nuevo año" + color.END + " del álbum (ej: 2018): ")
+            
+
+        pregunta9 = str(input(color.VERDE_CLARO + "Desea modificar el precio del album?" + color.BOLD + "s/n: " + color.END))
+        pregunta9.lower()
+        if pregunta9 == "s":
+            precio = float(input("\nEscriba el " + color.BOLD + "nuevo precio" + color.END + " del álbum (ej: 1200): "))
+            
+
+        pregunta10 = str(input(color.VERDE_CLARO + "Desea modificar el stock de unidades del album?" + color.BOLD + "s/n: " + color.END))
+        pregunta10.lower()
+        if pregunta10 == "s":
+            cantidad = int(input("\nEscriba la " + color.BOLD + "nueva cantidad de unidades" + color.END + " del álbum: "))
+            
+
+        pregunta11 = str(input(color.VERDE_CLARO + "Desea modificar la caratula del album?" + color.BOLD + "s/n: " + color.END))
+        pregunta11.lower()
+        if pregunta11 == "s":
+            caratula = (input("\nEscriba el " + color.BOLD + "link directo a la imagen" + color.END + " del álbum: "))
+            
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+        #Hacemos el Query select para traer los datos del id_album en el orden correcto, solicitado en el cuestionario.
+        getdatos = consulta.Listar()
+        resultados = getdatos.idAlbumEspecifico(id_album)
+
+        #Llenamos el objeto Album con los datos actualizados de la base de datos del id de album elegido.
+        for dato in resultados:
+            Album = abm.Album(dato[0],dato[1],dato[2],dato[3],dato[4],dato[5],dato[6],dato[7],dato[8],dato[9],dato[10],dato[11])
+            #print(dato) #print debug
+
+        #Alteramos el objeto Album solamente lo elegido en el cuestionario, si es distino a None es porque lo cambiamos en el cuestionario, si es None obtenemos el dato que sigue sin cambio desde el getter de la clase. 
+
+        if cod_album != None:
+            Album.setCod_album(cod_album)
+        else:
+            cod_album = Album.getCod_album()
+
+        if nombre != None:
+            Album.setNombre(nombre)
+        else:
+            nombre = Album.getNombre()
+
+        if id_interprete != None:
+            Album.setId_interprete(id_interprete)
+        else:
+            id_interprete = Album.getId_interprete()
+
+        if id_genero != None:
+            Album.setId_genero(id_genero)
+        else:
+            id_genero = Album.getId_genero()
+
+        if cant_temas != None:
+            Album.setCant_temas(cant_temas)
+        else:
+            cant_temas = Album.getCant_temas()
+
+        if id_discografica != None:
+            Album.setId_discografica(id_discografica)
+        else:
+            id_discografica = Album.getId_discografica()
+
+        if id_formato != None:
+            Album.setId_formato(id_formato)
+        else:
+            id_formato = Album.getId_formato()
+
+        if fec_lanzamiento != None:
+            Album.setFec_lanzamiento(fec_lanzamiento)
+        else:
+            fec_lanzamiento = Album.getFec_lanzamiento()
+
+        if precio != None:
+            Album.setPrecio(precio)
+        else:
+            precio = Album.getPrecio()
+
+        if cantidad != None:
+            Album.setCantidad(cantidad)
+        else:
+            cantidad = Album.getCantidad()
+
+        if caratula != None:
+            Album.setCaratula(caratula)
+        else:
+            caratula = Album.getCaratula()
+
+        #Antes de confirmar mostramos un resumen de los cambios:
+
+        print(color.BOLD + "\nINFO Precarga de datos: " + color.END)   #Print Debug
+
+        print(  "\nId seleccionado:",id_album, 
+                "\nCodigo album:",cod_album,
+                "\nNombre Album:",nombre,
+                "\nId Interprete:",id_interprete,
+                "\nId género:",id_genero,
+                "\ncant temas:",cant_temas,
+                "\nId Discografica:",id_discografica,
+                "\nId Formato:",id_formato,
+                "\nAño:",fec_lanzamiento,
+                "\nprecio:",precio,
+                "\ncantidad",cantidad,
+                "\ncaratula",caratula,
+                )
+
+
+
+        #Generamos la nueva tupla de datos modificados para el envio a la base de datos:
+
+        AlbumModificado = abm.Album(0,cod_album,nombre,id_interprete,id_genero,cant_temas,id_discografica,id_formato,fec_lanzamiento,precio,cantidad,caratula)
+
+
+        #Preguntamos y decidimos:
+        print(color.BOLD + color.CYAN_CLARO)
+        opcion = input("\n█ Que desea hacer? █ 1 (Confirmar cambios) █ 2 (Reintentar la Carga) █ 3 (Cancelar) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
+
+        if opcion == "1":
+            print("\nIntentando modificación de Album...")
+            modificar = abm.Cargar()                                 #Instanciamos la carga (modelo) y sus metodos.
+            modificar.ModificarAlbum(AlbumModificado,id_album)       #Se envia al metodo de la clase Cargar, el objeto portador de la tupla nueva, y de parametro el ID del album.  
+
+            print(color.AMARILLO + "\nALBUM MODIFICADO" + color.END) 
+            break
+
+        elif opcion == "2":
+            print("REINTENTANDO..")
+            cod_album = None
+            nombre = None
+            id_interprete = None
+            id_genero = None
+            cant_temas = None
+            id_discografica = None
+            id_formato = None
+            fec_lanzamiento = None
+            precio = None
+            cantidad = None
+            caratula = None
+
+        elif opcion == "3":
+            print("CANCELADO volviendo al menú principal.")
+            break  
+        else:
+            print("¡Opción incorrecta!")
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+def EliminarAlbumCLI():
+    id_album = None
+
+    while True:
+        print("\n")
+        print("Usted está por " + color.ROJO_CLARO + "ELIMINAR" + color.END + " un " + color.BOLD + "álbum." + color.END)
+
+        id_album = int(input("\nEscriba el " + color.BOLD + "id" + color.END + " del album a eliminar (ingrese 0 para ver la lista antes, si no lo sabe.):  "))
+
+        if (id_album == 0) or (id_album == None):
+            MostrarAlbumsPorInterpreteCLI()
+            id_album = int(input("\n Escriba el " + color.BOLD + "id" + color.END + " del album a eliminar: "))
+
+        print(color.BOLD + color.CYAN_CLARO)
+        opcion = input("\n█ Que desea hacer? █ " + color.ROJO_CLARO + "1 (ELIMINAR) " + color.END + color.CYAN_CLARO + "█ 2 (Reingresar Id del Album) █ 3 (Cancelar) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
+
+        if opcion == "1":
+            print("\nIntentando eliminación de Album...")
+            eliminar = abm.Cargar()
+            eliminar.EliminarAlbum(id_album)                                #Enviamos solamente el id del album 
+            print(color.ROJO_CLARO + "\nALBUM ELIMINADO" + color.END) 
+            break
+
+        elif opcion == "2":
+            print("\nREINTENTANDO..")
+            id_album = None
+        elif opcion == "3":
+            print("\nCANCELADO volviendo al menú principal.")
+            break  
+        else:
+            print("¡Opción incorrecta!")
+
+
+#------------------------------------------------
+
+#TEST DE CLASE ALBUM. 
+
+# consulta = consulta.Listar()
+# resultados = consulta.idAlbumEspecifico(14)
+
+# for dato in resultados:
+#     Album = abm.Album(dato[0],dato[1],dato[2],dato[3],dato[4],dato[5],dato[6],dato[7],dato[8],dato[9],dato[10],dato[11])
+
+# variable = Album.getId_album()
+# print(variable)
+
+# variable = Album.getCod_album()
+# print(variable)
+
+# variable = Album.getNombre()
+# print(variable)
+
+# variable = Album.getId_interprete()
+# print(variable)
+
+# variable = Album.getId_genero()
+# print(variable)
+
+# variable = Album.getCant_temas()
+# print(variable)
+
+# variable = Album.getId_discografica()
+# print(variable)
+
+# variable = Album.getId_formato()
+# print(variable)
+
+# variable = Album.getFec_lanzamiento()
+# print(variable)
+
+# variable = Album.getCaratula()
+# print(variable)
+
+
+#-------------------------------------------------
+
+
+# id_album = 14
+# nuevo_cod = "JHGFDDD"
+# #Hacemos el Query select para traer los datos del album en el orden correcto.
+# getdatos = consulta.Listar()
+# resultados = getdatos.idAlbumEspecifico(id_album)
+# #Llenamos el objeto Album con los datos de la base de datos del id de album elegido.
+# for dato in resultados:
+#     Album = amb.Album(dato[0],dato[1],dato[2],dato[3],dato[4],dato[5],dato[6],dato[7],dato[8],dato[9],dato[10],dato[11])
+
+# variable = Album.getCod_album()
+# print(variable)
+
+# Album.setCod_album(nuevo_cod)
+
+
+# variable = Album.getCod_album()
+# print(variable)

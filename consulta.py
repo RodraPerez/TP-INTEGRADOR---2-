@@ -36,7 +36,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
     def GeneroEspecifico(self, NombreGenero): #Leo Torres
         self.NombreGenero = NombreGenero
-        self.query = """SELECT album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.cod_album, formato.tipo, album.fec_lanzamiento,album.id_album
+        self.query = """SELECT album.id_album,album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.cod_album, formato.tipo, album.fec_lanzamiento,album.precio,album.cantidad
         FROM album 
         JOIN interprete
         ON album.id_interprete = interprete.id_interprete
@@ -78,6 +78,21 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
 #----------------------------------------------------------------------------------------------------------
 
+    def idAlbumEspecifico(self, idAlbum):
+        self.idAlbum = idAlbum
+        self.query = """SELECT album.id_album, album.cod_album, album.nombre, album.id_interprete, album.id_genero, album.cant_temas, album.id_discografica, album.id_formato, album.fec_lanzamiento, album.precio, album.cantidad, album.caratula
+        FROM album
+        WHERE album.id_album = """ + "'" + str(self.idAlbum) + "'"
+        #Conexion a Base de Datos:
+        self.Conectar()
+        print("Ejecutada consulta Album por id del Album.") #print debug
+        self.datos = self.QuerySQL(self.query)
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
+        #print(self.datos)
+        return self.datos
+
+#----------------------------------------------------------------------------------------------------------
+
     def ListaAlbumesCompleta(self):
         self.query = """SELECT album.nombre, interprete.nombre, interprete.apellido,album.cant_temas, genero.nombre, album.cod_album, formato.tipo, album.fec_lanzamiento,album.precio,album.cantidad,discografica.nombre,album.caratula,album.id_album,album.id_interprete,album.id_genero,album.id_discografica,album.id_formato
         FROM album
@@ -98,6 +113,10 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
         self.datos = self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         return self.datos
+
+
+
+
 
 
 #----------------------------------------------------------------------------------------------------------
@@ -138,29 +157,35 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 #----------------------------------------------------------------------------------------------------------
 # PENDIENTES:
 #----------------------------------------------------------------------------------------------------------
-#     def ListaDiscograficasCompleta(self):
+    def ListaDiscograficasCompleta(self):
 
-#         self.query ="""  """  #<---------------------------------
+        self.query ="""SELECT d.id_discografica, d.nombre
+                    FROM discografica 
+                    AS d
+                    ORDER BY d.nombre ASC;"""
 
-#         #Conexion a Base de Datos:
-#         self.Conectar()
-#         print("Ejecutada consulta Lista de Discograficas.") #print debug
-#         self.datos = self.QuerySQL(self.query)
-#         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
-#         return self.datos
+        #Conexion a Base de Datos:
+        self.Conectar()
+        print("Ejecutada consulta Lista de Discograficas.") #print debug
+        self.datos = self.QuerySQL(self.query)
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
+        return self.datos
 
-# #----------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------
     
-#     def ListaFormatosCompleta(self):
+    def ListaFormatosCompleta(self):
 
-#         self.query ="""   """ #<---------------------------------
+        self.query ="""SELECT f.id_formato, f.tipo
+                    FROM formato 
+                    AS f
+                    ORDER BY f.tipo ASC;"""
 
-#         #Conexion a Base de Datos:
-#         self.Conectar()
-#         print("Ejecutada consulta Lista de Formatos.") #print debug
-#         self.datos = self.QuerySQL(self.query)
-#         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
-#         return self.datos
+        #Conexion a Base de Datos:
+        self.Conectar()
+        print("Ejecutada consulta Lista de Formatos.") #print debug
+        self.datos = self.QuerySQL(self.query)
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
+        return self.datos
 
 
 #----------------------------------------------------------------------------------------------------------
@@ -177,3 +202,8 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
     #     return self.datos
 
 #----------------------------------------------------------------------------------------------------------
+
+
+# instancia = Listar()
+# idalbum = 14
+# instancia.idAlbumEspecifico(idalbum)
