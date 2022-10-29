@@ -1,6 +1,5 @@
 #Funciones de formato y salida de texto para estética del CLI consola y algunas filtros para la salida de datos en la interfaz.
 
-from lib2to3.pytree import NegatedPattern
 import consulta
 import abm
 from cli_colores import ColoresCLI as color
