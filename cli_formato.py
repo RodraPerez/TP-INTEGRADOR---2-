@@ -10,7 +10,7 @@ msg_nohayregistros = color.BOLD + "\nNo hay registros que coincidan con su búsq
 
 
 #Tema de Color Custom para las tablas, puede cambiarse para todas desde aqui::
-ColorTemaA = color.NEGRO
+ColorTemaA = color.CYAN_CLARO
 ColorTemaB = color.END
 ColorTemaC = color.CYAN
 ColorTemaD = color.NARANJA
