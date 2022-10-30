@@ -228,7 +228,7 @@ class Tema():
 
 class Cargar(conexion.BaseDatos):
     def __init__(self):
-        print("Instanciada Clase de Carga de datos..")  # Print Debug
+        #print("[ABM] Instanciada Clase de Carga de datos..")  # Print Debug
         conexion.BaseDatos.__init__(self)
     
 
@@ -320,7 +320,7 @@ class Cargar(conexion.BaseDatos):
  
         self.Conectar()
         self.run = self.abmSQL(self.query,self.data)
-        print("[ABM] Ejecutada carga de un Interprete..")  #print debug
+        #print("[ABM] Ejecutada carga de un Interprete..")  #print debug
 
         #Se desconecta automaticamente luego de hacer la operacion, ver modulo conexion.py.
 
@@ -337,7 +337,7 @@ class Cargar(conexion.BaseDatos):
         self.Conectar()
 
         self.run = self.abmSQL(self.query,self.data)
-        print("[ABM] Ejecutada carga de un Género..")  #print debug
+        #print("[ABM] Ejecutada carga de un Género..")  #print debug
 
         #Se desconecta automaticamente luego de hacer la operacion, ver modulo conexion.py.
 
@@ -353,7 +353,7 @@ class Cargar(conexion.BaseDatos):
         self.Conectar()
 
         self.run = self.abmSQL(self.query,self.data)
-        print("[ABM] Ejecutada carga de un Formato..")  #print debug
+        #print("[ABM] Ejecutada carga de un Formato..")  #print debug
 
         #Se desconecta automaticamente luego de hacer la operacion, ver modulo conexion.py.
 
@@ -370,13 +370,38 @@ class Cargar(conexion.BaseDatos):
         self.Conectar()
 
         self.run = self.abmSQL(self.query,self.data)
-        print("[ABM] Ejecutada carga de una Discografica..")  #print debug
+        #print("[ABM] Ejecutada carga de una Discografica..")  #print debug
 
         #Se desconecta automaticamente luego de hacer la operacion, ver modulo conexion.py.
 
 
+#---------------------------------------------------------------------------------------------------------------------------
+
+    def CargarCancion(self,Tema):     
+        # Tema:   tema.id_tema, tema.track_num, tema.titulo, tema.duracion, tema.autor,tema.compositor,tema.id_album,tema.id_interprete
+        #self,id_tema,track_num,titulo,duracion,autor,compositor,id_album,id_interprete
+
+        self.query = "INSERT IGNORE INTO tema VALUES(null,%s,%s,%s,%s,%s,%s,%s);"  #Evitamos cargar duplicado.
+
+        self.data = (Tema.getTrack_num(),
+        Tema.getTiulo(),
+        Tema.getDuracion(),
+        Tema.getAutor(),
+        Tema.getCompositor(),
+        Tema.getId_album(),
+        Tema.getId_interprete())
 
 
+        self.Conectar()
+
+        self.datos = self.abmSQL(self.query,self.data)   #Enviamos Query y Tupla, el metodo abm es el que posee el commit. y se desconecta al terminar.
+
+        #print("[ABM] Ejecutada CARGA de una cancion") #Si ya esta cargado, o si se cargó el registro.
+
+
+#----------------------------------------------------------------------------------------------------------------------
+
+#Cargar Album:
 
 # test = Cargar()
 
@@ -384,3 +409,15 @@ class Cargar(conexion.BaseDatos):
 # AComoAmor = Album(0,456783,'A Como Amor',3,5,10,5,3,'1978',899.99,3,"www.imagen.com/imagen.jpg")
 
 # test.CargarAlbum(AComoAmor)
+
+#----------------------------------------------------------------------------------------------------------------------
+
+#Cargar Una cancion a un album.
+
+# objeto = Cargar()
+
+# unacancion = Tema(0,4,"Cancion 1",'',"Autor X","Compositor X",4,2) #Almacenamos el objeto con los parametros de sus propiedades
+
+# objeto.CargarCancion(unacancion)
+
+#----------------------------------------------------------------------------------------------------------------------

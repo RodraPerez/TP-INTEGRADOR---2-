@@ -140,8 +140,9 @@ class cli():
             print(color.NARANJA + "1" + color.END + " - INSERTAR INTERPRETE")
             print(color.NARANJA + "2" + color.END + " - INSERTAR GENERO MUSICAL")
             print(color.NARANJA + "3" + color.END + " - INSERTAR FORMATO")
-            print(color.NARANJA + "4" + color.END + " - INSERTAR DISCOGRAFICA")            
-            print(color.NARANJA + "S" + color.END + " - Salir")
+            print(color.NARANJA + "4" + color.END + " - INSERTAR DISCOGRAFICA")
+            print(color.NARANJA + "5" + color.END + " - INSERTAR CANCION A UN ALBUM")                       
+            print(color.NARANJA + "\nS" + color.END + " - Salir")
             print(color.END)       
             print("\n")
 
@@ -159,6 +160,9 @@ class cli():
                 continue
             elif self.opcion == "4":
                 cli_formato.InsertarDiscograficaCLI()
+                continue
+            elif self.opcion == "5":
+                cli_formato.InsertarCancionCLI()
                 continue
             elif self.opcion == "S" or self.opcion == "s":
                 break

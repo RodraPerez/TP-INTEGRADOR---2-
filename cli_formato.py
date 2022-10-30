@@ -1,6 +1,5 @@
 #Funciones de formato y salida de texto para estética del CLI consola y algunas filtros para la salida de datos en la interfaz.
 
-from lib2to3.pytree import NegatedPattern
 import consulta
 import abm
 from cli_colores import ColoresCLI as color
@@ -10,7 +9,7 @@ msg_nohayregistros = color.BOLD + "\nNo hay registros que coincidan con su búsq
 
 
 #Tema de Color Custom para las tablas, puede cambiarse para todas desde aqui::
-ColorTemaA = color.NEGRO
+ColorTemaA = color.CYAN_CLARO
 ColorTemaB = color.END
 ColorTemaC = color.CYAN
 ColorTemaD = color.NARANJA
@@ -172,13 +171,12 @@ def MostrarAlbumPorNombreCLI(): #Edgar G.
 
 
         print("\n")
-        print("\nTapa del Disco: ",album[7])
-        print("Foto Interprete:",album[8])
+        print("\nTapa del Disco: ",album[7] if album[7] != "" else color.ROJO + "No hay imagen de la caratula en la Base de Datos." + color.END)
+        print("Foto Interprete:",album[8] if album[8] != "" else color.ROJO + "No hay imagen del Interprete en la Base de Datos." + color.END)
         print("Spotify Artista:",color.AZUL + "https://open.spotify.com/search/" + str(album[9]) + "%20" + str(album[10]) + color.END)
         print("Spotify Album:  ",color.AZUL + "https://open.spotify.com/search/album" + "%3A" + str(album[2]) + color.END)
         
     return
-
 
 
 def MostrarAlbumsPorGeneroCLI():
@@ -469,7 +467,7 @@ def MostrarDiscograficasCLI():
 
 def insertarGeneroCLI():
     while True:
-        print("\n" + color.UNDERLINE)
+        print("\n" + color.BOLD)
         print("Usted está por cargar nuevo Género Musical, si ya existe en la Base de Datos se omitirá la carga: \n" + color.END)
 
         nombre = str(input(color.BOLD + "Escriba nombre del Género:  " + color.END))
@@ -498,7 +496,7 @@ def insertarGeneroCLI():
 
 def insertarFormatoCLI():
     while True:
-        print("\n" + color.UNDERLINE)
+        print("\n" + color.BOLD)
         print("Usted está por cargar nuevo Tipo de Formato, si ya existe en la Base de Datos se omitirá la carga: \n" + color.END)
 
         nombre = str(input(color.BOLD + "Escriba el Tipo de Formato:  " + color.END))
@@ -527,7 +525,7 @@ def insertarFormatoCLI():
 
 def InsertarDiscograficaCLI():
     while True:
-        print("\n" + color.UNDERLINE)
+        print("\n" + color.BOLD)
         print("Usted está por cargar una nueva Discografica, si ya existe en la Base de Datos se omitirá la carga: \n" + color.END)
 
         nombre = str(input(color.BOLD + "Escriba el nombre de la Discográfica:  " + color.END))
@@ -759,7 +757,7 @@ def ModificarAlbumCLI():
         if pregunta11 == "s":
             caratula = (input("\nEscriba el " + color.BOLD + "link directo a la imagen" + color.END + " del álbum: "))
             
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------
 
         #Hacemos el Query select para traer los datos del id_album en el orden correcto, solicitado en el cuestionario.
         getdatos = consulta.Listar()
@@ -920,6 +918,70 @@ def EliminarAlbumCLI():
             print("¡Opción incorrecta!")
 
 
+
+#--------------------------------------------------------------------------------------------------------------------------------------
+#Cargar canciones:
+
+def InsertarCancionCLI():
+
+    id_album = None
+
+    while True:
+        print("\n")
+        print("Usted está por " + color.VERDE_CLARO+ "Agregar una cancion" + color.END + " a un " + color.BOLD + "álbum." + color.END)
+
+        id_album = int(input("\nEscriba el " + color.BOLD + "id" + color.END + " del album al que pertenecen los temas (ingrese 0 para ver la lista antes, si no lo sabe.): "))
+
+        if (id_album == 0) or (id_album == None):
+            MostrarAlbumsPorInterpreteCLI()
+            id_album = int(input("\n Escriba el " + color.BOLD + "id" + color.END + " del album para comenzar: "))
+
+        #Obtenemos Interprete y nombre de album desde la id_album
+        getdatos = consulta.Listar()
+        resultados = getdatos.idAlbumEspecifico(id_album)
+
+        for dato in resultados:
+            albumnom = dato[2]
+            interprete = dato[3]
+
+        print (color.AMARILLO + "Usted agregará entonces una canción al album " + color.END + color.CYAN_CLARO + albumnom + ": \n" + color.END)
+
+         #Tema.getTrack_num(),Tema.getTiulo(),Tema.getDuracion(),Tema.getAutor(),Tema.getCompositor(),Tema.getId_album(),Tema.getId_interprete())
+
+        track_num =  int(input(color.BOLD + "Ingrese el Numero" + color.END + " de pista: "))
+        titulo =     str(input(color.BOLD + "Ingrese el Título" + color.END + " de la canción: " ))
+        duracion =   str(input(color.BOLD + "Ingrese la Duración formato HH:MM:SS" + color.END + " de la canción: "))
+        autor =      str(input(color.BOLD + "Ingrese la Autor" + color.END + " de la canción: "))
+        compositor = str(input(color.BOLD + "Ingrese la Compositor" + color.END + " de la canción: "))
+
+
+
+        print(color.BOLD + color.CYAN_CLARO)
+        opcion = input("\n█ Que desea hacer? █ " + color.NARANJA + "1 (CARGAR LA CANCION) " + color.END + color.CYAN_CLARO + "█ 2 (Reingresar los datos) █ 3 (Cancelar) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
+
+        if opcion == "1":
+            print("\nIntentando CARGA DE CANCION...")
+
+            
+
+            unacancion = abm.Tema(0,track_num,titulo,duracion,autor,compositor,id_album,interprete)  #(0,4,"Cancion 1",'',"Autor X","Compositor X",4,2)
+
+            carga = abm.Cargar()
+            carga.CargarCancion(unacancion)                
+                             
+            print(color.VERDE_CLARO + "\nCARGA DE CANCION CORRECTA" + color.END) 
+            break
+
+        elif opcion == "2":
+            print("\nREINTENTANDO..")
+            id_album = None
+        elif opcion == "3":
+            print("\nCANCELADO volviendo al menú principal.")
+            break  
+        else:
+            print("¡Opción incorrecta!")
+
+
 #------------------------------------------------
 
 #TEST DE CLASE ALBUM. 
@@ -981,3 +1043,13 @@ def EliminarAlbumCLI():
 
 # variable = Album.getCod_album()
 # print(variable)
+
+
+
+#--------------------------------------------------------------------------------
+
+#Carga de cancion descomentar para test:
+
+#InsertarCancionCLI()
+
+#--------------------------------------------------------------------------------
