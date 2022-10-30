@@ -7,11 +7,11 @@ class cli():
     def __init__(self):
         self.Iniciar()
 
-
     def Iniciar(self):
         print(color.VERDE_CLARO)
         print("[MODULO cli] Interfaz de Consola Iniciada..")
         print(color.END)
+        self.flag = True
         self.GUIMenuPrincipal()
 
     def ErrorDeOpcion(self):
@@ -20,7 +20,7 @@ class cli():
         print(color.END)
 
     def GUIMenuPrincipal(self):
-        while True:
+        while self.flag == True:
             print(color.AZUL_CLARO)
             print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
             print(  "      DISQUERÍA FORMOSA MUSICAL      ")
@@ -35,19 +35,23 @@ class cli():
             print("\n")
 
             self.opcion = input("Ingrese su opción: ")
-
+            self.flag = False
             if self.opcion == "1":
                 self.GUIMenuABMAlbum()
+                break
             elif self.opcion == "2":
                 self.GUIMenuListados()
+                break
             elif self.opcion == "3":
                 self.GUIMenuOtros()
+                break
             elif self.opcion == "S" or self.opcion == "s":
+                self.flag = False
                 break
             else:
                 self.ErrorDeOpcion()
                 continue
-            break #[!]
+
 
     def GUIMenuABMAlbum(self):
         while True:
@@ -70,12 +74,16 @@ class cli():
 
             if self.opcion == "1":
                 cli_formato.InsertarAlbumCLI()
+                continue
             elif self.opcion == "2":
                 cli_formato.EliminarAlbumCLI()
+                continue
             elif self.opcion == "3":
                 cli_formato.ModificarAlbumCLI()
+                continue
             elif self.opcion == "S" or self.opcion == "s":
                 self.opcion == ""
+                self.GUIMenuPrincipal()
                 break            
             else:
                 self.ErrorDeOpcion()
@@ -122,6 +130,7 @@ class cli():
                 cli_formato.MostrarDiscograficasCLI()
                 continue
             elif self.opcion == "S" or self.opcion == "s":
+                self.GUIMenuPrincipal()
                 break            
             else:
                 self.ErrorDeOpcion()
@@ -165,6 +174,7 @@ class cli():
                 cli_formato.InsertarCancionCLI()
                 continue
             elif self.opcion == "S" or self.opcion == "s":
+                self.GUIMenuPrincipal()
                 break
             else:
                 self.ErrorDeOpcion()
