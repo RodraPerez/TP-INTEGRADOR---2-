@@ -1,4 +1,6 @@
-class ColoresCLI:   #Clase de constantes para colores del CLI.
+#Clase de constantes para colores del CLI. Asi Evitamos poner codigos ANSI en los print() para mejor legibilidad.
+
+class ColoresCLI:   
 
     NEGRO = "\033[0;30m"
     ROJO = "\033[0;31m"
@@ -15,6 +17,7 @@ class ColoresCLI:   #Clase de constantes para colores del CLI.
     AZUL_CLARO = "\033[1;34m"
     PURPURA_CLARO = "\033[1;35m"
     CYAN_CLARO = "\033[1;36m"
+    NARANJA ="\033[38;2;255;165;2m"
     BLANCO = "\033[1;37m"
     BOLD = "\033[1m"
     FAINT = "\033[2m"

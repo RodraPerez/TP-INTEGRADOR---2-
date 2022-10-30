@@ -1,4 +1,4 @@
-#Modulo de conexion, con desconexion automatica por defecto luego de operar, el llamado a metodo de desconexión está en el metodo QuerySQL().
+#Modulo de conexion, con desconexion automatica por defecto luego de operar.
 
 import mysql.connector                                          #Se importa el driver MySQL para Python.
 
@@ -37,11 +37,11 @@ class BaseDatos():                                              #Se crea la clas
                 #Cursor y query recibida::
                 self.cursor = self.conexion.cursor()
                 self.cursor.execute(self.query)
-                print("\033[1mEjecutada QUERY SQL..\033[0m") #print debug
+                print("Ejecutada selnencia SQL..") #print debug
 
                 #Almacenamos bajada de datos en una Variable Buffer.
                 self.listado = self.cursor.fetchall()
-                print("\033[1mDatos en cache [OK]..\033[0m") #print debug
+                print("Datos en cache [OK]..") #print debug
 
                 #Desconectamos por defecto en cualquier operacion, podemos llamar al metodo si deseamos conexión fija (no se recomienda)
                 self.Desconectar()  #   <-----------------
@@ -49,4 +49,26 @@ class BaseDatos():                                              #Se crea la clas
                 return self.listado
 
             except self.mysql.connector.Error as Error:
-                print("No hay conexion con la base de datos.",Error)
+                print("[QuerySQL] No hay conexion con la base de datos.",Error)
+
+    
+    def abmSQL(self,query,data):  # Recibo sentencia SQL y Datos.
+
+        self.query = query
+        self.data = data
+
+        if self.conexion.is_connected():
+            try:
+                self.cursor = self.conexion.cursor()
+
+                self.cursor.execute(self.query,self.data)
+
+                self.conexion.commit() #[!]
+
+                print("Commit [OK].") 
+
+            except self.mysql.connector.Error as Error:
+                print("[abmSQL] No hay conexion con la base de datos.",Error)
+
+        #Desconectamos por defecto en cualquier operacion, podemos llamar al metodo si deseamos conexión fija (no se recomienda)
+        self.Desconectar()

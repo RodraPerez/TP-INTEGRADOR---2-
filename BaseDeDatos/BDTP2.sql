@@ -36,12 +36,12 @@ create table album(
     nombre varchar(100) not null,
     id_interprete int not null,
     id_genero int not null,
-    cant_temas int not null,
+    cant_temas int null,
     id_discografica int not null,
     id_formato int not null,
-    fec_lanzamiento year,
-    precio decimal(10,2) not null,
-    cantidad int not null,
+    fec_lanzamiento year null,
+    precio decimal(10,2),
+    cantidad int null,
     caratula varchar(200),
     foreign key(id_genero) references genero(id_genero),
     foreign key(id_discografica) references discografica(id_discografica),
@@ -142,7 +142,7 @@ insert into genero values (null, 'Salsa'), (null, 'Samba'), (null, 'Score'), (nu
 insert into genero values (null, 'Soul'), (null, 'Soundtrack'), (null, 'Tango'), (null, 'Techno'), (null, 'Tecnopop'), (null, 'World Music'), (null,'Zamba');
 
 #Formatos de Musica:
-insert into formato values (null,'Compact Disc'),(null,'Cassette'),(null,'Long Play'),(null,'Digital');
+insert into formato values (null,'Compact Disc'),(null,'Cassette'),(null,'Long Play'),(null,'Digital'),(null,'Digipack'),(null,'Vinilo'),(null,'DVD');
 
 
 # Album:                  id_album, cod_album,   nombre,   id_interprete, id_genero, cant_temas, id_discografica,  id_formato,  fec_lanzamiento,  precio,cantidad,  caratula
