@@ -38,23 +38,20 @@ class cli():
             self.flag = False
             if self.opcion == "1":
                 self.GUIMenuABMAlbum()
-                break
             elif self.opcion == "2":
                 self.GUIMenuListados()
-                break
             elif self.opcion == "3":
                 self.GUIMenuOtros()
-                break
             elif self.opcion == "S" or self.opcion == "s":
-                self.flag = False
-                break
+                exit()
             else:
                 self.ErrorDeOpcion()
-                continue
-
-
+                self.flag = True
+                continue 
+                
     def GUIMenuABMAlbum(self):
-        while True:
+        self.flag = True
+        while self.flag == True:
             print(color.AZUL_CLARO)
             print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
             print(  "      DISQUERÍA FORMOSA MUSICAL      ")
@@ -82,15 +79,16 @@ class cli():
                 cli_formato.ModificarAlbumCLI()
                 continue
             elif self.opcion == "S" or self.opcion == "s":
-                self.opcion == ""
                 self.GUIMenuPrincipal()
-                break            
+                self.flag = False      
             else:
                 self.ErrorDeOpcion()
+                self.flag = True
                 continue
 
     def GUIMenuListados(self):
-        while True:
+        self.flag = True
+        while self.flag == True:
             print(color.AZUL_CLARO)
             print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
             print(  "      DISQUERÍA FORMOSA MUSICAL      ")
@@ -131,13 +129,15 @@ class cli():
                 continue
             elif self.opcion == "S" or self.opcion == "s":
                 self.GUIMenuPrincipal()
-                break            
+                self.flag = False      
             else:
                 self.ErrorDeOpcion()
+                self.flag = True
                 continue
 
     def GUIMenuOtros(self):
-        while True:
+        self.flag = True
+        while self.flag == True:
             print(color.AZUL_CLARO)
             print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
             print(  "      DISQUERÍA FORMOSA MUSICAL      ")
@@ -175,7 +175,8 @@ class cli():
                 continue
             elif self.opcion == "S" or self.opcion == "s":
                 self.GUIMenuPrincipal()
-                break
+                self.flag = False
             else:
                 self.ErrorDeOpcion()
+                self.flag = True
                 continue
