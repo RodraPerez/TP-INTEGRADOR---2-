@@ -499,12 +499,11 @@ def insertarFormatoCLI():
         print("\n" + color.BOLD)
         print("Usted está por cargar nuevo Tipo de Formato, si ya existe en la Base de Datos se omitirá la carga: \n" + color.END)
 
-        nombre = str(input(color.BOLD + "Escriba el Tipo de Formato:  " + color.END))
+        tipo = str(input(color.BOLD + "Escriba el Tipo de Formato:  " + color.END))
 
         print(color.BOLD + color.CYAN_CLARO)
         opcion = input("\n█ Que desea hacer? █ 1 (Cargar) █ 2 (Reingresar los Datos) █ 3 (Cancelar) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
         
-        tipo = tipo.strip('\n')  #String, limpieza de espacios anteriores y posteriores.
         tipo = tipo.strip()
 
         if opcion == "1":
