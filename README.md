@@ -21,10 +21,6 @@ de la ciudad.
 - Búsqueda por nombre de un álbum.
 
 
-**El esquema de la base de datos propuesta es la siguiente:**
-
-![](EsquemaBD.png)
-
 🏆 **Criterios de evaluación del trabajo práctico:**
 
 - Conexión del programa a la base de datos, alta, baja y modificación de datos (60%)
@@ -50,3 +46,13 @@ posible de realizar dentro de los plazos posibles.
 
 📚 T.S. Innovación con Tecnologías 4.0 - Prof. Sergio Daniel Romero
 
+<br>
+
+
+# INFO: Es necesario instalar las librerias adicionales:
+
+
+````
+pip install pillow qrcode qrcode-terminal
+
+````

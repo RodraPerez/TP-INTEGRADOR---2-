@@ -5,7 +5,7 @@ import conexion
 
 class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacenada en modulos para acceder a sus metodos y propiedades.
     def __init__(self):
-        print("Instanciada Clase Listar...")  # Print Debug
+        #print("[CONSULTA] Instanciada Clase Listar...")  # Print Debug
         conexion.BaseDatos.__init__(self)
 
 #----------------------------------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
         
         #Conexion a Base de Datos:
         self.Conectar()
-        print("Ejecutada consulta Albumes por búsqueda por Interprete.") #print debug
+        #print("[CONSULTA] Ejecutada consulta Albumes por búsqueda por Interprete.") #print debug
         self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
 
@@ -48,7 +48,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
          
         #Conexion a Base de Datos:
         self.Conectar()
-        print("Ejecutada consulta Albums por Género.") #print debug
+        #print("[CONSULTA] Ejecutada consulta Albums por Género.") #print debug
         self.datos = self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         return self.datos
@@ -71,7 +71,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
         #Conexion a Base de Datos:
         self.Conectar()
-        print("Ejecutada consulta Albums por Nombre del Album.") #print debug
+        #print("[CONSULTA] Ejecutada consulta Albums por Nombre del Album.") #print debug
         self.datos = self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         return self.datos
@@ -85,7 +85,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
         WHERE album.id_album = """ + "'" + str(self.idAlbum) + "'"
         #Conexion a Base de Datos:
         self.Conectar()
-        print("Ejecutada consulta Album por id del Album.") #print debug
+        #print("[CONSULTA] Ejecutada consulta Album por id del Album.") #print debug
         self.datos = self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         #print(self.datos)
@@ -109,7 +109,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
         #Conexion a Base de Datos:
         self.Conectar()
-        print("Ejecutada consulta Albums por Artista (consigna).") #print debug
+        #print("[CONSULTA] Ejecutada consulta Albums por Artista") #print debug
         self.datos = self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         return self.datos
@@ -130,7 +130,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
         #Conexion a Base de Datos:
         self.Conectar()
-        print("Ejecutada consulta Lista de géneros.") #print debug
+        #print("[CONSULTA] Ejecutada consulta Lista de géneros.") #print debug
         self.datos = self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         return self.datos
@@ -146,7 +146,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
         #Conexion a Base de Datos:
         self.Conectar()
-        print("Ejecutada consulta Lista de Intérpretes..") #print debug
+        #print("[CONSULTA] Ejecutada consulta Lista de Intérpretes..") #print debug
         self.datos = self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         return self.datos
@@ -155,8 +155,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
 
 #----------------------------------------------------------------------------------------------------------
-# PENDIENTES:
-#----------------------------------------------------------------------------------------------------------
+
     def ListaDiscograficasCompleta(self):
 
         self.query ="""SELECT d.id_discografica, d.nombre
@@ -166,7 +165,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
         #Conexion a Base de Datos:
         self.Conectar()
-        print("Ejecutada consulta Lista de Discograficas.") #print debug
+        #print("[CONSULTA] Ejecutada consulta Lista de Discograficas.") #print debug
         self.datos = self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         return self.datos
@@ -182,13 +181,23 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
         #Conexion a Base de Datos:
         self.Conectar()
-        print("Ejecutada consulta Lista de Formatos.") #print debug
+        #print("[CONSULTA] Ejecutada consulta Lista de Formatos.") #print debug
         self.datos = self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         return self.datos
 
 
-#----------------------------------------------------------------------------------------------------------
+    def ListaTemasCompleta(self):
+        self.query ="SELECT * FROM tema ORDER BY tema.id_album ASC;"
+        
+        #Conexion a Base de Datos:
+        self.Conectar()
+        #print("[CONSULTA] Ejecutada consulta Lista de Temas.") #print debug
+        self.datos = self.QuerySQL(self.query)
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
+        #print(self.datos) test
+        return self.datos
+
 
 #----------------------------------------------------------------------------------------------------------
 # Planteamos busqueda por parametros como práctica y prueba:
@@ -231,7 +240,8 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
         print("Ejecutada consulta Lista de Temas.") #print debug
         self.datos = self.QuerySQL(self.query )
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
-        print(self.datos) #test
+        #print(self.datos) #test
+        
         return self.datos
 
 
@@ -260,21 +270,3 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
 #instancia6 = Listar()
 #instancia6.ListaTemasPor("genero","Pop")  # por genero igual o similar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
