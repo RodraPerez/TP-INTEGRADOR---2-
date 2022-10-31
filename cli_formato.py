@@ -2,6 +2,7 @@
 
 import consulta
 import abm
+import qrcode_terminal
 from cli_colores import ColoresCLI as color
 
 #Mensaje por defecto para ausencia de registros:
@@ -174,8 +175,28 @@ def MostrarAlbumPorNombreCLI(): #Edgar G.
         print("\nTapa del Disco: ",album[7] if album[7] != "" else color.ROJO + "No hay imagen de la caratula en la Base de Datos." + color.END)
         print("Foto Interprete:",album[8] if album[8] != "" else color.ROJO + "No hay imagen del Interprete en la Base de Datos." + color.END)
         print("Spotify Artista:",color.AZUL + "https://open.spotify.com/search/" + str(album[9]) + "%20" + str(album[10]) + color.END)
-        print("Spotify Album:  ",color.AZUL + "https://open.spotify.com/search/album" + "%3A" + str(album[2]) + color.END)
         
+        albumstr = "https://open.spotify.com/search/album" + "%3A" + str(album[2])
+
+        print("Spotify Album:  ",color.AZUL + albumstr + color.END)
+
+        while True:
+            print(color.BOLD + color.CYAN_CLARO)
+            opcion = input("\n█ Opciones de Album █ 1 (QR Info) █ 2 (Modificar Album) █ 3 (Salir) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
+
+            if opcion == "1":
+                print("Generando su QR..\n")
+                qrcode_terminal.draw(albumstr)
+                print("")
+                continue
+            elif opcion == "2":
+                ModificarAlbumCLI()
+                break
+            elif opcion == "3":
+                print("CANCELADO volviendo al menú principal.")
+                break
+            else:
+                print("¡Opción incorrecta!")
     return
 
 
