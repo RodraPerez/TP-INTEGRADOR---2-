@@ -187,12 +187,9 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
         return self.datos
 
 
-#----------------------------------------------------------------------------------------------------------
-    
     def ListaTemasCompleta(self):
-
         self.query ="SELECT * FROM tema ORDER BY tema.id_album ASC;"
-
+        
         #Conexion a Base de Datos:
         self.Conectar()
         #print("[CONSULTA] Ejecutada consulta Lista de Temas.") #print debug
@@ -201,3 +198,75 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
         #print(self.datos) test
         return self.datos
 
+
+#----------------------------------------------------------------------------------------------------------
+# Planteamos busqueda por parametros como práctica y prueba:
+#----------------------------------------------------------------------------------------------------------
+
+    def ListaTemasPor(self,tipo_busqueda,parametro):
+
+        self.tipo_busqueda = tipo_busqueda
+        self.parametro = parametro
+
+        #Creamos una Query Base con lo que necesitamos. Dejamos la condición incompleta para concatenar segun parametros.
+
+        self.query = """SELECT tema.id_tema, tema.track_num, tema.titulo, tema.duracion, tema.autor,tema.compositor,tema.id_album,tema.id_interprete,album.id_genero,album.nombre, interprete.nombre, interprete.apellido, genero.nombre, album.fec_lanzamiento
+        FROM tema
+        JOIN album ON tema.id_album = album.id_album
+        JOIN interprete ON tema.id_interprete = interprete.id_interprete
+        JOIN genero ON genero.id_genero = album.id_genero
+        WHERE """
+
+        #Segun parametros modificamos la consulta concatenando la ultima parte de la Query donde está la condición.
+
+        if tipo_busqueda == "artista":
+            self.custom_query = "CONCAT (interprete.nombre ,' ', interprete.apellido) LIKE " + "'%" + self.parametro + "%'" + " ORDER BY tema.id_album ASC;"
+        
+        if tipo_busqueda == "albumnom":
+            self.custom_query = "album.nombre LIKE " + "'%" + self.parametro + "%'" + " ORDER BY tema.id_album ASC;"
+
+
+        if tipo_busqueda == "albumid":
+            self.custom_query = "album.id_album = " + "'" + str(self.parametro) + "'" + " ORDER BY tema.id_album ASC;"
+
+        if tipo_busqueda == "genero":
+            self.custom_query = "genero.nombre LIKE " + "'%" + self.parametro + "%'" + " ORDER BY tema.id_album ASC;"
+
+
+        #Unimos la Query Basde con la custom;
+        self.query = self.query + self.custom_query
+        #Conexion a Base de Datos:
+        self.Conectar()
+        print("Ejecutada consulta Lista de Temas.") #print debug
+        self.datos = self.QuerySQL(self.query )
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
+        #print(self.datos) #test
+        
+        return self.datos
+
+
+
+
+#------------------------------------------------------------------------------------------------------
+#Tests
+#-------------------------------------------------------------------------------------------------------
+
+# instancia = Listar()
+# idalbum = 14
+# instancia.idAlbumEspecifico(idalbum)
+
+
+# instancia2 = Listar()
+# instancia2.ListaTemasCompleta()
+
+# instancia3 = Listar()
+# instancia3.ListaTemasPor("artista","Jarre")  # Nombre y apellido junto, o nombre solo o apellido solo. Busca igual o similar.
+
+# instancia4 = Listar()
+# instancia4.ListaTemasPor("albumnom","Thriller")  # Nombre del album
+
+# instancia5 = Listar()
+# instancia5.ListaTemasPor("albumid",9)  # por id de album se puede pasar como int o como string. 
+
+#instancia6 = Listar()
+#instancia6.ListaTemasPor("genero","Pop")  # por genero igual o similar
