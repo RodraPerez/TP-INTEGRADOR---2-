@@ -31,6 +31,7 @@ class cli():
             print(color.NARANJA + "1" + color.END + "- ALTA / BAJA / MODIFICACION DE UN ÁLBUM ")
             print(color.NARANJA + "2" + color.END + "- LISTADOS Y BUSQUEDAS                   ")
             print(color.NARANJA + "3" + color.END + "- OTRAS OPCIONES DE CARGA                ")
+            print("")
             print(color.NARANJA + "S" + color.END + "- Salir")       
             print("\n")
 
@@ -63,6 +64,7 @@ class cli():
             print(color.NARANJA + "1" + color.END + "- ALTA DE UN ÁLBUM")
             print(color.NARANJA + "2" + color.END + "- BAJA DE UN ÁLBUM")
             print(color.NARANJA + "3" + color.END + "- MODIFICACION DE ALBUM")
+            print("")
             print(color.NARANJA + "S" + color.END + "- Salir")
             print(color.END)       
             print("\n")
@@ -136,8 +138,7 @@ class cli():
                 continue
 
     def GUIMenuOtros(self):
-        self.flag = True
-        while self.flag == True:
+        while True:
             print(color.AZUL_CLARO)
             print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
             print(  "      DISQUERÍA FORMOSA MUSICAL      ")
@@ -146,11 +147,12 @@ class cli():
 
             print(color.BOLD)
             print("OTRAS GESTIONES\n",color.END)
-            print(color.NARANJA + "1" + color.END + " - INSERTAR INTERPRETE")
+            print(color.NARANJA + "1" + color.END + " - INSERTAR INTERPRETE                 ", color.NARANJA + "6" + color.END + " - MODIFICAR INTERPRETE")
             print(color.NARANJA + "2" + color.END + " - INSERTAR GENERO MUSICAL")
             print(color.NARANJA + "3" + color.END + " - INSERTAR FORMATO")
             print(color.NARANJA + "4" + color.END + " - INSERTAR DISCOGRAFICA")
             print(color.NARANJA + "5" + color.END + " - INSERTAR CANCION A UN ALBUM")                       
+            print("")                     
             print(color.NARANJA + "\nS" + color.END + " - Salir")
             print(color.END)       
             print("\n")
@@ -173,10 +175,11 @@ class cli():
             elif self.opcion == "5":
                 cli_formato.InsertarCancionCLI()
                 continue
+            elif self.opcion == "6":
+                cli_formato.ModificarInterpreteCLI()
+                continue
             elif self.opcion == "S" or self.opcion == "s":
-                self.GUIMenuPrincipal()
-                self.flag = False
+                break
             else:
                 self.ErrorDeOpcion()
-                self.flag = True
                 continue
