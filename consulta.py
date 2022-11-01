@@ -129,7 +129,21 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
         return self.datos
 
 
+#----------------------------------------------------------------------------------------------------------
+    def idTemaEspecifico(self, idTema):
+        self.idTema = idTema
+        self.query = """SELECT tema.id_tema, tema.track_num, tema.titulo, tema.duracion, tema.autor, tema.compositor, tema.id_album, tema.id_interprete
+        FROM tema
+        WHERE tema.id_tema = """ + "'" + str(self.idTema) + "'"
+        #Conexion a Base de Datos:
+        self.Conectar()
+        #print("[CONSULTA] Ejecutada consulta Tena por id del Tema.") #print debug
+        self.datos = self.QuerySQL(self.query)
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
+        #print(self.datos)
+        return self.datos
 
+#------------------------------------------------------------------
 
 
 
@@ -211,6 +225,28 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         #print(self.datos) test
         return self.datos
+
+
+#-----------------------------------------------------------------------------------------------------------
+#Listar canciones por autor (utilizada para filtrar y poder modificar una cancion)
+
+    def ListaTemasAutor(self, autor):
+        self.autor= autor
+
+        self.query ="""SELECT tema.id_tema,tema.track_num, tema.titulo, tema.duracion, tema.autor, tema.compositor, tema.id_album, tema.id_interprete, album.nombre
+        FROM tema
+        JOIN album
+        ON tema.id_album = album.id_album
+        WHERE tema.autor = """  + "'" + self.autor + "'" + " ORDER BY tema.id_tema ASC;"
+
+        #Conexion a Base de Datos:
+        self.Conectar()
+        #print("[CONSULTA] Ejecutada consulta Lista de Temas.") #print debug
+        self.datos = self.QuerySQL(self.query)
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
+        #print(self.datos) test
+        return self.datos
+
 
 
 #----------------------------------------------------------------------------------------------------------

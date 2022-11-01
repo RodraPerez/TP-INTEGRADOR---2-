@@ -99,16 +99,17 @@ class cli():
 
             print(color.BOLD)
             print("GESTION DE CONSULTAS\n" + color.END + color.VERDE_CLARO)
-            print("1 > INFORMACION DETALLE DE UN ÁLBUM                      4 > LISTADO DE INTERPRETES")           
-            print("2 > LISTA DE ALBUMES POR ARTISTA (NOMBRE ASC)            5 > LISTADO DE GENEROS MUSICALES")
-            print("3 > LISTA DE ALBUMES DE UN GENERO MUSICAL ESPECIFICO     6 > LISTADO DE FORMATOS")
-            print("S > Salir                                                7 > LISTADO DE DISCOGRAFICAS" + color.END)              
-         
+            print("1 > INFORMACION DETALLE DE UN ÁLBUM                      5 > LISTADO DE INTERPRETES")           
+            print("2 > LISTA DE ALBUMES POR ARTISTA (NOMBRE ASC)            6 > LISTADO DE GENEROS MUSICALES")
+            print("3 > LISTA DE ALBUMES DE UN GENERO MUSICAL ESPECIFICO     7 > LISTADO DE FORMATOS")
+            print("4 > LISTA DE CANCIONES POR AUTOR                         8 > LISTADO DE DISCOGRAFICAS" + color.END)              
+            print("")
+            print("S > SALIR")
             print("\n")
 
             self.opcion = input("Ingrese su opción: ")
 
-            if self.opcion ==   "1":
+            if self.opcion == "1":
                 cli_formato.MostrarAlbumPorNombreCLI()
                 continue
             elif self.opcion == "2":
@@ -116,25 +117,26 @@ class cli():
                 continue
             elif self.opcion == "3":
                 cli_formato.MostrarAlbumsPorGeneroCLI()
-                continue                
+                continue    
             elif self.opcion == "4":
+                cli_formato.MostrarTemaAutorCLI()
+                continue                
+            elif self.opcion == "5":
                 cli_formato.MostrarInterpreteCLI()
                 continue  
-            elif self.opcion == "5":
+            elif self.opcion == "6":
                 cli_formato.MostrarGenerosCLI()   
                 continue 
-            elif self.opcion == "6":
+            elif self.opcion == "7":
                 cli_formato.MostrarFormatosCLI()
                 continue
-            elif self.opcion == "7":
+            elif self.opcion == "8":
                 cli_formato.MostrarDiscograficasCLI()
                 continue
             elif self.opcion == "S" or self.opcion == "s":
-                self.GUIMenuPrincipal()
-                self.flag = False      
+                break            
             else:
                 self.ErrorDeOpcion()
-                self.flag = True
                 continue
 
     def GUIMenuOtros(self):
@@ -148,7 +150,7 @@ class cli():
             print(color.BOLD)
             print("OTRAS GESTIONES\n",color.END)
             print(color.NARANJA + "1" + color.END + " - INSERTAR INTERPRETE                 ", color.NARANJA + "6" + color.END + " - MODIFICAR INTERPRETE")
-            print(color.NARANJA + "2" + color.END + " - INSERTAR GENERO MUSICAL")
+            print(color.NARANJA + "2" + color.END + " - INSERTAR GENERO MUSICAL             ",color.NARANJA + "7" + color.END + " - MODIFICAR CANCION")
             print(color.NARANJA + "3" + color.END + " - INSERTAR FORMATO")
             print(color.NARANJA + "4" + color.END + " - INSERTAR DISCOGRAFICA")
             print(color.NARANJA + "5" + color.END + " - INSERTAR CANCION A UN ALBUM")                       
@@ -177,6 +179,9 @@ class cli():
                 continue
             elif self.opcion == "6":
                 cli_formato.ModificarInterpreteCLI()
+                continue
+            elif self.opcion == "7":
+                cli_formato.ModificarCancionCLI()
                 continue
             elif self.opcion == "S" or self.opcion == "s":
                 break
