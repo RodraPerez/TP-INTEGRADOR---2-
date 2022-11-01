@@ -171,32 +171,31 @@ def MostrarAlbumPorNombreCLI(): #Edgar G.
             print(" " * gap, color.CYAN, album[13],color.END," " * gap, str(album[14]).ljust(tituloChrLen, ' '), " " * gap  ,album[15])
 
 
-        print("\n")
-        print("\nTapa del Disco: ",album[7] if album[7] != "" else color.ROJO + "No hay imagen de la caratula en la Base de Datos." + color.END)
-        print("Foto Interprete:",album[8] if album[8] != "" else color.ROJO + "No hay imagen del Interprete en la Base de Datos." + color.END)
-        print("Spotify Artista:",color.AZUL + "https://open.spotify.com/search/" + str(album[9]) + "%20" + str(album[10]) + color.END)
+    print("\n")
+    print("\nTapa del Disco: ",album[7] if album[7] != "" else color.ROJO + "No hay imagen de la caratula en la Base de Datos." + color.END)
+    print("Foto Interprete:",album[8] if album[8] != "" else color.ROJO + "No hay imagen del Interprete en la Base de Datos." + color.END)
+    print("Spotify Artista:",color.AZUL + "https://open.spotify.com/search/" + str(album[9]).replace(" ", "+") + "%20" + str(album[10]).replace(" ", "+") + color.END)
         
-        albumstr = "https://open.spotify.com/search/album" + "%3A" + str(album[2])
+    albumstr = "https://www.last.fm/es/music/" + str(album[9] + ' ' + album[10]).replace(" ", "+") + "/" + str(album[2]).replace(" ", "+")
+    #print(albumstr) debug
 
-        print("Spotify Album:  ",color.AZUL + albumstr + color.END)
+    while True:
+        print(color.BOLD + color.CYAN_CLARO)
+        opcion = input("\n█ Opciones de Album █ 1 (QR Info LastFM) █ 2 (Modificar Album) █ 3 (Salir) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
 
-        while True:
-            print(color.BOLD + color.CYAN_CLARO)
-            opcion = input("\n█ Opciones de Album █ 1 (QR Info) █ 2 (Modificar Album) █ 3 (Salir) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
-
-            if opcion == "1":
-                print("Generando su QR..\n")
-                qrcode_terminal.draw(albumstr)
-                print("")
-                continue
-            elif opcion == "2":
-                ModificarAlbumCLI()
-                break
-            elif opcion == "3":
-                print("CANCELADO volviendo al menú principal.")
-                break
-            else:
-                print("¡Opción incorrecta!")
+        if opcion == "1":
+            print("Generando su QR..\n")
+            qrcode_terminal.draw(albumstr)
+            print("")
+            continue
+        elif opcion == "2":
+            ModificarAlbumCLI()
+            break
+        elif opcion == "3":
+            print("CANCELADO volviendo al menú principal.")
+            break
+        else:
+            print("¡Opción incorrecta!")
     return
 
 
