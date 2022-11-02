@@ -114,7 +114,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         return self.datos
 
-def idInterpreteEspecifico(self, idInterprete):
+    def idInterpreteEspecifico(self, idInterprete):
         self.idInterprete = idInterprete
         self.query = """SELECT interprete.id_interprete, interprete.nombre, interprete.apellido, interprete.nacionalidad, interprete.foto
         FROM interprete
@@ -130,7 +130,7 @@ def idInterpreteEspecifico(self, idInterprete):
 #----------------------------------------------------------------------------------------------------------
     
 
-def idTemaEspecifico(self, idTema):
+    def idTemaEspecifico(self, idTema):
         self.idTema = idTema
         self.query = """SELECT tema.id_tema, tema.track_num, tema.titulo, tema.duracion, tema.autor, tema.compositor, tema.id_album, tema.id_interprete
         FROM tema
@@ -151,21 +151,20 @@ def idTemaEspecifico(self, idTema):
 # consultas de una sola tabla sin parametros:
 #----------------------------------------------------------------------------------------------------------
 
+    def ListaGenerosCompleta(self):
 
-def ListaGenerosCompleta(self):
-
-    self.query ="SELECT genero.id_genero, genero.nombre FROM genero ORDER BY genero.nombre ASC"
+        self.query ="SELECT genero.id_genero, genero.nombre FROM genero ORDER BY genero.nombre ASC"
 
         #Conexion a Base de Datos:
-    self.Conectar()
+        self.Conectar()
         #print("[CONSULTA] Ejecutada consulta Lista de géneros.") #print debug
-    self.datos = self.QuerySQL(self.query)
+        self.datos = self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
-    return self.datos
+        return self.datos
 
 #---------------------------------------------------------------------------------------------------------
     
-     
+    
     def ListaInterpretesCompleta(self): #Nico
         self.query ="""SELECT i.id_interprete, i.nombre, i.apellido, i.nacionalidad, i.foto
                     FROM interprete 
