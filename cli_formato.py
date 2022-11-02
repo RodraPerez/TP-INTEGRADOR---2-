@@ -3,6 +3,8 @@
 import consulta
 import abm
 import qrcode_terminal
+from PIL import Image
+import urllib.request 
 from cli_colores import ColoresCLI as color
 
 #Mensaje por defecto para ausencia de registros:
@@ -1429,7 +1431,68 @@ def EliminarAlbumCLI():
         else:
             print("¡Opción incorrecta!")
 
+# -------------------------------------------------------
 
+def VerImagenEnCLI(linkImagen):
+
+    ASCII_CHARS3 = [' ','.',':',';','0','k','W','M','#','%']
+
+    def scale_image(image, new_width=120):
+        #Cambia tamaño de imagen preservando el ratio de aspecto
+
+        (original_width, original_height) = image.size
+        aspect_ratio = original_height/float(original_width)/2
+        new_height = int(aspect_ratio * new_width)
+
+        new_image = image.resize((new_width, new_height))
+        return new_image
+
+    def convert_to_grayscale(image):
+        i = image.convert('L') #escala de grises
+        return i
+
+    def map_pixels_to_ascii_chars(image, range_width=25):
+        """Asigna cada píxel a un carácter ASCII según el rango en el que se encuentra.
+        0-255 está dividido en 11 rangos o bloques de 25 pixels cada uno o sea genera pixeles mas grandes.
+        para que sean menos cantidad y asi reemplazarlos por las letras de la paleta de "colores" """
+
+        pixels_in_image = list(image.getdata())
+        pixels_to_chars = [ASCII_CHARS3[int(pixel_value/range_width)] for pixel_value in pixels_in_image]
+
+        return "".join(pixels_to_chars)
+
+    def convert_image_to_ascii(image, new_width=120):  #ideal para consola en este uso
+        image = scale_image(image)
+        image = convert_to_grayscale(image)
+
+        pixels_to_chars = map_pixels_to_ascii_chars(image)
+        len_pixels_to_chars = len(pixels_to_chars)
+
+        image_ascii = [pixels_to_chars[index: index + new_width] for index in range(0, len_pixels_to_chars, new_width)]
+
+        return "\n".join(image_ascii)
+
+    def handle_image_conversion(image_filepath):
+        image = None
+        try:
+            image = Image.open(image_filepath)
+        except Exception as e:
+            print("No se puede abrir la imagen descargada {image_filepath}.".format(image_filepath=image_filepath))
+            print(e)
+            return
+
+        image_ascii = convert_image_to_ascii(image)
+        print(image_ascii)
+
+    def ObtenerImagenUrl(linkimagen):
+        try:
+            urllib.request.urlretrieve(linkImagen, "temp.jpg") #descargamos imagen temporalmente en la raiz.  
+            handle_image_conversion("temp.jpg")
+        except Exception as error:
+            print("\nNo se puede obtener la imagen en este momento.")
+            print("\n",error)
+
+    ObtenerImagenUrl(linkImagen)
 
 # ------------------------------------------------
 
