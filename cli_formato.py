@@ -942,6 +942,138 @@ def EliminarAlbumCLI():
 #--------------------------------------------------------------------------------------------------------------------------------------
 #Cargar canciones:
 
+def ModificarInterpreteCLI():
+
+    id_interprete = None
+    nombre = None
+    apellido = None
+    nacionalidad = None
+    foto = None
+
+    while True:
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
+        #Se elige el id del album:
+
+        print("\n")
+        print("Usted está por " + color.AMARILLO+ "MODIFICAR" + color.END + " un " + color.BOLD + "intérprete." + color.END)
+
+        id_interprete = int(input("\nEscriba el " + color.BOLD + "id" + color.END + " del intérprete a modificar (ingrese 0 para ver la lista antes, si no lo sabe.):  "))
+
+        if (id_interprete == 0) or (id_interprete == None):
+            MostrarInterpreteCLI()
+            id_interprete = int(input("\n Escriba el " + color.BOLD + "id" + color.END + " del intérprete a modificar: "))
+              
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+        print(color.BOLD + "\nPerfecto, ahora siga las instrucciones: \n" + color.END)
+
+        #Cuestionario donde cambiaremos los datos en las propiedades de la clase Album luego por medio de los setters y los getters las propiedades de el objeto:
+
+        pregunta1 = str(input(color.VERDE_CLARO + "Desea modificar el nombre del intérprete? " + color.BOLD + "s/n: " + color.END))
+        pregunta1.lower()
+        if pregunta1 == "s":
+            nombre = str(input("\nEscriba el " + color.BOLD + "nuevo nombre" + color.END + " del intérprete: "))
+            nombre = nombre.strip()
+
+        pregunta2 = str(input(color.VERDE_CLARO + "Desea modificar el apellido del interprete? " + color.BOLD + "s/n: " + color.END))
+        pregunta2.lower()       
+        if pregunta2 == "s":
+            apellido = str(input("\nEscriba el " + color.BOLD + "nuevo apellido" + color.END + " del intérprete: "))
+            apellido = apellido.strip()
+            
+
+        pregunta3 = str(input(color.VERDE_CLARO + "Desea modificar la nacionalidad del intérprete? " + color.BOLD + "s/n: " + color.END))
+        pregunta3.lower()       
+        if pregunta3 == "s":
+            nacionalidad = str(input("\nEscriba la " + color.BOLD + "nueva nacionalidad del interprete" + color.END + " del álbum: "))
+            nacionalidad = nacionalidad.strip()
+            
+
+        pregunta4 = str(input(color.VERDE_CLARO + "Desea modificar la foto del intérprete?" + color.BOLD + "s/n: " + color.END))
+        pregunta4.lower()
+        if pregunta4 == "s":
+            foto = str(input("\nEscriba el " + color.BOLD + "link directo a la imagen" + color.END + " del intérprete: "))
+            foto = foto.strip()
+
+            
+#---------------------------------------------------------------------------------------------------------------------------------------
+
+        #Hacemos el Query select para traer los datos del id_album en el orden correcto, solicitado en el cuestionario.
+        getdatos = consulta.Listar()
+        resultados = getdatos.idInterpreteEspecifico(id_interprete)
+
+        #Llenamos el objeto Album con los datos actualizados de la base de datos del id de album elegido.
+        for dato in resultados:
+            Interprete = abm.Interprete (dato[0],dato[1],dato[2],dato[3],dato[4])
+            #print(dato) #print debug 
+
+        #Alteramos el objeto Album solamente lo elegido en el cuestionario, si es distino a None es porque lo cambiamos en el cuestionario, si es None obtenemos el dato que sigue sin cambio desde el getter de la clase. 
+
+        if nombre != None:
+            Interprete.setNombre(nombre)
+        else:
+            nombre = Interprete.getNombre()
+
+        if apellido != None:
+            Interprete.setApellido(apellido)
+        else:
+            nombre = Interprete.getApellido()
+
+        if nacionalidad != None:
+            Interprete.setNacionalidad(nacionalidad)
+        else:
+            nacionalidad = Interprete.getNacionalidad()
+
+        if foto != None:
+            Interprete.setFoto(foto)
+        else:
+            foto = Interprete.getFoto()
+
+
+        #Antes de confirmar mostramos un resumen de los cambios:
+
+        print(color.BOLD + "\nINFO Precarga de datos: " + color.END)   #Print Debug
+
+        print(  "\nId Interprete:",id_interprete,
+                "\nNombre Intérprete:",nombre,
+                "\nApellido Intérprete:",apellido,
+                "\nNacionalidad Intérprete:",nacionalidad,
+                "\nFoto Intérprete:",foto,      
+                )
+
+        #Generamos la nueva tupla de datos modificados para el envio a la base de datos:
+
+        InterpreteModificado = abm.Interprete(0,nombre,apellido,nacionalidad,foto)
+
+        #Preguntamos y decidimos:
+        print(color.BOLD + color.CYAN_CLARO)
+        opcion = input("\n█ Que desea hacer? █ 1 (Confirmar cambios) █ 2 (Reintentar la Carga) █ 3 (Cancelar) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
+
+        if opcion == "1":
+            print("\nIntentando modificación de Album...")
+            modificar = abm.Cargar()                                 #Instanciamos la carga (modelo) y sus metodos.
+            modificar.ModificarInterprete(InterpreteModificado,id_interprete)       #Se envia al metodo de la clase Cargar, el objeto portador de la tupla nueva, y de parametro el ID del album.  
+
+            print(color.AMARILLO + "\nINTERPRETE MODIFICADO" + color.END) 
+            break
+
+        elif opcion == "2":
+            print("REINTENTANDO..")
+            nombre = None
+            apellido = None
+            nacionalidad = None
+            foto = None
+
+        elif opcion == "3":
+            print("CANCELADO volviendo al menú principal.")
+            break  
+        else:
+            print("¡Opción incorrecta!")
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 def InsertarCancionCLI():
 
     id_album = None
