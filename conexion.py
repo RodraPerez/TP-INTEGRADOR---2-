@@ -12,7 +12,7 @@ class BaseDatos():                                              #Se crea la clas
             host = 'localhost', #si no conecta con esto probamos con 127.0.0.1
             port = 3306,
             user = 'root',
-            password = '36144709Leo',   #NO OLVIDAR Configurar con su pass, y antes de hacer commit borrarlo.
+            password = '',   #NO OLVIDAR Configurar con su pass, y antes de hacer commit borrarlo.
             db = 'disqueria' #nombre de la base de datos
             )
             if self.conexion.is_connected():
