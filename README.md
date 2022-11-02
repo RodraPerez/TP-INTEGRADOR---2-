@@ -1,9 +1,9 @@
-# Proyecto Integrador 2
+# Proyecto Integrador 2 :man_technologist:	:computer:	
 
 ℹ Segunda Actividad Integradora Programación Inicial 
 
 
-### Consigna:
+### Consigna :pencil2: 
 
 #### TRABAJO INTEGRADOR – Programación Inicial y Bases de Datos 
 
@@ -47,12 +47,35 @@ posible de realizar dentro de los plazos posibles.
 📚 T.S. Innovación con Tecnologías 4.0 - Prof. Sergio Daniel Romero
 
 <br>
+<br>
 
+### ¿Cómo ejecutar el programa? :eyes: :thinking:	
 
-# INFO: Es necesario instalar las librerias adicionales:
+1. En su consola ejecutar :keyboard::
+````
+git clone https://github.com/RodraPerez/TP-INTEGRADOR---2-.git
+````
 
+2. Ingresar a la carpeta del repositorio.
+````
+cd TP-INTEGRADOR---2-
+````
 
+3. Instalar las librerias necesarias, copiar el sigueinte código y pegarlo en la consola:
 ````
 pip install pillow qrcode qrcode-terminal
+````
+
+4. Listo! Una vez descargadas las librerías, para abrir el programa debes ejecutar el archivo **Disqueria.py**
+````
+Disqueria.py 
+````
+O 
 
 ````
+python Disqueria.py 
+````
+<br>
+
+_Gracias por pasarte y probar!_  :wink: :wave:	
+
