@@ -152,16 +152,16 @@ def idTemaEspecifico(self, idTema):
 #----------------------------------------------------------------------------------------------------------
 
 
-    def ListaGenerosCompleta(self):
+def ListaGenerosCompleta(self):
 
-        self.query ="SELECT genero.id_genero, genero.nombre FROM genero ORDER BY genero.nombre ASC"
+    self.query ="SELECT genero.id_genero, genero.nombre FROM genero ORDER BY genero.nombre ASC"
 
         #Conexion a Base de Datos:
-        self.Conectar()
+    self.Conectar()
         #print("[CONSULTA] Ejecutada consulta Lista de géneros.") #print debug
-        self.datos = self.QuerySQL(self.query)
+    self.datos = self.QuerySQL(self.query)
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
-        return self.datos
+    return self.datos
 
 #---------------------------------------------------------------------------------------------------------
     
