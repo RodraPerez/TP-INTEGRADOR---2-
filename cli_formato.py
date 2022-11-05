@@ -199,7 +199,7 @@ def MostrarAlbumPorNombreCLI(parametro=None): #Edgar G.
             MostrarAlbumPorNombreCLI(album[2])
             continue
         if opcion == "2":
-            print("Generando su QR..\n")
+            print("Generando su código QR..\n")
             qrcode_terminal.draw(albumstr)
             print("")
             continue
