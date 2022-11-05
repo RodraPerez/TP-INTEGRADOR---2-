@@ -4,6 +4,7 @@ import consulta
 import abm
 import qrcode_terminal
 from PIL import Image
+from image import DrawImage
 import urllib.request 
 from cli_colores import ColoresCLI as color
 
@@ -110,10 +111,13 @@ def MostrarAlbumsPorInterpreteCLI():
     i = 0
 
 
-def MostrarAlbumPorNombreCLI(): #Edgar G.
-    nombre = str(input("Ingrese nombre del Album: "))
-    nombre = nombre.strip('\n')  #String, limpieza de espacios ant post.
-    nombre = nombre.strip()
+def MostrarAlbumPorNombreCLI(parametro=None): #Edgar G.
+    if parametro == None: 
+        nombre = str(input("Ingrese nombre del Album: "))
+        nombre = nombre.strip('\n')  #String, limpieza de espacios ant post.
+        nombre = nombre.strip()
+    else:
+        nombre = parametro
 
     pistaChrLen = 0
     tituloChrLen = 0
@@ -121,8 +125,6 @@ def MostrarAlbumPorNombreCLI(): #Edgar G.
 
     Listar = consulta.Listar()
     registros = Listar.NombreAlbumEspecifico(nombre)
-
-    
 
     if registros == []:
         print(msg_nohayregistros)
@@ -150,9 +152,9 @@ def MostrarAlbumPorNombreCLI(): #Edgar G.
     else:
         print("En Stock?:",color.ROJO, "NO quedan unidades.",color.END)             
     print("Canciones del Album: ", str(album[3]))
-
-    print("\n")
-
+    print(color.CYAN_CLARO)
+    print("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n")
+    print("         " * gap, color.BOLD + "Canciones:\n", color.END)
     #Se puede dar que existan albumes sin canciones cargadas. 
     if ((album[13] == None) and (album[14] == None) and (album[15] == None)):
         print(color.AMARILLO + "Album sin información de canciones cargadas." + color.END)
@@ -167,38 +169,53 @@ def MostrarAlbumPorNombreCLI(): #Edgar G.
             if len(str(cancion[15])) > duracionChrLen:
                 duracionChrLen = len(str(cancion[15]))
 
+
         print(color.BOLD,end='')
-        print(" " * gap, str("Pista").ljust(pistaChrLen, ' ')," " * 3,str("Nombre").ljust(tituloChrLen, ' '), " " * 5, str("Duracion").ljust(duracionChrLen, ' '))
+        print("    " * gap, str("Pista").ljust(pistaChrLen, ' ')," " * 3,str("Nombre").ljust(tituloChrLen, ' '), " " * 5, str("Duracion").ljust(duracionChrLen, ' '))
         print(color.END)
 
         
         for album in registros:               
-            print(" " * gap, color.CYAN, album[13],color.END," " * gap, str(album[14]).ljust(tituloChrLen, ' '), " " * gap  ,album[15])
+            print("    " * gap, color.CYAN, str(album[13]).ljust(pistaChrLen, ' '),color.END," " * gap, str(album[14]).ljust(tituloChrLen, ' '), " " * gap  ,album[15])
 
 
-    print("\n")
-    print("\nTapa del Disco: ",album[7] if album[7] != "" else color.ROJO + "No hay imagen de la caratula en la Base de Datos." + color.END)
-    print("Foto Interprete:",album[8] if album[8] != "" else color.ROJO + "No hay imagen del Interprete en la Base de Datos." + color.END)
-    print("Spotify Artista:",color.AZUL + "https://open.spotify.com/search/" + str(album[9]).replace(" ", "+") + "%20" + str(album[10]).replace(" ", "+") + color.END)
-        
+    print("\n",color.CYAN_CLARO)
+    print("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",color.END)
+    print("Tapa del Disco: ",color.VERDE, "Disponible " + color.END if album[7] != "" else color.ROJO + "No hay imagen de la caratula en la Base de Datos." + color.END)
+    print("Foto Interprete:",color.VERDE, "Disponible " + color.END if album[8] != "" else color.ROJO + "No hay imagen del Interprete en la Base de Datos." + color.END)
+    print("Spotify Artista: ",color.AZUL + "https://open.spotify.com/search/" + str(album[9]).replace(" ", "+") + "%20" + str(album[10]).replace(" ", "+") + color.END + color.CYAN_CLARO)
+    print("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",color.END)
+    print(color.END, "\n")
     albumstr = "https://www.last.fm/es/music/" + str(album[9] + ' ' + album[10]).replace(" ", "+") + "/" + str(album[2]).replace(" ", "+")
     #print(albumstr) debug
 
-    while True:
+    flag = True
+    while flag == True:
         print(color.BOLD + color.CYAN_CLARO)
-        opcion = input("\n█ Opciones de Album █ 1 (QR Info LastFM) █ 2 (Modificar Album) █ 3 (Salir) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
+        opcion = input("\n█ 1 Ver Album █ 2 (QR Info LastFM) █ 3 (Modificar Album (Id: " + color.AMARILLO + str(album[0]) + color.END + color.CYAN_CLARO + ") █ 4 (Ver Caratula) █ 5 (Ver Foto Intérprete) █ 6 (Salir) █\n\n" + color.END + color.BOLD + "Ingrese un número de opción: " + color.END)
 
         if opcion == "1":
-            print("Generando su QR..\n")
+            print("Refrescando..")
+            MostrarAlbumPorNombreCLI(album[2])
+            continue
+        if opcion == "2":
+            print("Generando su código QR..\n")
             qrcode_terminal.draw(albumstr)
             print("")
             continue
-        elif opcion == "2":
-            ModificarAlbumCLI()
-            break
         elif opcion == "3":
+            ModificarAlbumCLI(album[0])
+            continue
+        elif opcion == "4":
+            VerImagenModoPixelsEnCLI(album[7]) if album[7] != "" else print(color.ROJO, "\n No hay imagen de la caratula en la Base de Datos. \n " + color.END)
+            continue
+        elif opcion == "5":
+            VerImagenModoPixelsEnCLI(album[8]) if album[8] != "" else print(color.ROJO, "\n No hay imagen del Interprete en la Base de Datos. \n " + color.END) 
+            continue
+        elif opcion == "6":
             print("CANCELADO volviendo al menú principal.")
-            break
+            flag = False
+            exit()
         else:
             print("¡Opción incorrecta!")
     return
@@ -309,6 +326,7 @@ def MostrarInterpreteCLI():
     longnombre = 0
     longapellido = 0
     longnacionalidad = 0
+    longlink = 0
 
     for artista in registros:
         if len(str(artista[0])) > longidinterprete:
@@ -320,14 +338,20 @@ def MostrarInterpreteCLI():
         if len(str(artista[2])) > longapellido:
             longapellido = len(str(artista[2]))
 
-
         if len(str(artista[3])) > longnacionalidad:
             longnacionalidad = len(str(artista[3]))
 
+        if len(str(artista[4])) > longlink:
+            longlink = len(str(artista[4]))
+
+
     print(color.BOLD)
     print("Usted solicitó listar los Artistas disponibles en la base de datos:\n" )
-    print(" " * gap, str("Id").ljust(longidinterprete, ' ')," " * gap, str("Nombre").ljust(longnombre, ' ')," " * gap, str("Apellido").ljust(longapellido, ' ')," " * gap,str("Nacionalidad" + color.END).center(longnacionalidad, ' '))
-
+    print(ColorTemaA, end='')
+    print("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",color.END)
+    print(" " * gap, str("Id").ljust(longidinterprete, ' ')," " * gap, str("Nombre").ljust(longnombre, ' ')," " * gap, str("Apellido").ljust(longapellido, ' '),"        " * gap,str("Imagen del Artista" + color.END).center(longlink, ' '))
+    print(ColorTemaA, end='')
+    print("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",color.END)
     i = 0
     for artista in registros:
         
@@ -339,7 +363,8 @@ def MostrarInterpreteCLI():
 
         print(" " * gap, str(artista[0]).ljust(longidinterprete, ' ')," " * gap, str(artista[1]).ljust(longnombre, ' ')," " * gap, str(artista[2]).ljust(longapellido, ' ')," " * gap,str(artista[3]).center(longnacionalidad, ' '),(artista[4] if artista[4] != "" else color.ROJO + "No hay imagen de este artista en la Base de Datos." + color.END))
     i = 0
-
+    print(ColorTemaA, end='')
+    print("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",color.END)
 
 def MostrarGenerosCLI():
 
@@ -454,26 +479,29 @@ def MostrarDiscograficasCLI():
 
 
 def MostrarCanciones():
-    tipo = str(input("""¿Cómo desea buscar las canciones?
-    1- Por Artista
-    2- Por género
-    3- Por id Album
-    4- Por nombre de Album
-                        
-    Su elección: """
-                        ))
-    if tipo == "1":
-        tipo_busqueda = "artista"
-    elif tipo == "2":
-        tipo_busqueda = "genero"
-    elif tipo == "3":
-        tipo_busqueda = "albumid"
-    elif tipo == "4":
-        tipo_busqueda = "albumnom"
-    else:
-        "No se reconoce la opción"
-    
-    parametro = input("Ingrese su parámetro de búsqueda: ")
+       
+    while True: 
+        tipo = str(input(color.BOLD + "\n¿Cómo desea buscar las canciones?\n\n " + color.END + color.NARANJA + "1 " + color.END + "- Por Artista \n" + color.NARANJA +  " 2 " + color.END + "- Por género \n" + color.NARANJA + " 3 " + color.END + "- Por id de Album \n" + color.NARANJA + " 4 " + color.END + "- Por Nombre de album \n" + "\n Su elección : "))                    
+ 
+        if tipo == "1":
+            tipo_busqueda = "artista"
+            break
+        elif tipo == "2":
+            tipo_busqueda = "genero"
+            break
+        elif tipo == "3":
+            tipo_busqueda = "albumid"
+            break
+        elif tipo == "4":
+            tipo_busqueda = "albumnom"
+            break
+        else:
+            print(color.BOLD + color.ROJO_CLARO)
+            print("No se reconoce la opción.")
+            print(color.END)
+            tipo = ""
+    print(color.BOLD)
+    parametro = input("\n Ingrese su parámetro de búsqueda: " + color.END)
 
 
     #Creamos instancia de la clase Listar en el archivo consulta
@@ -589,8 +617,8 @@ def MostrarCanciones():
 ################################################
 
 def InsertarInterpreteCLI():
-
-    while True:
+    flag = True
+    while flag == True:
         print("\n")
         print("Usted está por cargar nuevo Artista o Interprete:"+ color.END)
         nombre =        str(input(color.BOLD +"Escriba Nombre del interprete:                      " + color.END))
@@ -616,15 +644,16 @@ def InsertarInterpreteCLI():
             foto = ""
 
         elif opcion == "3":
-            print("CANCELADO volviendo al menú principal.")
-            break  
-
+            print("CANCELADO volviendo al menú principal.") 
+            flag = False
+            break
         else:
             print("¡Opción incorrecta!")
 
 
 def insertarGeneroCLI():
-    while True:
+    flag = True
+    while flag == True:
         print("\n" + color.BOLD)
         print("Usted está por cargar nuevo Género Musical, si ya existe en la Base de Datos se omitirá la carga: \n" + color.END)
 
@@ -648,13 +677,15 @@ def insertarGeneroCLI():
             nombre = ""
         elif opcion == "3":
             print("CANCELADO volviendo al menú principal.")
+            flag = False
             break  
         else:
             print("¡Opción incorrecta!")
 
 
 def insertarFormatoCLI():
-    while True:
+    flag = True
+    while flag == True:
         print("\n" + color.BOLD)
         print("Usted está por cargar nuevo Tipo de Formato, si ya existe en la Base de Datos se omitirá la carga: \n" + color.END)
 
@@ -676,13 +707,15 @@ def insertarFormatoCLI():
             tipo = ""
         elif opcion == "3":
             print("CANCELADO volviendo al menú principal.")
+            flag = False
             break  
         else:
             print("¡Opción incorrecta!")
 
 
 def InsertarDiscograficaCLI():
-    while True:
+    flag = True
+    while flag == True:
         print("\n" + color.BOLD)
         print("Usted está por cargar una nueva Discografica, si ya existe en la Base de Datos se omitirá la carga: \n" + color.END)
 
@@ -705,14 +738,15 @@ def InsertarDiscograficaCLI():
             nombre = ""
         elif opcion == "3":
             print("CANCELADO volviendo al menú principal.")
+            flag = False
             break  
         else:
             print("¡Opción incorrecta!")
 
 
 def InsertarAlbumCLI():
-
-    while True:
+    flag = True
+    while flag == True:
         print("\n")
         print("Usted está por cargar un álbum: \n")
         
@@ -793,6 +827,7 @@ def InsertarAlbumCLI():
 
         elif opcion == "3":
             print("CANCELADO volviendo al menú principal.")
+            flag = False
             break  
         else:
             print("¡Opción incorrecta!")
@@ -802,7 +837,8 @@ def InsertarCancionCLI():
 
     id_album = None
 
-    while True:
+    flag = True
+    while flag == True:
         print("\n")
         print("Usted está por " + color.VERDE_CLARO+ "Agregar una cancion" + color.END + " a un " + color.BOLD + "álbum." + color.END)
 
@@ -853,6 +889,7 @@ def InsertarCancionCLI():
             id_album = None
         elif opcion == "3":
             print("\nCANCELADO volviendo al menú principal.")
+            flag = False
             break  
         else:
             print("¡Opción incorrecta!")
@@ -869,8 +906,8 @@ def InsertarCancionCLI():
 # CLI (interfaz) ---> CLI_FORMATO (estetica y formato de los datos) ---> CONSULTA (SOLO CONSULTAS select) ----> ABM(altas bajas modificacion, y clases)-----> conexion.
 
 
-def ModificarAlbumCLI():
-
+def ModificarAlbumCLI(parametro=None):
+    flag = True
     id_album = None
     cod_album = None
     nombre = None
@@ -885,18 +922,21 @@ def ModificarAlbumCLI():
     caratula = None
 
 
-    while True:
+    while flag == True:
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
         #Se elige el id del album:
 
-        print("\n")
-        print("Usted está por " + color.AMARILLO+ "MODIFICAR" + color.END + " un " + color.BOLD + "álbum." + color.END)
+        if parametro == None: 
+            print("\n")
+            print("Usted está por " + color.AMARILLO+ "MODIFICAR" + color.END + " un " + color.BOLD + "álbum." + color.END)
 
-        id_album = int(input("\nEscriba el " + color.BOLD + "id" + color.END + " del album a modificar (ingrese 0 para ver la lista antes, si no lo sabe.):  "))
+            id_album = int(input("\nEscriba el " + color.BOLD + "id" + color.END + " del album a modificar (ingrese 0 para ver la lista antes, si no lo sabe.):  "))
 
-        if (id_album == 0) or (id_album == None):
-            MostrarAlbumsPorInterpreteCLI()
-            id_album = int(input("\n Escriba el " + color.BOLD + "id" + color.END + " del album a modificar: "))
+            if (id_album == 0) or (id_album == None):
+                MostrarAlbumsPorInterpreteCLI()
+                id_album = int(input("\n Escriba el " + color.BOLD + "id" + color.END + " del album a modificar: "))
+        else:
+                id_album = parametro
               
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -905,73 +945,73 @@ def ModificarAlbumCLI():
         #Cuestionario donde cambiaremos los datos en las propiedades de la clase Album luego por medio de los setters y los getters las propiedades de el objeto:
 
         pregunta1 = str(input(color.VERDE_CLARO + "Desea modificar el codigo discográfico del album? " + color.BOLD + "s/n: " + color.END))
-        pregunta1.lower()
-        if pregunta1 == "s":
+        
+        if pregunta1.lower() == "s":
             cod_album = str(input("\nEscriba el " + color.BOLD + "nuevo código" + color.END + " discográfico del álbum: "))
             cod_album = cod_album.strip()
 
         pregunta2 = str(input(color.VERDE_CLARO + "Desea modificar el nombre del album? " + color.BOLD + "s/n: " + color.END))
-        pregunta2.lower()       
-        if pregunta2 == "s":
+    
+        if pregunta2.lower() == "s":
             nombre = str(input("\nEscriba el " + color.BOLD + "nuevo nombre" + color.END + " del álbum: "))
             nombre = nombre.strip()
             
 
         pregunta3 = str(input(color.VERDE_CLARO + "Desea modificar el interprete del album? " + color.BOLD + "s/n: " + color.END))
-        pregunta3.lower()       
-        if pregunta3 == "s":
+   
+        if pregunta3.lower() == "s":
             MostrarInterpreteCLI()
             id_interprete = int(input("\nEscriba el " + color.BOLD + "id del nuevo interprete" + color.END + " del álbum: "))
             
 
         pregunta4 = str(input(color.VERDE_CLARO + "Desea modificar el género del album? " + color.BOLD + "s/n: " + color.END))
-        pregunta4.lower()       
-        if pregunta4 == "s":
+      
+        if pregunta4.lower() == "s":
             MostrarGenerosCLI()
             id_genero = int(input("\nEscriba el " + color.BOLD + "id del nuevo género" + color.END + " del álbum: "))
 
 
         pregunta5 = str(input(color.VERDE_CLARO + "Desea modificar cantidad de temas del album? " + color.BOLD + "s/n: " + color.END))
-        pregunta5.lower()       
-        if pregunta5 == "s":
+     
+        if pregunta5.lower() == "s":
             cant_temas = input("\nEscriba la " + color.BOLD + "nueva cantidad de temas" + color.END + " del álbum: ")
             
 
         pregunta6 = str(input(color.VERDE_CLARO + "Desea modificar el sello discográfico del album? " + color.BOLD + "s/n: " + color.END))
-        pregunta6.lower()       
-        if pregunta6 == "s":
+     
+        if pregunta6.lower() == "s":
             MostrarDiscograficasCLI()
             id_discografica = int(input("\nEscriba la " + color.BOLD + "nueva id discográfica" + color.END + " del álbum: "))
             
 
         pregunta7 = str(input(color.VERDE_CLARO + "Desea modificar el formato del album? " + color.BOLD + "s/n: " + color.END))
-        pregunta7.lower()       
-        if pregunta7 == "s":
+  
+        if pregunta7.lower() == "s":
             MostrarFormatosCLI()
             id_formato = int(input("\nEscriba el " + color.BOLD + "nuevo formato" + color.END + " del álbum: "))
             
 
         pregunta8 = str(input(color.VERDE_CLARO + "Desea modificar año de lanzamiento del album?" + color.BOLD + "s/n: " + color.END))
-        pregunta8.lower()       
-        if pregunta8 == "s":
+    
+        if pregunta8.lower() == "s":
             fec_lanzamiento = input("\nEscriba el " + color.BOLD + "nuevo año" + color.END + " del álbum (ej: 2018): ")
             
 
         pregunta9 = str(input(color.VERDE_CLARO + "Desea modificar el precio del album?" + color.BOLD + "s/n: " + color.END))
-        pregunta9.lower()
-        if pregunta9 == "s":
+
+        if pregunta9.lower() == "s":
             precio = float(input("\nEscriba el " + color.BOLD + "nuevo precio" + color.END + " del álbum (ej: 1200): "))
             
 
         pregunta10 = str(input(color.VERDE_CLARO + "Desea modificar el stock de unidades del album?" + color.BOLD + "s/n: " + color.END))
-        pregunta10.lower()
-        if pregunta10 == "s":
+
+        if pregunta10.lower() == "s":
             cantidad = int(input("\nEscriba la " + color.BOLD + "nueva cantidad de unidades" + color.END + " del álbum: "))
             
 
         pregunta11 = str(input(color.VERDE_CLARO + "Desea modificar la caratula del album?" + color.BOLD + "s/n: " + color.END))
-        pregunta11.lower()
-        if pregunta11 == "s":
+
+        if pregunta11.lower() == "s":
             caratula = (input("\nEscriba el " + color.BOLD + "link directo a la imagen" + color.END + " del álbum: "))
             
 #---------------------------------------------------------------------------------------------------------------------------------------
@@ -1095,10 +1135,11 @@ def ModificarAlbumCLI():
 
         elif opcion == "3":
             print("CANCELADO volviendo al menú principal.")
+            flag = False
             break  
         else:
             print("¡Opción incorrecta!")
-
+    
 
 def ModificarInterpreteCLI():
 
@@ -1107,10 +1148,11 @@ def ModificarInterpreteCLI():
     apellido = None
     nacionalidad = None
     foto = None
+    flag = True
 
-    while True:
+    while flag ==True:
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
-        #Se elige el id del album:
+        #Se elige el id del intérprete:
 
         print("\n")
         print("Usted está por " + color.AMARILLO+ "MODIFICAR" + color.END + " un " + color.BOLD + "intérprete." + color.END)
@@ -1125,31 +1167,31 @@ def ModificarInterpreteCLI():
 
         print(color.BOLD + "\nPerfecto, ahora siga las instrucciones: \n" + color.END)
 
-        #Cuestionario donde cambiaremos los datos en las propiedades de la clase Album luego por medio de los setters y los getters las propiedades de el objeto:
+        #Cuestionario donde cambiaremos los datos en las propiedades de la clase Interprete luego por medio de los setters y los getters las propiedades de el objeto:
 
         pregunta1 = str(input(color.VERDE_CLARO + "Desea modificar el nombre del intérprete? " + color.BOLD + "s/n: " + color.END))
-        pregunta1.lower()
-        if pregunta1 == "s":
+        
+        if pregunta1.lower() == "s":
             nombre = str(input("\nEscriba el " + color.BOLD + "nuevo nombre" + color.END + " del intérprete: "))
             nombre = nombre.strip()
 
         pregunta2 = str(input(color.VERDE_CLARO + "Desea modificar el apellido del interprete? " + color.BOLD + "s/n: " + color.END))
-        pregunta2.lower()       
-        if pregunta2 == "s":
+    
+        if pregunta2.lower() == "s":
             apellido = str(input("\nEscriba el " + color.BOLD + "nuevo apellido" + color.END + " del intérprete: "))
             apellido = apellido.strip()
             
 
         pregunta3 = str(input(color.VERDE_CLARO + "Desea modificar la nacionalidad del intérprete? " + color.BOLD + "s/n: " + color.END))
-        pregunta3.lower()       
-        if pregunta3 == "s":
+       
+        if pregunta3.lower() == "s":
             nacionalidad = str(input("\nEscriba la " + color.BOLD + "nueva nacionalidad del interprete" + color.END + " del álbum: "))
             nacionalidad = nacionalidad.strip()
             
 
         pregunta4 = str(input(color.VERDE_CLARO + "Desea modificar la foto del intérprete?" + color.BOLD + "s/n: " + color.END))
-        pregunta4.lower()
-        if pregunta4 == "s":
+
+        if pregunta4.lower() == "s":
             foto = str(input("\nEscriba el " + color.BOLD + "link directo a la imagen" + color.END + " del intérprete: "))
             foto = foto.strip()
 
@@ -1224,6 +1266,7 @@ def ModificarInterpreteCLI():
 
         elif opcion == "3":
             print("CANCELADO volviendo al menú principal.")
+            flag = False
             break  
         else:
             print("¡Opción incorrecta!")
@@ -1240,7 +1283,9 @@ def ModificarCancionCLI():
     id_album = None
     id_interprete = None
 
-    while True:
+    flag = True
+
+    while flag ==True:
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
         #Se elige el id de la cancion:
 
@@ -1259,44 +1304,44 @@ def ModificarCancionCLI():
         #Cuestionario donde cambiaremos los datos en las propiedades de la clase Album luego por medio de los setters y los getters las propiedades de el objeto:
 
         pregunta1 = str(input(color.VERDE_CLARO + "Desea modificar el número de track de la canción? " + color.BOLD + "s/n: " + color.END))
-        pregunta1.lower()
-        if pregunta1 == "s":
+
+        if pregunta1.lower() == "s":
             track_num = int(input("\nEscriba el " + color.BOLD + "nuevo número de track" + color.END + " de la canción: "))
 
         pregunta2 = str(input(color.VERDE_CLARO + "Desea modificar el título de la canción? " + color.BOLD + "s/n: " + color.END))
-        pregunta2.lower()       
-        if pregunta2 == "s":
+        
+        if pregunta2.lower() == "s":
             titulo = str(input("\nEscriba el " + color.BOLD + "nuevo título" + color.END + " de la canción: "))
             titulo = titulo.strip()
 
         pregunta3 = str(input(color.VERDE_CLARO + "Desea modificar la duración de la canción? " + color.BOLD + "s/n: " + color.END))
-        pregunta3.lower()       
-        if pregunta3 == "s":
+     
+        if pregunta3.lower() == "s":
             duracion = str(input("\nEscriba la " + color.BOLD + "nueva duración" + color.END + " de la canción: "))
             duracion = duracion.strip()
             
         pregunta4 = str(input(color.VERDE_CLARO + "Desea modificar el autor de la canción?" + color.BOLD + "s/n: " + color.END))
-        pregunta4.lower()
-        if pregunta4 == "s":
+
+        if pregunta4.lower() == "s":
             autor = str(input("\nEscriba el " + color.BOLD + "nuevo autor" + color.END + " de la canción: "))
             autor = autor.strip()
 
 
         pregunta5 = str(input(color.VERDE_CLARO + "Desea modificar el compositor de la canción?" + color.BOLD + "s/n: " + color.END))
-        pregunta5.lower()
-        if pregunta5 == "s":
+
+        if pregunta5.lower() == "s":
             compositor = str(input("\nEscriba el " + color.BOLD + "nuevo compositor" + color.END + " de la canción: "))
             compositor = compositor.strip()
 
         pregunta6 = str(input(color.VERDE_CLARO + "Desea modificar el álbum de la canción?" + color.BOLD + "s/n: " + color.END))
-        pregunta6.lower()
-        if pregunta6 == "s":
+
+        if pregunta6.lower() == "s":
             MostrarAlbumPorNombreCLI()
             id_album = int(input("\nEscriba el " + color.BOLD + "id del nuevo álbum" + color.END + " de la canción: "))
 
         pregunta7 = str(input(color.VERDE_CLARO + "Desea modificar el intérprete de la canción?" + color.BOLD + "s/n: " + color.END))
-        pregunta7.lower()
-        if pregunta7 == "s":
+
+        if pregunta7.lower() == "s":
             MostrarInterpreteCLI()
             id_interprete = int(input("\nEscriba el " + color.BOLD + "id del nuevo intérprete" + color.END + " de la canción: "))
 
@@ -1392,6 +1437,7 @@ def ModificarCancionCLI():
             
         elif opcion == "3":
             print("CANCELADO volviendo al menú principal.")
+            flag = False         
             break  
         else:
             print("¡Opción incorrecta!")
@@ -1402,7 +1448,8 @@ def ModificarCancionCLI():
 def EliminarAlbumCLI():
     id_album = None
 
-    while True:
+    flag = True
+    while flag ==True:
         print("\n")
         print("Usted está por " + color.ROJO_CLARO + "ELIMINAR" + color.END + " un " + color.BOLD + "álbum." + color.END)
 
@@ -1427,13 +1474,14 @@ def EliminarAlbumCLI():
             id_album = None
         elif opcion == "3":
             print("\nCANCELADO volviendo al menú principal.")
+            flag= False
             break  
         else:
             print("¡Opción incorrecta!")
 
 # -------------------------------------------------------
 
-def VerImagenEnCLI(linkImagen):
+def VerImagenModoTXTEnCLI(linkImagen):
 
     ASCII_CHARS3 = [' ','.',':',';','0','k','W','M','#','%']
 
@@ -1498,7 +1546,29 @@ def VerImagenEnCLI(linkImagen):
 
 #------------------------------------------------
 
+def VerImagenModoPixelsEnCLI(linkImagen):
+    try:
+        source = linkImagen
+        tam = (120,100)   
+        image = DrawImage.from_url(source)
+        image.size = tam
+        image.draw_image()
+    except Exception as error:
+        print("\nNo se puede obtener la imagen en este momento. Puede que el link de la misma no funcione: :(")
+        print("\n",error)
+
+# ------------------------------------------------
+#VerImagenModoPixelsEnCLI("https://lastfm.freetls.fastly.net/i/u/770x0/ab67d9a3c3624a16ca334032438752a5.jpg")
+
+
+
+
+
+
+
 #TEST DE CLASE ALBUM. 
+
+
 
 # consulta = consulta.Listar()
 # resultados = consulta.idAlbumEspecifico(14)
