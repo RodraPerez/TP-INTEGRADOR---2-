@@ -132,12 +132,15 @@ class cli():
                 cli_formato.MostrarDiscograficasCLI()
                 continue
             elif self.opcion == "S" or self.opcion == "s":
-                break            
+                self.GUIMenuPrincipal()
+                self.flag = False            
             else:
                 self.ErrorDeOpcion()
+                self.flag = True
                 continue
 
     def GUIMenuOtros(self):
+        self.flag = True
         while True:
             print(color.AZUL_CLARO)
             print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
@@ -182,7 +185,9 @@ class cli():
                 cli_formato.ModificarCancionCLI()
                 continue
             elif self.opcion == "S" or self.opcion == "s":
-                break
+                self.GUIMenuPrincipal()
+                self.flag = False            
             else:
                 self.ErrorDeOpcion()
+                self.flag = True
                 continue
