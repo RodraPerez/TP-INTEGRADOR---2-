@@ -70,7 +70,7 @@ cd TP-INTEGRADOR---2-
 
 3. Instalar las librerias necesarias, copiar el sigueinte código y pegarlo en la consola:
 ````
-pip install pillow qrcode qrcode-terminal
+pip install pillow qrcode qrcode-terminal terminal-img
 ````
 4. Agregar la contraseña de la base de datos en el archivo _conexión.py_ :
 
