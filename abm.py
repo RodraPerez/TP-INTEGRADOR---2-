@@ -325,7 +325,28 @@ class Cargar(conexion.BaseDatos):
         #Se desconecta automaticamente luego de hacer la operacion, ver modulo conexion.py.
 
 #----------------------------------------------------------------------------------
+    def ModificarInterprete(self,interprete,id_interpreteModificado): 
 
+        self.id_interpreteModificado = id_interpreteModificado
+
+        self.query = ("""UPDATE interprete
+                        SET nombre=%s, apellido=%s, nacionalidad=%s, foto= %s
+                        WHERE id_interprete = """) + "'" + str(self.id_interpreteModificado) + "'"
+
+        self.data = (
+            interprete.getNombre(),
+            interprete.getApellido(),
+            interprete.getNacionalidad(),
+            interprete.getFoto(),
+        )
+
+        self.Conectar()
+
+        self.datos = self.abmSQL(self.query,self.data)   #Enviamos Query y Tupla, el metodo abm es el que posee el commit. y se desconecta al terminar.
+
+        print("[ABM] Ejecutada MODIFICACION de un Interprete.") #Si ya esta cargado, o si se cargó el registro.
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
 
     def CargarGenero(self,nombre): #Cargar un Género musical.    
         # Tabla Interprete:  id_interprete(autoincremental),nombre,apellido,nacionalidad,foto
@@ -396,10 +417,35 @@ class Cargar(conexion.BaseDatos):
 
         self.datos = self.abmSQL(self.query,self.data)   #Enviamos Query y Tupla, el metodo abm es el que posee el commit. y se desconecta al terminar.
 
-        #print("[ABM] Ejecutada CARGA de una cancion") #Si ya esta cargado, o si se cargó el registro.
-
+        print("[ABM] Ejecutada CARGA de una cancion") #Si ya esta cargado, o si se cargó el registro.
 
 #----------------------------------------------------------------------------------------------------------------------
+
+    def ModificarCancion(self,tema, idTemaModificado):     
+        self.idTemaModificado = idTemaModificado
+
+        self.query = ("""UPDATE tema
+                        SET track_num=%s, titulo=%s, duracion=%s, autor= %s, compositor=%s, id_album=%s, id_interprete=%s
+                        WHERE id_tema = """) + "'" + str(self.idTemaModificado) + "'"
+
+
+        self.data = (
+            tema.getTrack_num(),
+            tema.getTiulo(),
+            tema.getDuracion(),
+            tema.getAutor(),
+            tema.getCompositor(),
+            tema.getId_album(),
+            tema.getId_interprete(),
+        )
+
+        self.Conectar()
+
+        self.datos = self.abmSQL(self.query,self.data)   #Enviamos Query y Tupla, el metodo abm es el que posee el commit. y se desconecta al terminar.
+
+        print("[ABM] Ejecutada MODIFICACION de una Cancion.") #Si ya esta cargado, o si se cargó el registro.
+
+#--------------------------------------------------------------------------------------------
 
 #Cargar Album:
 

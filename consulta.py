@@ -114,6 +114,34 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
         #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
         return self.datos
 
+    def idInterpreteEspecifico(self, idInterprete):
+        self.idInterprete = idInterprete
+        self.query = """SELECT interprete.id_interprete, interprete.nombre, interprete.apellido, interprete.nacionalidad, interprete.foto
+        FROM interprete
+        WHERE interprete.id_interprete = """ + "'" + str(self.idInterprete) + "'"
+        #Conexion a Base de Datos:
+        self.Conectar()
+        #print("[CONSULTA] Ejecutada consulta Album por id del Album.") #print debug
+        self.datos = self.QuerySQL(self.query)
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
+        #print(self.datos)
+        return self.datos
+
+#----------------------------------------------------------------------------------------------------------
+    
+
+    def idTemaEspecifico(self, idTema):
+        self.idTema = idTema
+        self.query = """SELECT tema.id_tema, tema.track_num, tema.titulo, tema.duracion, tema.autor, tema.compositor, tema.id_album, tema.id_interprete
+        FROM tema
+        WHERE tema.id_tema = """ + "'" + str(self.idTema) + "'"
+        #Conexion a Base de Datos:
+        self.Conectar()
+        #print("[CONSULTA] Ejecutada consulta Tena por id del Tema.") #print debug
+        self.datos = self.QuerySQL(self.query)
+        #Desconexion automatica en el modulo conexion luego de hacer una consulta u otra operacion, ahorramos codigo.
+        #print(self.datos)
+        return self.datos
 
 
 
@@ -122,7 +150,6 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 #----------------------------------------------------------------------------------------------------------
 # consultas de una sola tabla sin parametros:
 #----------------------------------------------------------------------------------------------------------
-
 
     def ListaGenerosCompleta(self):
 
@@ -137,7 +164,7 @@ class Listar(conexion.BaseDatos): # Heredaremos de la clase BaseDeDatos almacena
 
 #---------------------------------------------------------------------------------------------------------
     
-     
+    
     def ListaInterpretesCompleta(self): #Nico
         self.query ="""SELECT i.id_interprete, i.nombre, i.apellido, i.nacionalidad, i.foto
                     FROM interprete 
