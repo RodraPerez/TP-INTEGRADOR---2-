@@ -944,72 +944,72 @@ def ModificarAlbumCLI(parametro=None):
 
         #Cuestionario donde cambiaremos los datos en las propiedades de la clase Album luego por medio de los setters y los getters las propiedades de el objeto:
 
-        pregunta1 = str(input(color.VERDE_CLARO + "Desea modificar el codigo discográfico del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta1 = str(input(color.VERDE_CLARO + "\nDesea modificar el codigo discográfico del album? " + color.BOLD + "s/n: " + color.END))
         
         if pregunta1.lower() == "s":
             cod_album = str(input("\nEscriba el " + color.BOLD + "nuevo código" + color.END + " discográfico del álbum: "))
             cod_album = cod_album.strip()
 
-        pregunta2 = str(input(color.VERDE_CLARO + "Desea modificar el nombre del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta2 = str(input(color.VERDE_CLARO + "\nDesea modificar el nombre del album? " + color.BOLD + "s/n: " + color.END))
     
         if pregunta2.lower() == "s":
             nombre = str(input("\nEscriba el " + color.BOLD + "nuevo nombre" + color.END + " del álbum: "))
             nombre = nombre.strip()
             
 
-        pregunta3 = str(input(color.VERDE_CLARO + "Desea modificar el interprete del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta3 = str(input(color.VERDE_CLARO + "\nDesea modificar el interprete del album? " + color.BOLD + "s/n: " + color.END))
    
         if pregunta3.lower() == "s":
             MostrarInterpreteCLI()
             id_interprete = int(input("\nEscriba el " + color.BOLD + "id del nuevo interprete" + color.END + " del álbum: "))
             
 
-        pregunta4 = str(input(color.VERDE_CLARO + "Desea modificar el género del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta4 = str(input(color.VERDE_CLARO + "\nDesea modificar el género del album? " + color.BOLD + "s/n: " + color.END))
       
         if pregunta4.lower() == "s":
             MostrarGenerosCLI()
             id_genero = int(input("\nEscriba el " + color.BOLD + "id del nuevo género" + color.END + " del álbum: "))
 
 
-        pregunta5 = str(input(color.VERDE_CLARO + "Desea modificar cantidad de temas del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta5 = str(input(color.VERDE_CLARO + "\nDesea modificar cantidad de temas del album? " + color.BOLD + "s/n: " + color.END))
      
         if pregunta5.lower() == "s":
             cant_temas = input("\nEscriba la " + color.BOLD + "nueva cantidad de temas" + color.END + " del álbum: ")
             
 
-        pregunta6 = str(input(color.VERDE_CLARO + "Desea modificar el sello discográfico del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta6 = str(input(color.VERDE_CLARO + "\nDesea modificar el sello discográfico del album? " + color.BOLD + "s/n: " + color.END))
      
         if pregunta6.lower() == "s":
             MostrarDiscograficasCLI()
             id_discografica = int(input("\nEscriba la " + color.BOLD + "nueva id discográfica" + color.END + " del álbum: "))
             
 
-        pregunta7 = str(input(color.VERDE_CLARO + "Desea modificar el formato del album? " + color.BOLD + "s/n: " + color.END))
+        pregunta7 = str(input(color.VERDE_CLARO + "\nDesea modificar el formato del album? " + color.BOLD + "s/n: " + color.END))
   
         if pregunta7.lower() == "s":
             MostrarFormatosCLI()
             id_formato = int(input("\nEscriba el " + color.BOLD + "nuevo formato" + color.END + " del álbum: "))
             
 
-        pregunta8 = str(input(color.VERDE_CLARO + "Desea modificar año de lanzamiento del album?" + color.BOLD + "s/n: " + color.END))
+        pregunta8 = str(input(color.VERDE_CLARO + "\nDesea modificar año de lanzamiento del album?" + color.BOLD + "s/n: " + color.END))
     
         if pregunta8.lower() == "s":
             fec_lanzamiento = input("\nEscriba el " + color.BOLD + "nuevo año" + color.END + " del álbum (ej: 2018): ")
             
 
-        pregunta9 = str(input(color.VERDE_CLARO + "Desea modificar el precio del album?" + color.BOLD + "s/n: " + color.END))
+        pregunta9 = str(input(color.VERDE_CLARO + "\nDesea modificar el precio del album?" + color.BOLD + "s/n: " + color.END))
 
         if pregunta9.lower() == "s":
             precio = float(input("\nEscriba el " + color.BOLD + "nuevo precio" + color.END + " del álbum (ej: 1200): "))
             
 
-        pregunta10 = str(input(color.VERDE_CLARO + "Desea modificar el stock de unidades del album?" + color.BOLD + "s/n: " + color.END))
+        pregunta10 = str(input(color.VERDE_CLARO + "\nDesea modificar el stock de unidades del album?" + color.BOLD + "s/n: " + color.END))
 
         if pregunta10.lower() == "s":
             cantidad = int(input("\nEscriba la " + color.BOLD + "nueva cantidad de unidades" + color.END + " del álbum: "))
             
 
-        pregunta11 = str(input(color.VERDE_CLARO + "Desea modificar la caratula del album?" + color.BOLD + "s/n: " + color.END))
+        pregunta11 = str(input(color.VERDE_CLARO + "\nDesea modificar la caratula del album?" + color.BOLD + "s/n: " + color.END))
 
         if pregunta11.lower() == "s":
             caratula = (input("\nEscriba el " + color.BOLD + "link directo a la imagen" + color.END + " del álbum: "))
@@ -1175,21 +1175,21 @@ def ModificarInterpreteCLI():
             nombre = str(input("\nEscriba el " + color.BOLD + "nuevo nombre" + color.END + " del intérprete: "))
             nombre = nombre.strip()
 
-        pregunta2 = str(input(color.VERDE_CLARO + "Desea modificar el apellido del interprete? " + color.BOLD + "s/n: " + color.END))
+        pregunta2 = str(input(color.VERDE_CLARO + "\nDesea modificar el apellido del interprete? " + color.BOLD + "s/n: " + color.END))
     
         if pregunta2.lower() == "s":
             apellido = str(input("\nEscriba el " + color.BOLD + "nuevo apellido" + color.END + " del intérprete: "))
             apellido = apellido.strip()
             
 
-        pregunta3 = str(input(color.VERDE_CLARO + "Desea modificar la nacionalidad del intérprete? " + color.BOLD + "s/n: " + color.END))
+        pregunta3 = str(input(color.VERDE_CLARO + "\nDesea modificar la nacionalidad del intérprete? " + color.BOLD + "s/n: " + color.END))
        
         if pregunta3.lower() == "s":
             nacionalidad = str(input("\nEscriba la " + color.BOLD + "nueva nacionalidad del interprete" + color.END + " del álbum: "))
             nacionalidad = nacionalidad.strip()
             
 
-        pregunta4 = str(input(color.VERDE_CLARO + "Desea modificar la foto del intérprete?" + color.BOLD + "s/n: " + color.END))
+        pregunta4 = str(input(color.VERDE_CLARO + "\nDesea modificar la foto del intérprete?" + color.BOLD + "s/n: " + color.END))
 
         if pregunta4.lower() == "s":
             foto = str(input("\nEscriba el " + color.BOLD + "link directo a la imagen" + color.END + " del intérprete: "))
@@ -1198,16 +1198,15 @@ def ModificarInterpreteCLI():
             
 #---------------------------------------------------------------------------------------------------------------------------------------
 
-        #Hacemos el Query select para traer los datos del id_album en el orden correcto, solicitado en el cuestionario.
         getdatos = consulta.Listar()
         resultados = getdatos.idInterpreteEspecifico(id_interprete)
 
-        #Llenamos el objeto Album con los datos actualizados de la base de datos del id de album elegido.
+        #Llenamos el objeto Interprete con los datos actualizados de la base de datos del id de interprete elegido.
         for dato in resultados:
-            Interprete = abm.Interprete (dato[0],dato[1],dato[2],dato[3],dato[4])
+            Interprete = abm.Interprete(dato[0],dato[1],dato[2],dato[3],dato[4])
             #print(dato) #print debug 
 
-        #Alteramos el objeto Album solamente lo elegido en el cuestionario, si es distino a None es porque lo cambiamos en el cuestionario, si es None obtenemos el dato que sigue sin cambio desde el getter de la clase. 
+        #Alteramos el objeto Interprete solamente lo elegido en el cuestionario, si es distino a None es porque lo cambiamos en el cuestionario, si es None obtenemos el dato que sigue sin cambio desde el getter de la clase. 
 
         if nombre != None:
             Interprete.setNombre(nombre)
@@ -1217,7 +1216,7 @@ def ModificarInterpreteCLI():
         if apellido != None:
             Interprete.setApellido(apellido)
         else:
-            nombre = Interprete.getApellido()
+            apellido = Interprete.getApellido()
 
         if nacionalidad != None:
             Interprete.setNacionalidad(nacionalidad)
@@ -1238,7 +1237,7 @@ def ModificarInterpreteCLI():
                 "\nNombre Intérprete:",nombre,
                 "\nApellido Intérprete:",apellido,
                 "\nNacionalidad Intérprete:",nacionalidad,
-                "\nFoto Intérprete:",foto,      
+                "\nFoto Intérprete:",foto    
                 )
 
         #Generamos la nueva tupla de datos modificados para el envio a la base de datos:
@@ -1303,43 +1302,43 @@ def ModificarCancionCLI():
 
         #Cuestionario donde cambiaremos los datos en las propiedades de la clase Album luego por medio de los setters y los getters las propiedades de el objeto:
 
-        pregunta1 = str(input(color.VERDE_CLARO + "Desea modificar el número de track de la canción? " + color.BOLD + "s/n: " + color.END))
+        pregunta1 = str(input(color.VERDE_CLARO + "\nDesea modificar el número de track de la canción? " + color.BOLD + "s/n: " + color.END))
 
         if pregunta1.lower() == "s":
             track_num = int(input("\nEscriba el " + color.BOLD + "nuevo número de track" + color.END + " de la canción: "))
 
-        pregunta2 = str(input(color.VERDE_CLARO + "Desea modificar el título de la canción? " + color.BOLD + "s/n: " + color.END))
+        pregunta2 = str(input(color.VERDE_CLARO + "\nDesea modificar el título de la canción? " + color.BOLD + "s/n: " + color.END))
         
         if pregunta2.lower() == "s":
             titulo = str(input("\nEscriba el " + color.BOLD + "nuevo título" + color.END + " de la canción: "))
             titulo = titulo.strip()
 
-        pregunta3 = str(input(color.VERDE_CLARO + "Desea modificar la duración de la canción? " + color.BOLD + "s/n: " + color.END))
+        pregunta3 = str(input(color.VERDE_CLARO + "\nDesea modificar la duración de la canción? " + color.BOLD + "s/n: " + color.END))
      
         if pregunta3.lower() == "s":
             duracion = str(input("\nEscriba la " + color.BOLD + "nueva duración" + color.END + " de la canción: "))
             duracion = duracion.strip()
             
-        pregunta4 = str(input(color.VERDE_CLARO + "Desea modificar el autor de la canción?" + color.BOLD + "s/n: " + color.END))
+        pregunta4 = str(input(color.VERDE_CLARO + "\nDesea modificar el autor de la canción?" + color.BOLD + "s/n: " + color.END))
 
         if pregunta4.lower() == "s":
             autor = str(input("\nEscriba el " + color.BOLD + "nuevo autor" + color.END + " de la canción: "))
             autor = autor.strip()
 
 
-        pregunta5 = str(input(color.VERDE_CLARO + "Desea modificar el compositor de la canción?" + color.BOLD + "s/n: " + color.END))
+        pregunta5 = str(input(color.VERDE_CLARO + "\nDesea modificar el compositor de la canción?" + color.BOLD + "s/n: " + color.END))
 
         if pregunta5.lower() == "s":
             compositor = str(input("\nEscriba el " + color.BOLD + "nuevo compositor" + color.END + " de la canción: "))
             compositor = compositor.strip()
 
-        pregunta6 = str(input(color.VERDE_CLARO + "Desea modificar el álbum de la canción?" + color.BOLD + "s/n: " + color.END))
+        pregunta6 = str(input(color.VERDE_CLARO + "\nDesea modificar el álbum de la canción?" + color.BOLD + "s/n: " + color.END))
 
         if pregunta6.lower() == "s":
             MostrarAlbumPorNombreCLI()
             id_album = int(input("\nEscriba el " + color.BOLD + "id del nuevo álbum" + color.END + " de la canción: "))
 
-        pregunta7 = str(input(color.VERDE_CLARO + "Desea modificar el intérprete de la canción?" + color.BOLD + "s/n: " + color.END))
+        pregunta7 = str(input(color.VERDE_CLARO + "\nDesea modificar el intérprete de la canción?" + color.BOLD + "s/n: " + color.END))
 
         if pregunta7.lower() == "s":
             MostrarInterpreteCLI()
