@@ -329,7 +329,7 @@ class Cargar(conexion.BaseDatos):
 
         self.id_interpreteModificado = id_interpreteModificado
 
-        self.query = ("""UPDATE interprete
+        self.query = ("""UPDATE IGNORE interprete
                         SET nombre=%s, apellido=%s, nacionalidad=%s, foto= %s
                         WHERE id_interprete = """) + "'" + str(self.id_interpreteModificado) + "'"
 
