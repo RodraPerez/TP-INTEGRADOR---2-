@@ -188,8 +188,11 @@ def MostrarAlbumPorNombreCLI(parametro=None): #Edgar G.
     print("Spotify Artista: ",color.AZUL + "https://open.spotify.com/search/" + str(album[9]).replace(" ", "+") + "%20" + str(album[10]).replace(" ", "+") + color.END + color.CYAN_CLARO)
     print("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",color.END)
     print(color.END, "\n")
-    albumstr = "https://www.last.fm/es/music/" + str(album[9] + ' ' + album[10]).replace(" ", "+") + "/" + str(album[2]).replace(" ", "+")
-    #print(albumstr) debug qr link
+    artista_rev = str(album[9]) if album[10] == "" or album[10] == " " or album[10] == None else str(album[9] + ' ' + album[10]).replace(" ", "+") #adaptación a artista sin apellido
+    albumstr = "https://www.last.fm/es/music/" + artista_rev + "/" + str(album[2]).replace(" ", "+")
+    #print(albumstr) #debug qr link
+    #print(artista_rev) #debug qr link
+
     flag = True
     try:       
         while flag: 
