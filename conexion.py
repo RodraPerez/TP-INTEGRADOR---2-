@@ -4,8 +4,8 @@ import mysql.connector                                          #Se importa el d
 
 class BaseDatos():                                              #Se crea la clase de conecxion.
     def __init__(self):
-        print("[CONEXION] load.")              
-
+        #print("[CONEXION] load.")              
+        print("\n")
     def Conectar(self):                                         #Metodo para conectarse a la Base de Datos
         try:
             self.conexion = mysql.connector.connect(
@@ -16,18 +16,19 @@ class BaseDatos():                                              #Se crea la clas
             db = 'disqueria' #nombre de la base de datos
             )
             if self.conexion.is_connected():
-                print("[CONEXION] La conexion es exitosa.")
+                #print("[CONEXION] La conexion es exitosa.")
+                print("\n")
 
         except mysql.connector.Error as error:
-            print("[CONEXION] ¡No se conectó!")
+            #print("[CONEXION] ¡No se conectó!")
             print(error)
 
     def Desconectar(self):                                      #Metodo para Desconectarse de la Base de Datos
 
         if self.conexion.is_connected():
             self.conexion.close()
-            print("[CONEXION] La conexión se cerró\n")
-
+            #print("[CONEXION] Operación realizada, la conexión se cerró adecuadamente.\n")
+            print("\n")
 
     def QuerySQL(self,query):  #Recibimos la query SQL desde cualquier llamando al metodo del objeto con un solo parametro
         self.query = query
@@ -49,7 +50,7 @@ class BaseDatos():                                              #Se crea la clas
                 return self.listado
 
             except self.mysql.connector.Error as Error:
-                print("[CONEXION] [QuerySQL] No hay conexion con la base de datos.",Error)
+                print("[CONEXION] [QuerySQL] No hay conexion con la base de datos. ¿Está conectado a la red? ¿Revisó su password de la Base de Datos?",Error)
 
     
     def abmSQL(self,query,data):  # Recibo sentencia SQL y Datos.
@@ -68,7 +69,7 @@ class BaseDatos():                                              #Se crea la clas
                 #print("[CONEXION] Commit [OK].") 
 
             except self.mysql.connector.Error as Error:
-                print("[CONEXION] [abmSQL] No hay conexion con la base de datos.",Error)
+                print("[CONEXION] [abmSQL] No hay conexion con la base de datos. ¿Está conectado a la red? ¿Revisó su password de la Base de Datos?",Error)
 
         #Desconectamos por defecto en cualquier operacion, podemos llamar al metodo si deseamos conexión fija (no se recomienda)
         self.Desconectar()

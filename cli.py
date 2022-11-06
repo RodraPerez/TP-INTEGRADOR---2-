@@ -1,5 +1,5 @@
 #Interfaz de modo consola.
-
+import os
 import cli_formato
 from cli_colores import ColoresCLI as color
 
@@ -8,6 +8,7 @@ class cli():
         self.Iniciar()
 
     def Iniciar(self):
+        os.system('cls')
         print(color.VERDE_CLARO)
         print("[MODULO cli] Interfaz de Consola Iniciada..")
         print(color.END)
@@ -20,6 +21,7 @@ class cli():
         print(color.END)
 
     def GUIMenuPrincipal(self):
+        os.system('cls')
         while self.flag == True:
             print(color.AZUL_CLARO)
             print("\n█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█")
@@ -50,6 +52,7 @@ class cli():
                 continue 
                 
     def GUIMenuABMAlbum(self):
+        os.system('cls')
         self.flag = True
         while self.flag == True:
             print(color.AZUL_CLARO)
@@ -60,10 +63,11 @@ class cli():
 
             print(color.CYAN_CLARO)
             print("GESTION DE ALBUMES\n")
-            print(color.NARANJA + "1" + color.END + "- ALTA DE UN ÁLBUM")
-            print(color.NARANJA + "2" + color.END + "- BAJA DE UN ÁLBUM")
-            print(color.NARANJA + "3" + color.END + "- MODIFICACION DE ALBUM")
-            print(color.NARANJA + "S" + color.END + "- Salir")
+            print(color.ROJO + "1" + color.END + " > ALTA DE UN ÁLBUM")
+            print(color.ROJO + "2" + color.END + " > BAJA DE UN ÁLBUM")
+            print(color.ROJO + "3" + color.END + " > MODIFICACION DE ALBUM")
+            print("\n")
+            print(color.CYAN_CLARO + "S"+ color.AZUL_CLARO + " - VOLVER MENU PRINCIPAL" + color.END)
             print(color.END)       
             print("\n")
 
@@ -87,6 +91,7 @@ class cli():
                 continue
 
     def GUIMenuListados(self):
+        os.system('cls')
         self.flag = True
         while self.flag == True:
             print(color.AZUL_CLARO)
@@ -95,14 +100,14 @@ class cli():
             print(  "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n")
             print(color.END)
 
-            print(color.BOLD)
-            print("GESTION DE CONSULTAS\n" + color.END + color.VERDE_CLARO)
-            print("1 > INFORMACION DETALLE DE UN ÁLBUM                      5 > LISTADO DE INTERPRETES")           
-            print("2 > LISTA DE ALBUMES POR ARTISTA (NOMBRE ASC)            6 > LISTADO DE GENEROS MUSICALES")
-            print("3 > LISTA DE ALBUMES DE UN GENERO MUSICAL ESPECIFICO     7 > LISTADO DE FORMATOS")
-            print("4 > LISTA DE CANCIONES SEGUN LO SOLICITADO               8 > LISTADO DE DISCOGRAFICAS" + color.END)              
+            print(color.VERDE_CLARO + color.BOLD)
+            print("GESTION DE CONSULTAS\n" + color.END)
+            print(color.CYAN_CLARO + "1" + color.END + " > INFORMACION DETALLE DE UN ÁLBUM                      " + color.CYAN_CLARO + "5" + color.END + " > LISTADO DE INTERPRETES")           
+            print(color.CYAN_CLARO + "2" + color.END + " > LISTA DE ALBUMES POR ARTISTA (NOMBRE ASC)            " + color.CYAN_CLARO + "6" + color.END + " > LISTADO DE GENEROS MUSICALES")
+            print(color.CYAN_CLARO + "3" + color.END + " > LISTA DE ALBUMES DE UN GENERO MUSICAL ESPECIFICO     " + color.CYAN_CLARO + "7" + color.END + " > LISTADO DE FORMATOS")
+            print(color.CYAN_CLARO + "4" + color.END + " > LISTA DE CANCIONES SEGUN LO SOLICITADO               " + color.CYAN_CLARO + "8" + color.END + " > LISTADO DE DISCOGRAFICAS")              
             print("")
-            print("S > SALIR")
+            print(color.CYAN_CLARO + "S > "+ color.AZUL_CLARO + "VOLVER MENU PRINCIPAL" + color.END)
             print("\n")
 
             self.opcion = input("Ingrese su opción: ")
@@ -140,6 +145,7 @@ class cli():
                 continue
 
     def GUIMenuOtros(self):
+        os.system('cls')
         self.flag = True
         while True:
             print(color.AZUL_CLARO)
@@ -156,7 +162,7 @@ class cli():
             print(color.NARANJA + "4" + color.END + " - INSERTAR DISCOGRAFICA")
             print(color.NARANJA + "5" + color.END + " - INSERTAR CANCION A UN ALBUM")                       
             print("")                     
-            print(color.NARANJA + "\nS" + color.END + " - Salir")
+            print(color.CYAN_CLARO + "S"+ color.AZUL_CLARO + " - VOLVER MENU PRINCIPAL" + color.END)
             print(color.END)       
             print("\n")
 
