@@ -1,7 +1,7 @@
 # Proyecto Integrador 2 :man_technologist:	:computer:	
 
-ℹ Segunda Actividad Integradora Programación Inicial 
-
+### Breve resumen
+> Pequeño programa que se ejecuta sobre consola, realizado para una disquería que permite la carga, baja y modificación de datos, así como la consulta de los mismos. Realizado en python y conectado a una base de datos(MySQL).
 
 <details> <summary> Consigna :pencil2:  </summary>
 
@@ -108,8 +108,15 @@ python Disqueria.py
 * QR para redirigir a página con más informarción sobre el álbum
 * Muestra de imagen del artista en formato ASCII
 
-
-
 </details>
 
+<details> <summary> Tecnologías utilizadas :computer: </summary>
+<br>
+ <img src = "https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" />
+ 
+ <img src = "https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white" />
+ 
+ </details>
+ 
+ <br>
 _Gracias por pasarte y probar!_  :wink: :wave:	
