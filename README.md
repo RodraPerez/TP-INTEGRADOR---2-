@@ -60,7 +60,7 @@ posible de realizar dentro de los plazos posibles.
 
 1. En su consola ejecutar :keyboard::
 ````
-git clone https://github.com/RodraPerez/TP-INTEGRADOR---2-.git
+git clone https://github.com/RodraPerez/proyecto-integrador-II.git
 ````
 
 2. Ingresar a la carpeta del repositorio.
