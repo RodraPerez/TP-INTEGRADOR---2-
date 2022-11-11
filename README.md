@@ -59,19 +59,23 @@ posible de realizar dentro de los plazos posibles.
 
 
 1. En su consola ejecutar :keyboard::
+
 ````
 git clone https://github.com/RodraPerez/proyecto-integrador-II.git
 ````
 
 2. Ingresar a la carpeta del repositorio.
+
 ````
 cd proyecto-integrador-II
 ````
 
 3. Instalar las librerias necesarias, copiar el sigueinte código y pegarlo en la consola:
+
 ````
-pip install pillow qrcode qrcode-terminal terminal-img
+python -m pip install -r requirements.txt
 ````
+
 4. Agregar la contraseña de la base de datos en el archivo _conexión.py_ :
 
 ![password](https://user-images.githubusercontent.com/97641886/200140691-202bbd98-89cc-4753-8d37-28fc28fede96.png)
