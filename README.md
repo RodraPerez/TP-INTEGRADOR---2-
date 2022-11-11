@@ -65,7 +65,7 @@ git clone https://github.com/RodraPerez/proyecto-integrador-II.git
 
 2. Ingresar a la carpeta del repositorio.
 ````
-cd TP-INTEGRADOR---2-
+cd proyecto-integrador-II
 ````
 
 3. Instalar las librerias necesarias, copiar el sigueinte código y pegarlo en la consola:
